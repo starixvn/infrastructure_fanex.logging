@@ -80,7 +80,6 @@
         public void Clear()
         {
             CacheManager.Flush();
-
             Keys.Clear();
         }
 

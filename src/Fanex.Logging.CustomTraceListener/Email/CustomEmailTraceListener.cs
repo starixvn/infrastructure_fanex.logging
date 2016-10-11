@@ -196,10 +196,8 @@
             {
                 return;
             }
-            else
-            {
-                _cacheManager.Set(cacheKey, new object(), _cacheDuplicatedEmailTimeOut);
-            }
+
+            _cacheManager.Set(cacheKey, new object(), _cacheDuplicatedEmailTimeOut);
 
             DowntimeCheckingEmailMessage mailMessage = new DowntimeCheckingEmailMessage(
                     _toAddress,
@@ -243,10 +241,8 @@
                     {
                         return;
                     }
-                    else
-                    {
-                        _cacheManager.Set(cacheKey, new object(), _cacheDuplicatedEmailTimeOut);
-                    }
+
+                    _cacheManager.Set(cacheKey, new object(), _cacheDuplicatedEmailTimeOut);
 
                     var emailMessage = new DowntimeCheckingEmailMessage(
                         _toAddress,
