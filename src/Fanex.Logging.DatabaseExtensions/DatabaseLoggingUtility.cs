@@ -8,10 +8,10 @@
     {
         public static string BuildSqlInfo(Exception ex)
         {
-            ////if (ex is ObjectDbException)
-            ////{
-            ////    return GetObjectDbExceptionInfo(ex as ObjectDbException);
-            ////}
+            if (ex is ObjectDbException)
+            {
+                return GetObjectDbExceptionInfo(ex as ObjectDbException);
+            }
 
             if (ex is SqlException)
             {
@@ -35,27 +35,27 @@
                 $"SQL Server: {ex.Server}");
         }
 
-        ////private static string GetObjectDbExceptionInfo(ObjectDbException ex)
-        ////{
-        ////    var sqlConnectionString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
-        ////    var storedProcedureName = ex.DbSetting.SpName;
-        ////    var databaseName = ex.DbSetting.DbName;
-        ////    var lineNumber = ex.InnerException is SqlException
-        ////        ? (ex.InnerException as SqlException).LineNumber
-        ////        : 0;
+        private static string GetObjectDbExceptionInfo(ObjectDbException ex)
+        {
+            var sqlConnectionString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
+            var storedProcedureName = ex.DbSetting.SpName;
+            var databaseName = ex.DbSetting.DbName;
+            var lineNumber = ex.InnerException is SqlException
+                ? (ex.InnerException as SqlException).LineNumber
+                : 0;
 
-        ////    // Passed Parameters for fanex.data 2+
-        ////    ////var passedParameters = ex.DbSetting.Parameters
-        ////    ////            .Select(parameter => $"{parameter.ParameterName}={parameter.Value}")
-        ////    ////            .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}");
+            // Passed Parameters for fanex.data 2+
+            ////var passedParameters = ex.DbSetting.Parameters
+            ////            .Select(parameter => $"{parameter.ParameterName}={parameter.Value}")
+            ////            .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}");
 
-        ////    return LogUtility.CombineInfo(
-        ////        "DATABASE INFO",
-        ////        $"Database Name: {databaseName}",
-        ////        $"Account: {sqlConnectionString.UserID}",
-        ////        $"Stored Procedure: {storedProcedureName}",
-        ////        $"Line Number: {lineNumber}",
-        ////        $"SQL Server: {sqlConnectionString.DataSource}");
-        ////}
+            return LogUtility.CombineInfo(
+                "DATABASE INFO",
+                $"Database Name: {databaseName}",
+                $"Account: {sqlConnectionString.UserID}",
+                $"Stored Procedure: {storedProcedureName}",
+                $"Line Number: {lineNumber}",
+                $"SQL Server: {sqlConnectionString.DataSource}");
+        }
     }
 }
