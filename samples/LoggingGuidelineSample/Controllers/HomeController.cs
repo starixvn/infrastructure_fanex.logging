@@ -23,9 +23,13 @@
 
         public ActionResult SqlException()
         {
-            using (var db = new ObjectDb("Logging_UpdateMachine"))
+            using (var db = ObjectDbFactory.CreateInstance("Logging_UpdateMachine"))
             {
-                db.ExecuteNonQuery();
+                db.ExecuteNonQuery(new
+                {
+                    MachineIP = "45454",
+                    Timezone = "GMT8"
+                });
             }
 
             return Content("SQL View");

@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Fanex.Data;
-    using Fanex.Data.Configuration;
+    using Fanex.Data.CrossCutting.WrappingException;
+    using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
     using Fanex.Logging.DatabaseExtensions;
 
@@ -71,11 +72,25 @@
 
         private static void SimulateSqlException()
         {
-            DbSettingProviderManager.Current.Start();
+            // Fanex.Data version 1
+            //DbSettingProviderManager.Current.Start();
 
-            using (var db = new ObjectDb("Logging_UpdateMachine"))
+
+            // Fanex.Data version 2
+            DbSettingProviderManager
+                .StartNewSession()
+                .Use(new OldConnectionStringProvider())
+                .UseDefaultDbSettingProvider(
+                    resourcePath: "App_Data/")
+                .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
+                .Run();
+
+            using (var db = ObjectDbFactory.CreateInstance("Logging_UpdateMachine"))
             {
-                db.ExecuteNonQuery();
+                db.ExecuteNonQuery(new {
+                    MachineIP = "45454",
+                    Timezone = "GMT8"
+                });
             }
         }
     }

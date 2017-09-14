@@ -1,8 +1,10 @@
 ﻿namespace Fanex.Logging.DatabaseExtensions
 {
     using System;
+    using System.Data.Common;
     using System.Data.SqlClient;
-    using Data;
+    using System.Linq;
+    using Data.CrossCutting.WrappingException;
 
     public static class DatabaseLoggingUtility
     {
@@ -45,9 +47,11 @@
                 : 0;
 
             // Passed Parameters for fanex.data 2+
-            ////var passedParameters = ex.DbSetting.Parameters
-            ////            .Select(parameter => $"{parameter.ParameterName}={parameter.Value}")
-            ////            .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}");
+            var passedParameters = ex.Parameters.Count > 0 
+                ? ex.Parameters.Cast<DbParameter>()
+                        .Select(parameter => $"{parameter.ParameterName}={parameter.Value}")
+                        .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}")
+                : string.Empty;
 
             return LogUtility.CombineInfo(
                 "DATABASE INFO",
@@ -55,7 +59,8 @@
                 $"Account: {sqlConnectionString.UserID}",
                 $"Stored Procedure: {storedProcedureName}",
                 $"Line Number: {lineNumber}",
-                $"SQL Server: {sqlConnectionString.DataSource}");
+                $"SQL Server: {sqlConnectionString.DataSource}",
+                $"SP Params: {passedParameters}");
         }
     }
 }

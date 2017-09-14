@@ -5,9 +5,10 @@
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using Fanex.Data.Configuration;
+    using Fanex.Data;
+    using Fanex.Data.CrossCutting.WrappingException;
+    using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
-    using Fanex.Logging.DatabaseExtensions;
     using Fanex.Logging.WebExtensions;
 
     public class MvcApplication : System.Web.HttpApplication
@@ -22,15 +23,23 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            DbSettingProviderManager.Current.Start();
+            //DbSettingProviderManager.Current.Start();
+            // Fanex.Data version 2
+            DbSettingProviderManager
+                .StartNewSession()
+                .Use(new OldConnectionStringProvider())
+                .UseDefaultDbSettingProvider(
+                    resourcePath: "~/App_Data/")
+                .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
+                .Run();
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Exception ex = Server.GetLastError();
+            Exception exception = Server.GetLastError();
 
             // Don't write log for HTTP exception
-            if (ex is HttpException)
+            if (exception is HttpException)
             {
                 return;
             }
@@ -41,7 +50,11 @@
                                             "User Id: dummyId",
                                             "Username: dummyname");
 
-            var errorInfo = WebLoggingUtility.BuildLogInfo(ex.Message, ex, customLogSection);
+            var errorInfo = WebLoggingUtility.BuildLogInfo(
+                exception.Message, 
+                exception, 
+                customLogSection, 
+                sampleSensitiveParams);
 
             LogService.Error(errorInfo);
 
