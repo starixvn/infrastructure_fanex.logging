@@ -1,0 +1,56 @@
+﻿namespace LoggingGuidelineSample
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+    using Fanex.Data.Configuration;
+    using Fanex.Logging;
+    using Fanex.Logging.DatabaseExtensions;
+    using Fanex.Logging.WebExtensions;
+
+    public class MvcApplication : System.Web.HttpApplication
+    {
+        private static IEnumerable<string> sampleSensitiveParams = new List<string>
+        {
+            "password",
+            "securitycode"
+        };
+
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DbSettingProviderManager.Current.Start();
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+
+            // Don't write log for HTTP exception
+            if (ex is HttpException)
+            {
+                return;
+            }
+
+            //// Custom Section For each site logs more information.
+            var customLogSection = LogUtility.CombineInfo(
+                                            "USER INFO",
+                                            "User Id: dummyId",
+                                            "Username: dummyname");
+
+            var errorInfo = WebLoggingUtility.BuildLogInfo(ex.Message, ex, customLogSection);
+
+            LogService.Error(errorInfo);
+
+#if DEBUG
+            //// this code for dev to view message on browser, dont bring it to production
+            HttpContext.Current.Response.Write(errorInfo.Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
+            HttpContext.Current.Response.End();
+            HttpContext.Current.Response.Close();
+#endif
+        }
+    }
+}

@@ -7,33 +7,34 @@
     using Microsoft.Practices.EnterpriseLibrary.Caching.Expirations;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 
+#pragma warning disable S3881 // "IDisposable" should be implemented correctly
     internal class CacheService : ICacheService
+#pragma warning restore S3881 // "IDisposable" should be implemented correctly
     {
         private static volatile ICacheManager cacheManager;
-        private static volatile HashSet<string> listKey;
         private static object syncRoot = new object();
 
-        public int Count => CacheManager.Count;
+        /// <summary>
+        /// Contains a list of keys of current cache instance.
+        /// </summary>
+        private static volatile HashSet<string> listKey = new HashSet<string>();
 
-        public HashSet<string> Keys
+        #region ICache Members
+
+        /// <summary>
+        /// Gets the number of item in current cache instance.
+        /// </summary>
+        public int Count
         {
             get
             {
-                if (listKey == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (listKey == null)
-                        {
-                            listKey = new HashSet<string>();
-                        }
-                    }
-                }
-
-                return listKey;
+                return CacheManager.Count;
             }
         }
 
+        /// <summary>
+        /// Gets the cache manager.
+        /// </summary>
         private static ICacheManager CacheManager
         {
             get
@@ -46,11 +47,7 @@
                         {
                             try
                             {
-#if NET40
                                 cacheManager = EnterpriseLibraryContainer.Current.GetInstance<ICacheManager>();
-#else
-                                cacheManager = CacheFactory.GetCacheManager();
-#endif
                             }
                             catch (Exception ex)
                             {
@@ -77,74 +74,121 @@
             EventLog.WriteEntry(logSource, message, EventLogEntryType.Warning, 234);
         }
 
-        public void Clear()
-        {
-            CacheManager.Flush();
-            Keys.Clear();
-        }
-
+        /// <summary>
+        /// Determines whether cache contains the specified key.
+        /// </summary>
+        /// <param name="key">The string key.</param>
+        /// <returns>
+        ///   <c>True</c> if [contains] [the specified key]; otherwise, <c>false</c>.
+        /// </returns>
         public bool Contains(string key)
-            => CacheManager?.Contains(key) ?? false;
-
-        public void Dispose()
         {
-            cacheManager = null;
-            listKey = null;
+            if (CacheManager != null)
+            {
+                return CacheManager.Contains(key);
+            }
+
+            return false;
         }
 
+        /// <summary>
+        /// Gets cached value by the specified key.
+        /// </summary>
+        /// <typeparam name="T">Any .Net type.</typeparam>
+        /// <param name="key">The string key.</param>
+        /// <returns>T instance.</returns>
         public T Get<T>(string key)
-            => (T)CacheManager.GetData(key);
-
-        public void Remove(string key)
         {
-            if (Contains(key))
+            return (T)CacheManager.GetData(key);
+        }
+
+        public bool TryGet<T>(string key, out T value)
+        {
+            bool contains = this.Contains(key);
+            value = (T)CacheManager.GetData(key);
+            return contains;
+        }
+
+        public void Set<T>(string key, T value, params ICacheItemExpiration[] expiration)
+        {
+            CacheManager.Add(key, value, CacheItemPriority.Normal, null, expiration);
+
+            lock (syncRoot)
             {
-                CacheManager.Remove(key);
-                Keys.Remove(key);
+                listKey.Add(key);
+            }
+        }
+
+        /// <summary>
+        /// Sets the specified key.
+        /// </summary>
+        /// <typeparam name="T">Any .Net type.</typeparam>
+        /// <param name="key">The string key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="timeOut">Default is 120s.</param>
+        public void Set<T>(string key, T value, int timeOut = 120)
+        {
+            if (CacheManager != null)
+            {
+                DateTime absoluteExpiration = DateTime.Now.AddSeconds(timeOut);
+                Set<T>(key, value, absoluteExpiration);
             }
         }
 
         public void Set<T>(string key, T value, DateTime absoluteExpiration)
         {
-            var ansoluteTime = new AbsoluteTime(absoluteExpiration);
-
-            Set(key, value, new ICacheItemExpiration[] { ansoluteTime });
+            AbsoluteTime ansoluteTime = new AbsoluteTime(absoluteExpiration);
+            Set<T>(key, value, new ICacheItemExpiration[] { ansoluteTime });
         }
 
+        /// <summary>
+        /// Set item type T to cache with sliding expiration.
+        /// </summary>
+        /// <typeparam name="T">Any .Net type.</typeparam>
+        /// <param name="key">Valid key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="slidingExpiration">Sliding expiration.</param>
         public void Set<T>(string key, T value, TimeSpan slidingExpiration)
         {
-            var slidingTime = new SlidingTime(slidingExpiration);
-
-            Set(key, value, slidingTime);
+            SlidingTime slidingTime = new SlidingTime(slidingExpiration);
+            Set<T>(key, value, slidingTime);
         }
 
-        public void Set<T>(string key, T value, int timeout = 120)
+        public void SetFileDependency<T>(string key, T value, string filePath)
         {
-            var absoluteExpiration = DateTime.Now.AddSeconds(timeout);
-
-            Set(key, value, absoluteExpiration);
+            FileDependency fileDependency = new FileDependency(filePath);
+            CacheManager.Add(key, value, CacheItemPriority.High, null, new ICacheItemExpiration[] { fileDependency });
         }
 
-        public void Set<T>(string key, T value, params ICacheItemExpiration[] expiration)
+        /// <summary>
+        /// Removes cache item by the specified key.
+        /// </summary>
+        /// <param name="key">The string key.</param>
+        public void Remove(string key)
         {
-            if (CacheManager != null)
+            if (this.Contains(key))
             {
-                CacheManager.Add(key, value, CacheItemPriority.Normal, null, expiration);
-
-                lock (syncRoot)
-                {
-                    Keys.Add(key);
-                }
+                CacheManager.Remove(key);
+                listKey.Remove(key);
             }
         }
 
-        public bool TryGet<T>(string key, out T value)
+        public void Clear()
         {
-            bool contains = Contains(key);
-
-            value = (T)CacheManager.GetData(key);
-
-            return contains;
+            CacheManager.Flush();
+            listKey.Clear();
         }
+
+        #endregion ICache Members
+
+        #region IDisposable Members
+
+#pragma warning disable S1186 // Methods should not be empty
+        public void Dispose()
+#pragma warning restore S1186 // Methods should not be empty
+        {
+        }
+
+        #endregion IDisposable Members
     }
 }
