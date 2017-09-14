@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Fanex.Logging")]
 [assembly: AssemblyDescription("Fanex.Logging")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Nexcel Solutions")]
+[assembly: AssemblyCompany("Starixsoft")]
 [assembly: AssemblyProduct("Fanex.Logging")]
-[assembly: AssemblyCopyright("Copyright Nexcel Solutions Vietnam©  2011")]
+[assembly: AssemblyCopyright("Starixsoft.com")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
