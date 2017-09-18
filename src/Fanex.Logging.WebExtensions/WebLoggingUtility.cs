@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
-    using DatabaseExtensions;
 
     public static class WebLoggingUtility
     {
@@ -14,28 +14,37 @@
         private const string RegexSensitiveBodyJsonParam = "(\"{0}\":)(?<paramValue>[^,]+)";
 
         public static string BuildLogInfo(
-            string message, 
+            string message,
             Exception exception,
-            string customLogSection, 
+            IList<Func<Exception, string>> logInfoBuilders = null,
             IEnumerable<string> sensitiveParams = null,
             string regexSensitiveQueryStringParam = RegexSensitiveQueryStringParam,
             string regexSensitiveBodyJsonParam = RegexSensitiveBodyJsonParam)
         {
             var request = HttpContext.Current.Request;
 
+            var webInfoBuilder = new List<Func<Exception, string>>
+                    {
+                        (ex) => BuildRequestInfo(
+                            request,
+                            sensitiveParams,
+                            regexSensitiveQueryStringParam,
+                            regexSensitiveBodyJsonParam)
+                    };
+
+            if (logInfoBuilders != null && logInfoBuilders.Any())
+            {
+                webInfoBuilder.AddRange(logInfoBuilders);
+            }
+
             return LogUtility.BuildLogInfo(
                     message,
                     exception,
-                    new List<Func<Exception, string>>
-                    {
-                        (ex) => BuildRequestInfo(request, sensitiveParams),
-                        DatabaseLoggingUtility.BuildSqlInfo
-                    },
-                    customLogSection);
+                    webInfoBuilder);
         }
 
         public static string BuildRequestInfo(
-            HttpRequest request, 
+            HttpRequest request,
             IEnumerable<string> sensitiveParams,
             string regexSensitiveQueryStringParam = RegexSensitiveQueryStringParam,
             string regexSensitiveBodyJsonParam = RegexSensitiveBodyJsonParam)

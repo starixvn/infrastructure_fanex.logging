@@ -16,21 +16,15 @@
         public static string BuildLogInfo(
             string message,
             Exception exception,
-            IList<Func<Exception, string>> logInfoBuilders = null,
-            string customLogInfo = null)
+            IList<Func<Exception, string>> logInfoBuilders = null)
         {
             if (exception == null
-                || logInfoBuilders == null
-                || !logInfoBuilders.Any())
+                && (logInfoBuilders == null || !logInfoBuilders.Any()))
             {
-                return JoinWithoutEmptyItem(
-                    NewSection, 
-                    message,
-                    customLogInfo);
+                return message;
             }
 
             logInfoBuilders.Add(ex => BuildWebServerInfo());
-            logInfoBuilders.Add(ex => customLogInfo);
             logInfoBuilders.Add(BuildExceptionInfo);
 
             var resultLogBuilders = JoinWithoutEmptyItem(

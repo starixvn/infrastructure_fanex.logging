@@ -24,24 +24,22 @@
                 //TestLogging();
                 SimulateSqlException();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                var customLogSection = LogUtility.CombineInfo(
-                                            "INFO GROUP",
-                                            "Info 1",
-                                            "Info 2");
-
-                var logMessage = LogUtility.BuildLogInfo(
-                    ex.Message,
-                    ex,
+                var errorInfo = LogUtility.BuildLogInfo(
+                    exception.Message,
+                    exception,
                     new List<Func<Exception, string>>
                     {
-                        DatabaseLoggingUtility.BuildSqlInfo
-                    },
-                    customLogSection);
+                        DatabaseLoggingUtility.BuildSqlInfo,
+                        ex => LogUtility.CombineInfo(
+                                            "INFO GROUP",
+                                            "Info 1",
+                                            "Info 2")
+                    });
 
-                Console.WriteLine(logMessage);
-                LogService.Error(logMessage);
+                LogService.Error(errorInfo);
+                Console.WriteLine(errorInfo);
             }
 
             Console.ReadLine();

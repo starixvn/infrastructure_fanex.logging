@@ -9,6 +9,7 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
+    using Fanex.Logging.DatabaseExtensions;
     using Fanex.Logging.WebExtensions;
 
     public class MvcApplication : System.Web.HttpApplication
@@ -45,15 +46,18 @@
             }
 
             //// Custom Section For each site logs more information.
-            var customLogSection = LogUtility.CombineInfo(
-                                            "USER INFO",
-                                            "User Id: dummyId",
-                                            "Username: dummyname");
 
             var errorInfo = WebLoggingUtility.BuildLogInfo(
                 exception.Message, 
                 exception, 
-                customLogSection, 
+                new List<Func<Exception, string>>
+                {
+                    DatabaseLoggingUtility.BuildSqlInfo,
+                    ex => LogUtility.CombineInfo(
+                                            "USER INFO",
+                                            "User Id: dummyId",
+                                            "Username: dummyname") // Custom Log Info
+                }, 
                 sampleSensitiveParams);
 
             LogService.Error(errorInfo);
