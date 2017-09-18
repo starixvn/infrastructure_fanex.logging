@@ -6,7 +6,7 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
-    using Fanex.Logging.DatabaseExtensions;
+    using Fanex.Logging.Extensions.Database;
 
     /// <summary>
     /// The testing application.
@@ -27,16 +27,14 @@
             catch (Exception exception)
             {
                 var errorInfo = LogUtility.BuildLogInfo(
-                    exception.Message,
                     exception,
-                    new List<Func<Exception, string>>
-                    {
-                        DatabaseLoggingUtility.BuildSqlInfo,
-                        ex => LogUtility.CombineInfo(
+                    ex => ex.Message,
+                    DatabaseLoggingUtility.BuildSqlInfo,
+                    ex => LogUtility.CombineInfo(
                                             "INFO GROUP",
                                             "Info 1",
-                                            "Info 2")
-                    });
+                                            "Info 2") // Custom Info
+                                            );
 
                 LogService.Error(errorInfo);
                 Console.WriteLine(errorInfo);
@@ -67,12 +65,10 @@
             ////LogService.Info("Test info");
         }
 
-
         private static void SimulateSqlException()
         {
             // Fanex.Data version 1
             //DbSettingProviderManager.Current.Start();
-
 
             // Fanex.Data version 2
             DbSettingProviderManager
@@ -85,7 +81,8 @@
 
             using (var db = ObjectDbFactory.CreateInstance("Logging_UpdateMachine"))
             {
-                db.ExecuteNonQuery(new {
+                db.ExecuteNonQuery(new
+                {
                     MachineIP = "45454",
                     Timezone = "GMT8"
                 });

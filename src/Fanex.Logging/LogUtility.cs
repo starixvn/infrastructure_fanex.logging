@@ -14,27 +14,23 @@
         public const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
 
         public static string BuildLogInfo(
-            string message,
             Exception exception,
-            IList<Func<Exception, string>> logInfoBuilders = null)
+            params Func<Exception, string>[] logInfoBuilders)
         {
             if (exception == null
                 && (logInfoBuilders == null || !logInfoBuilders.Any()))
             {
-                return message;
+                return string.Empty;
             }
 
-            logInfoBuilders.Add(ex => BuildWebServerInfo());
-            logInfoBuilders.Add(BuildExceptionInfo);
-
-            var resultLogBuilders = JoinWithoutEmptyItem(
-                       NewSection,
-                       logInfoBuilders.Select(builder => builder(exception)).ToArray());
+            logInfoBuilders = logInfoBuilders.Concat(new List<Func<Exception, string>> {
+                ex => BuildWebServerInfo(),
+                BuildExceptionInfo
+            }).ToArray();
 
             return JoinWithoutEmptyItem(
                        NewSection,
-                       message,
-                       resultLogBuilders);
+                       logInfoBuilders.Select(builder => builder(exception)).ToArray());
         }
 
         public static string BuildExceptionInfo(Exception exception)
@@ -53,17 +49,11 @@
                 $"Details: {exception}");
         }
 
-        public static string CombineInfo(string infoGroup, params string[] infoItems)
-        {
-            //infoGroup:
-            //  infoItems[0]
-            //  infoItems[1]
-            //  ...
-            return string.Join(
+        public static string CombineInfo(string infoGroup, params string[] infoItems) 
+            => string.Join(
                 "\r\n",
                 $"{infoGroup}:",
                 $"\t{string.Join("\r\n\t", infoItems)}");
-        }
 
         public static string JoinWithoutEmptyItem(string separator, params string[] values)
         {
@@ -95,16 +85,14 @@
             return information;
         }
 
-        public static string BuildWebServerInfo()
-        {
-            return CombineInfo(
+        public static string BuildWebServerInfo() 
+            => CombineInfo(
                         "WEB SERVER INFO",
                         $"Server IP: {GetServerIP()}",
                         $"Machine Name: {Environment.MachineName}",
                         $"OS: {Environment.OSVersion}",
                         $"System Time: {DateTime.Now}",
                         $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}");
-        }
 
         private static string GetServerIP()
         {

@@ -16,14 +16,14 @@
         public static string BuildLogInfo(
             string message,
             Exception exception,
-            IList<Func<Exception, string>> logInfoBuilders = null,
+            IEnumerable<Func<Exception, string>> logInfoBuilders = null,
             IEnumerable<string> sensitiveParams = null,
             string regexSensitiveQueryStringParam = RegexSensitiveQueryStringParam,
             string regexSensitiveBodyJsonParam = RegexSensitiveBodyJsonParam)
         {
             var request = HttpContext.Current.Request;
 
-            var webInfoBuilder = new List<Func<Exception, string>>
+            var webInfoBuilders = new List<Func<Exception, string>>
                     {
                         (ex) => BuildRequestInfo(
                             request,
@@ -34,13 +34,13 @@
 
             if (logInfoBuilders != null && logInfoBuilders.Any())
             {
-                webInfoBuilder.AddRange(logInfoBuilders);
+                webInfoBuilders.AddRange(logInfoBuilders);
             }
 
             return LogUtility.BuildLogInfo(
                     message,
                     exception,
-                    webInfoBuilder);
+                    webInfoBuilders);
         }
 
         public static string BuildRequestInfo(
