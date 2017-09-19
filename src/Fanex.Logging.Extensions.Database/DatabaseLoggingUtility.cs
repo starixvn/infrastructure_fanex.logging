@@ -8,24 +8,31 @@
 
     public static class DatabaseLoggingUtility
     {
-        public static string BuildSqlInfo(Exception ex)
+        public static string AddSqlInfo(this string message, Exception ex)
         {
+            if (string.IsNullOrWhiteSpace(message) || ex == null)
+            {
+                return message;
+            }
+
+            var sqlInfo = string.Empty;
+
             if (ex is ObjectDbException)
             {
-                return GetObjectDbExceptionInfo(ex as ObjectDbException);
+                sqlInfo = GetObjectDbExceptionInfo(ex as ObjectDbException);
             }
 
             if (ex is SqlException)
             {
-                return GetSqlExceptionInfo(ex as SqlException);
+                sqlInfo = GetSqlExceptionInfo(ex as SqlException);
             }
 
             if (ex.GetBaseException() is SqlException)
             {
-                return GetSqlExceptionInfo(ex.GetBaseException() as SqlException);
+                sqlInfo = GetSqlExceptionInfo(ex.GetBaseException() as SqlException);
             }
 
-            return "NO DATABASE INFO";
+            return message.AddLogSection(sqlInfo);
         }
 
         private static string GetSqlExceptionInfo(SqlException ex) =>

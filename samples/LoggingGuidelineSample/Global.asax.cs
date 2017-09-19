@@ -14,12 +14,6 @@
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static IEnumerable<string> sampleSensitiveParams = new List<string>
-        {
-            "password",
-            "securitycode"
-        };
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -45,19 +39,26 @@
                 return;
             }
 
-            //// Custom Section For each site logs more information.
+            var sensitiveParams = new List<string>
+            {
+                "password",
+                "securitycode"
+            };
 
-            var errorInfo = LogUtility.BuildLogInfo(
-                exception,
-                ex => ex.Message,
-                ex => WebLoggingUtility.BuildRequestInfo(
-                            HttpContext.Current.Request,
-                            sampleSensitiveParams),
-                DatabaseLoggingUtility.BuildSqlInfo,
-                ex => LogUtility.CombineInfo(
-                                            "USER INFO",
-                                            "User Id: dummyId",
-                                            "Username: dummyname")); // Custom Log Info
+            var errorInfo = exception
+                        .Message
+                        .AddRequestInfo(HttpContext.Current.Request)
+                        .CensorSensitiveParams(
+                                sensitiveParams, 
+                                "(?:{0}=)(?<paramValue>[^&|^\\s]+)", // For query string & form
+                                "(\"{0}\":)(?<paramValue>[^,|^\r]+)") // For body json data
+                        .AddSqlInfo(exception)
+                        .AddWebServerInfo()
+                        .AddExceptionInfo(exception)
+                        .AddCustomInfo(
+                            "USER INFO",
+                            "User Id: dummyId",
+                            "Username: dummyname");
 
             LogService.Error(errorInfo);
 

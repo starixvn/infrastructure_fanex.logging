@@ -26,15 +26,15 @@
             }
             catch (Exception exception)
             {
-                var errorInfo = LogUtility.BuildLogInfo(
-                    exception,
-                    ex => ex.Message,
-                    DatabaseLoggingUtility.BuildSqlInfo,
-                    ex => LogUtility.CombineInfo(
-                                            "INFO GROUP",
-                                            "Info 1",
-                                            "Info 2") // Custom Info
-                                            );
+                var errorInfo = exception
+                                .Message
+                                .AddSqlInfo(exception)
+                                .AddWebServerInfo()
+                                .AddExceptionInfo(exception)
+                                .AddCustomInfo(
+                                    "INFO GROUP",
+                                    "Info 1",
+                                    "Info 2");
 
                 LogService.Error(errorInfo);
                 Console.WriteLine(errorInfo);

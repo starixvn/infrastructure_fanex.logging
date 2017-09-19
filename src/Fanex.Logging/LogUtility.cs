@@ -13,40 +13,22 @@
         private const string paramValue = "paramValue";
         public const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
 
-        public static string BuildLogInfo(
-            Exception exception,
-            params Func<Exception, string>[] logInfoBuilders)
+        public static string AddExceptionInfo(this string message, Exception exception)
         {
-            if (exception == null
-                && (logInfoBuilders == null || !logInfoBuilders.Any()))
+            if (string.IsNullOrWhiteSpace(message) 
+                || exception == null)
             {
-                return string.Empty;
+                return message;
             }
 
-            logInfoBuilders = logInfoBuilders.Concat(new List<Func<Exception, string>> {
-                ex => BuildWebServerInfo(),
-                BuildExceptionInfo
-            }).ToArray();
-
-            return JoinWithoutEmptyItem(
-                       NewSection,
-                       logInfoBuilders.Select(builder => builder(exception)).ToArray());
-        }
-
-        public static string BuildExceptionInfo(Exception exception)
-        {
-            if (exception == null)
-            {
-                return string.Empty;
-            }
-
-            return CombineInfo(
-                "EXCEPTION",
-                $"Source: {exception.Source}",
-                $"Type: {exception.GetType()}",
-                $"Target Site: {exception.TargetSite}",
-                $"Stack Trace: {exception.StackTrace}",
-                $"Details: {exception}");
+            return message.AddLogSection(
+                        CombineInfo(
+                        "EXCEPTION",
+                        $"Source: {exception.Source}",
+                        $"Type: {exception.GetType()}",
+                        $"Target Site: {exception.TargetSite}",
+                        $"Stack Trace: {exception.StackTrace}",
+                        $"Details: {exception}"));
         }
 
         public static string CombineInfo(string infoGroup, params string[] infoItems) 
@@ -54,6 +36,22 @@
                 "\r\n",
                 $"{infoGroup}:",
                 $"\t{string.Join("\r\n\t", infoItems)}");
+
+        public static string AddLogSection(this string message, string logSection)
+        {
+            return JoinWithoutEmptyItem(
+                        NewSection,
+                        message,
+                        logSection);
+        }
+
+        public static string AddCustomInfo(this string message, string infoGroupName, params string[] infoItems)
+        {
+            return JoinWithoutEmptyItem(
+                        NewSection,
+                        message,
+                        CombineInfo(infoGroupName, infoItems));
+        }
 
         public static string JoinWithoutEmptyItem(string separator, params string[] values)
         {
@@ -85,14 +83,19 @@
             return information;
         }
 
-        public static string BuildWebServerInfo() 
-            => CombineInfo(
+        public static string AddWebServerInfo(this string message) 
+            => string.IsNullOrWhiteSpace(message) 
+            ? message
+            : JoinWithoutEmptyItem(
+                NewSection,
+                message,
+                CombineInfo(
                         "WEB SERVER INFO",
                         $"Server IP: {GetServerIP()}",
                         $"Machine Name: {Environment.MachineName}",
                         $"OS: {Environment.OSVersion}",
                         $"System Time: {DateTime.Now}",
-                        $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}");
+                        $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}"));
 
         private static string GetServerIP()
         {

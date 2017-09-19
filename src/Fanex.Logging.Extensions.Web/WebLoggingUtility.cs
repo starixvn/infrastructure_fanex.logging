@@ -2,46 +2,64 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
 
     public static class WebLoggingUtility
     {
-        private const string RegexSensitiveQueryStringParam = "(?:{0}=)(?<paramValue>[^&]+)";
-        private const string RegexSensitiveBodyJsonParam = "(\"{0}\":)(?<paramValue>[^,]+)";
+        public const string RegexSensitiveQueryStringParam = "(?:{0}=)(?<paramValue>[^&]+)";
+        public const string RegexSensitiveBodyJsonParam = "(\"{0}\":)(?<paramValue>[^,]+)";
 
-        public static string BuildRequestInfo(
-            HttpRequest request,
-            IEnumerable<string> sensitiveParams,
-            string regexSensitiveQueryStringParam = RegexSensitiveQueryStringParam,
-            string regexSensitiveBodyJsonParam = RegexSensitiveBodyJsonParam)
+        public static string AddRequestInfo(this string message, HttpRequest request)
         {
-            if (request == null)
+            if (string.IsNullOrWhiteSpace(message)
+                || request == null)
             {
-                return string.Empty;
+                return message;
             }
 
-            var censoredUrl = LogUtility.CensorSensitiveInformation(request.Url.ToString(), RegexSensitiveQueryStringParam, sensitiveParams);
-            var censoredUrlReferrer = request.UrlReferrer == null
-                ? string.Empty
-                : LogUtility.CensorSensitiveInformation(request.UrlReferrer.ToString(), RegexSensitiveQueryStringParam, sensitiveParams);
-            var censoredForm = LogUtility.CensorSensitiveInformation(request.Form.ToString(), RegexSensitiveQueryStringParam, sensitiveParams);
-            var censoredRequestBodyData = LogUtility.CensorSensitiveInformation(GetRequestBodyData(request.InputStream), RegexSensitiveBodyJsonParam, sensitiveParams);
-
-            return LogUtility.CombineInfo(
-              "REQUEST & BROWSER INFO",
-              $"Url: {censoredUrl}",
-              $"Url Referrer: {censoredUrlReferrer}",
-              $"Form Variables: {censoredForm}",
-              $"Body Data: {censoredRequestBodyData}",
-              $"Client IP: {GetClientIP(request)}",
-              $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
-              BuildClientBrowserInfo(request.Browser),
-              $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}");
+            return message.AddLogSection(
+                    LogUtility.CombineInfo(
+                      "REQUEST & BROWSER INFO",
+                      $"Url: {request.Url}",
+                      $"Url Referrer: {request.UrlReferrer}",
+                      $"Form Variables: {request.Form}",
+                      $"Body Data: {GetRequestBodyData(request.InputStream)}",
+                      $"Client IP: {GetClientIP(request)}",
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
+                      BuildClientBrowserInfo(request.Browser),
+                      $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
         }
 
-        private static string BuildClientBrowserInfo(HttpCapabilitiesBase browser) 
+        public static string CensorSensitiveParams(
+            this string message,
+            IEnumerable<string> sensitiveParams,
+            params string[] regexSensitiveQueryStringParams)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                return message;
+            }
+
+            if (sensitiveParams == null 
+                || !sensitiveParams.Any()
+                || regexSensitiveQueryStringParams == null
+                || !regexSensitiveQueryStringParams.Any())
+            {
+                return message;
+            }
+
+            foreach (var regexSensitiveQueryStringParam in regexSensitiveQueryStringParams)
+            {
+                message = LogUtility.CensorSensitiveInformation(message, regexSensitiveQueryStringParam, sensitiveParams);
+            }
+
+            return message;
+        }
+
+        private static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)
             => browser == null
                     ? string.Empty
                     : string.Join(
