@@ -217,7 +217,7 @@
         {
             if (logEntry == null)
             {
-                return;
+                logEntry = LogEntry.NoInformationLogEntry;
             }
 
             WriteLog(logEntry.ToString(), traceEventType);
@@ -227,7 +227,7 @@
         {
             if (logEntry == null)
             {
-                return;
+                logEntry = LogEntry.NoInformationLogEntry;
             }
 
             WriteLog(logEntry.ToString(), category, traceEventType);

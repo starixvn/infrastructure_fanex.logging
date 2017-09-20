@@ -34,9 +34,9 @@
         private static string GetSqlExceptionInfo(SqlException ex)
             => LogUtility.CombineInfo(
                 "DATABASE INFO",
+                $"SQL Server: {ex.Server}",
                 $"Stored Procedure: {ex.Procedure}",
-                $"Line Number: {ex.LineNumber}",
-                $"SQL Server: {ex.Server}");
+                $"Line Number: {ex.LineNumber}");
 
         private static string GetObjectDbExceptionInfo(ObjectDbException ex)
         {
@@ -49,11 +49,11 @@
 
             return LogUtility.CombineInfo(
                 "DATABASE INFO",
+                $"SQL Server: {sqlConnectionString.DataSource}",
                 $"Database Name: {databaseName}",
                 $"Account: {sqlConnectionString.UserID}",
                 $"Stored Procedure: {storedProcedureName}",
-                $"Line Number: {lineNumber}",
-                $"SQL Server: {sqlConnectionString.DataSource}");
+                $"Line Number: {lineNumber}");
         }
     }
 }

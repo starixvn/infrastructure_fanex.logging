@@ -41,18 +41,16 @@
 
         private static string GetRequestBodyData(Stream requestStream)
         {
-            if (requestStream == null)
+            if (requestStream != null)
             {
-                return string.Empty;
-            }
-
-            requestStream.Seek(0, SeekOrigin.Begin);
-            var bodyData = new StreamReader(requestStream).ReadToEnd();
-            requestStream.Seek(0, SeekOrigin.Begin);
-            if (!string.IsNullOrWhiteSpace(bodyData)
-                && bodyData.Contains("{"))
-            {
-                return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
+                requestStream.Seek(0, SeekOrigin.Begin);
+                var bodyData = new StreamReader(requestStream).ReadToEnd();
+                requestStream.Seek(0, SeekOrigin.Begin);
+                if (!string.IsNullOrWhiteSpace(bodyData)
+                    && bodyData.Contains("{"))
+                {
+                    return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
+                }
             }
 
             return string.Empty;

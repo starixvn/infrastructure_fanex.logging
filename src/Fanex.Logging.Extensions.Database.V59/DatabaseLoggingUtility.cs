@@ -28,8 +28,8 @@
         private static string GetSqlExceptionInfo(SqlException ex) 
             => LogUtility.CombineInfo(
                 "DATABASE INFO",
+                $"SQL Server: {ex.Server}",
                 $"Stored Procedure: {ex.Procedure}",
-                $"Line Number: {ex.LineNumber}",
-                $"SQL Server: {ex.Server}");
+                $"Line Number: {ex.LineNumber}");
     }
 }

@@ -7,53 +7,55 @@
     public class LogEntry : ILogEntry
     {
         public const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
+        public static readonly ILogEntry NoInformationLogEntry = new LogEntry("This log has no information.");
         private readonly StringBuilder stringBuilder;
+
+        public LogEntry() : this(string.Empty)
+        {
+        }
 
         public LogEntry(string message)
         {
             stringBuilder = new StringBuilder();
-            stringBuilder.Append(message);
+
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                stringBuilder.Append(message);
+            }
         }
 
         public ILogEntry AddInfo(string information)
         {
-            if (string.IsNullOrWhiteSpace(information))
+            if (!string.IsNullOrWhiteSpace(information))
             {
-                return this;
+                stringBuilder
+                   .Append(NewSection)
+                   .Append(information);
             }
-
-            stringBuilder.Append(NewSection);
-            stringBuilder.Append(information);
 
             return this;
         }
 
         public ILogEntry CensorSensitiveInfo(IEnumerable<string> sensitiveParams, params string[] regexSensitiveParams)
         {
-            if (sensitiveParams == null
-                || !sensitiveParams.Any()
-                || regexSensitiveParams == null
-                || !regexSensitiveParams.Any())
+            if (sensitiveParams != null
+                && regexSensitiveParams != null)
             {
-                return this;
+                var message = stringBuilder.ToString();
+                stringBuilder.Clear();
+
+                foreach (var regexSensitiveParam in regexSensitiveParams)
+                {
+                    message = LogUtility.CensorSensitiveInformation(message, regexSensitiveParam, sensitiveParams);
+                }
+
+                stringBuilder.Append(message);
             }
-
-            var message = stringBuilder.ToString();
-            stringBuilder.Clear();
-
-            foreach (var regexSensitiveParam in regexSensitiveParams)
-            {
-                message = LogUtility.CensorSensitiveInformation(message, regexSensitiveParam, sensitiveParams);
-            }
-
-            stringBuilder.Append(message);
 
             return this;
         }
 
-        public override string ToString()
-        {
-            return stringBuilder.ToString();
-        }
+        public override string ToString() 
+            => stringBuilder.ToString();
     }
 }
