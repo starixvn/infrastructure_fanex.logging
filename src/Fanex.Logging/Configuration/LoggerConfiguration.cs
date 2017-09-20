@@ -7,9 +7,6 @@
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.Fluent;
     using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 
-    /// <summary>
-    /// The logger configuration class.
-    /// </summary>
     internal static class LoggerConfiguration
     {
         private static volatile LoggingSettings _loggingSetting;
@@ -37,9 +34,6 @@
             get { return _loggingSetting; }
         }
 
-        /// <summary>
-        /// Runs this instance.
-        /// </summary>
         public static void Run()
         {
             if (_hasRunConfig)

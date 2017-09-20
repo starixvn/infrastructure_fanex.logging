@@ -16,15 +16,16 @@
             }
             catch (Exception exception)
             {
-                var errorInfo = exception
-                                .Message
-                                .AddSqlInfo(exception)
-                                .AddWebServerInfo()
-                                .AddExceptionInfo(exception)
-                                .AddCustomInfo(
-                                    "INFO GROUP",
-                                    "Info 1",
-                                    "Info 2");
+                var errorInfo = new LogEntry(exception.Message)
+                               .AddSqlInfo(exception)
+                               .AddWebServerInfo()
+                               .AddExceptionInfo(exception)
+                               .AddInfo(
+                                   LogUtility.CombineInfo(
+                                       "INFO GROUP",
+                                        "Info 1",
+                                        "Info 2"))
+                                       .ToString();
 
                 LogService.Error(errorInfo);
                 Console.WriteLine(errorInfo);

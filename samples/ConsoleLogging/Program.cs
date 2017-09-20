@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Threading;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
@@ -26,18 +28,27 @@
             }
             catch (Exception exception)
             {
-                var errorInfo = exception
-                                .Message
-                                .AddSqlInfo(exception)
-                                .AddWebServerInfo()
-                                .AddExceptionInfo(exception)
-                                .AddCustomInfo(
-                                    "INFO GROUP",
-                                    "Info 1",
-                                    "Info 2");
+                var logEntry = new LogEntry(exception.Message)
+                               .AddSqlInfo(exception)
+                               .AddWebServerInfo()
+                               .AddExceptionInfo(exception)
+                               .AddInfo(
+                                   LogUtility.CombineInfo(
+                                       "INFO GROUP",
+                                        "Info 1",
+                                        "Info 2"));
 
-                LogService.Error(errorInfo);
-                Console.WriteLine(errorInfo);
+                LogService.Write(logEntry, TraceEventType.Error);
+                LogService.Write(logEntry, TraceEventType.Warning);
+                LogService.Write(logEntry, TraceEventType.Verbose);
+                LogService.Write(logEntry, TraceEventType.Critical);
+                LogService.Write(logEntry, TraceEventType.Information);
+                LogService.Write(logEntry, TraceEventType.Start);
+                LogService.Write(logEntry, TraceEventType.Stop);
+
+                LogService.Write(logEntry, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
+
+                Console.WriteLine(logEntry);
             }
 
             Console.ReadLine();
@@ -45,24 +56,24 @@
 
         private static void TestLogging()
         {
-            ////for (int i = 0; i < 2; i++)
-            ////{
-            ////    LogService.Error("Test logging.", new Exception("Demo Exception"));
-            ////    LogService.Warn("Test warning");
-            ////    LogService.Info("Test info");
-            ////}
+            for (int i = 0; i < 2; i++)
+            {
+                LogService.Error("Test logging.", new Exception("Demo Exception"));
+                LogService.Warn("Test warning");
+                LogService.Info("Test info");
+            }
 
-            ////LogService.Error("Test logging1.", new Exception("Demo Exception"));
-            ////LogService.Warn("Test warning1");
-            ////LogService.Info("Test info1");
+            LogService.Error("Test logging1.", new Exception("Demo Exception"));
+            LogService.Warn("Test warning1");
+            LogService.Info("Test info1");
 
-            ////Thread.Sleep(130 * 1000);
+            Thread.Sleep(130 * 1000);
 
-            ////Console.WriteLine("Second time");
+            Console.WriteLine("Second time");
 
-            ////LogService.Error("Test logging.", new Exception("Demo Exception"));
-            ////LogService.Warn("Test warning");
-            ////LogService.Info("Test info");
+            LogService.Error("Test logging2", new Exception("Demo Exception"));
+            LogService.Warn("Test warning2");
+            LogService.Info("Test info2");
         }
 
         private static void SimulateSqlException()

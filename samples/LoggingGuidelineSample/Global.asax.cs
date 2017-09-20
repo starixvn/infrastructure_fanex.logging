@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -45,26 +46,26 @@
                 "securitycode"
             };
 
-            var errorInfo = exception
-                        .Message
-                        .AddRequestInfo(HttpContext.Current.Request)
-                        .CensorSensitiveParams(
-                                sensitiveParams, 
-                                "(?:{0}=)(?<paramValue>[^&|^\\s]+)", // For query string & form
-                                "(\"{0}\":)(?<paramValue>[^,|^\r]+)") // For body json data
-                        .AddSqlInfo(exception)
-                        .AddWebServerInfo()
-                        .AddExceptionInfo(exception)
-                        .AddCustomInfo(
-                            "USER INFO",
-                            "User Id: dummyId",
-                            "Username: dummyname");
+            var logEntry = new LogEntry(exception.Message)
+                                .AddRequestInfo(HttpContext.Current.Request)
+                                .CensorSensitiveInfo(
+                                        sensitiveParams,
+                                        "(?:{0}=)(?<paramValue>[^&|^\\s]+)", // For query string & form
+                                        "(\"{0}\":)(?<paramValue>[^,|^\r]+)") // For body json data
+                                .AddSqlInfo(exception)
+                                .AddWebServerInfo()
+                                .AddExceptionInfo(exception)
+                                .AddInfo(
+                                    LogUtility.CombineInfo(
+                                        "USER INFO",
+                                        "User Id: dummyId",
+                                        "Username: dummyname"));
 
-            LogService.Error(errorInfo);
+            LogService.Write(logEntry, TraceEventType.Error);
 
 #if DEBUG
             //// this code for dev to view message on browser, dont bring it to production
-            HttpContext.Current.Response.Write(errorInfo.Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
+            HttpContext.Current.Response.Write(logEntry.ToString().Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
             HttpContext.Current.Response.End();
             HttpContext.Current.Response.Close();
 #endif

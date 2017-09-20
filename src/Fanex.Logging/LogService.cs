@@ -1,10 +1,8 @@
 ﻿namespace Fanex.Logging
 {
     using System;
+    using System.Diagnostics;
 
-    /// <summary>
-    /// The log services.
-    /// </summary>
     public static class LogService
     {
         #region Debug
@@ -127,6 +125,14 @@
 
         #endregion
 
+        public static void Write(ILogEntry logEntry, TraceEventType traceEventType)
+        {
+            Logger.Log.Write(logEntry, traceEventType);
+        }
 
+        public static void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
+        {
+            Logger.Log.Write(logEntry, traceEventType, category);
+        }
     }
 }

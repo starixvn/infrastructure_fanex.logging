@@ -1,26 +1,20 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
-    using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
 
     public static class WebLoggingUtility
     {
-        public const string RegexSensitiveQueryStringParam = "(?:{0}=)(?<paramValue>[^&]+)";
-        public const string RegexSensitiveBodyJsonParam = "(\"{0}\":)(?<paramValue>[^,]+)";
-
-        public static string AddRequestInfo(this string message, HttpRequest request)
+        public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request)
         {
-            if (string.IsNullOrWhiteSpace(message)
-                || request == null)
+            if (logEntry == null || request == null)
             {
-                return message;
+                return logEntry;
             }
 
-            return message.AddLogSection(
+            return logEntry.AddInfo(
                     LogUtility.CombineInfo(
                       "REQUEST & BROWSER INFO",
                       $"Url: {request.Url}",
@@ -31,32 +25,6 @@
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
                       BuildClientBrowserInfo(request.Browser),
                       $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
-        }
-
-        public static string CensorSensitiveParams(
-            this string message,
-            IEnumerable<string> sensitiveParams,
-            params string[] regexSensitiveQueryStringParams)
-        {
-            if (string.IsNullOrWhiteSpace(message))
-            {
-                return message;
-            }
-
-            if (sensitiveParams == null 
-                || !sensitiveParams.Any()
-                || regexSensitiveQueryStringParams == null
-                || !regexSensitiveQueryStringParams.Any())
-            {
-                return message;
-            }
-
-            foreach (var regexSensitiveQueryStringParam in regexSensitiveQueryStringParams)
-            {
-                message = LogUtility.CensorSensitiveInformation(message, regexSensitiveQueryStringParam, sensitiveParams);
-            }
-
-            return message;
         }
 
         private static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)

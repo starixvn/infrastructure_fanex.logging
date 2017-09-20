@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging
 {
     using System;
+    using System.Diagnostics;
 
     public interface ILogger
     {
@@ -43,5 +44,9 @@
         void Critical(string format, params object[] args);
 
         void Critical(string format, string category, params object[] args);
+
+        void Write(ILogEntry logEntry, TraceEventType traceEventType);
+
+        void Write(ILogEntry logEntry, TraceEventType traceEventType, string category);
     }
 }
