@@ -50,8 +50,8 @@
                                 .AddRequestInfo(HttpContext.Current.Request)
                                 .CensorSensitiveInfo(
                                         sensitiveParams,
-                                        "(?:{0}=)(?<paramValue>[^&|^\\s]+)", // For query string & form
-                                        "(\"{0}\":)(?<paramValue>[^,|^\r]+)") // For body json data
+                                        LogUtility.QueryStringParamRegexPattern, // For query string & form
+                                        LogUtility.BodyDataJsonParamRegexPattern) // For body json data
                                 .AddSqlInfo(exception)
                                 .AddWebServerInfo()
                                 .AddExceptionInfo(exception)

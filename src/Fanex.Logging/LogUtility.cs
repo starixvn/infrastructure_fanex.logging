@@ -9,6 +9,9 @@
 
     public static class LogUtility
     {
+        public const string QueryStringParamRegexPattern = "(?:{0}=)(?<paramValue>[^&|^\\s]+)";
+        public const string BodyDataJsonParamRegexPattern = "(\"{0}\":)(?<paramValue>[^,|^\r]+)";
+
         private const string censoredInformation = "******";
         private const string paramValue = "paramValue";
 
@@ -29,7 +32,7 @@
                         $"Details: {exception}"));
         }
 
-        public static string CombineInfo(string infoGroup, params string[] infoItems) 
+        public static string CombineInfo(string infoGroup, params string[] infoItems)
             => string.Join(
                 "\r\n",
                 $"{infoGroup}:",
