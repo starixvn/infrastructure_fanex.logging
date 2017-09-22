@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Web;
 
     public class WebLoggingConfiguration
@@ -16,7 +17,7 @@
         internal string[] RegexSensitiveParamPatterns;
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
-        internal List<Type> IgnoredExceptionTypes = new List<Type>();
+        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(HttpException), typeof(ThreadAbortException)};
 
         public WebLoggingConfiguration UseGetDatabaseInfoFunc(Func<Exception, string> getDatabaseInfoFunc)
         {
@@ -57,6 +58,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Ingore HttpException and ThreadAbortException
+        /// </summary>
+        /// <param name="exceptionTypes"></param>
+        /// <returns>instance of WebLoggingConfiguration</returns>
         public WebLoggingConfiguration AddIgnoreExceptionTypes(params Type[] exceptionTypes)
         {
             IgnoredExceptionTypes.AddRange(exceptionTypes);
@@ -64,6 +70,11 @@
             return this;
         }
 
+        /// <summary>
+        /// Ingore HttpException and ThreadAbortException 
+        /// </summary>
+        /// <typeparam name="TException"></typeparam>
+        /// <returns>instance of WebLoggingConfiguration</returns>
         public WebLoggingConfiguration IgnoreException<TException>()
         {
             IgnoredExceptionTypes.Add(typeof(TException));

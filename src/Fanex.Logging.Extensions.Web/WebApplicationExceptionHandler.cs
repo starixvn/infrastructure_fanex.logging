@@ -21,15 +21,9 @@
         }
 
         public static void Handle(Exception exception)
-        {
-            Handle(exception, string.Empty);
-        }
-
+            => Handle(exception, string.Empty);
         public static void Handle(Exception exception, string customInfo)
-        {
-            Handle(exception, TraceEventType.Error, customInfo);
-        }
-
+            => Handle(exception, TraceEventType.Error, customInfo);
 
         public static void Handle(
             Exception exception,
