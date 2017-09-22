@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
 
-    public class WebLoggingSession
+    public class WebLoggingConfiguration
     {
-        private static string[] defualtRegexSensitiveParamPatterns = new string[]
-        {
+        static string[] defaultRegexSensitiveParamPatterns = {
             LogUtility.QueryStringParamRegexPattern,
             LogUtility.BodyDataJsonParamRegexPattern
         };
@@ -16,8 +16,9 @@
         internal string[] RegexSensitiveParamPatterns;
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
+        internal List<Type> IgnoredExceptionTypes = new List<Type>();
 
-        public WebLoggingSession UseGetDatabaseInfoFunc(Func<Exception, string> getDatabaseInfoFunc)
+        public WebLoggingConfiguration UseGetDatabaseInfoFunc(Func<Exception, string> getDatabaseInfoFunc)
         {
             if (GetDatabaseInfoFunc == null
                 && getDatabaseInfoFunc != null)
@@ -28,7 +29,7 @@
             return this;
         }
 
-        public WebLoggingSession CensorSensitiveValueForTheseParams(
+        public WebLoggingConfiguration CensorSensitiveValueForTheseParams(
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParamPatterns)
         {
@@ -36,22 +37,36 @@
                 && sensitiveParams != null)
             {
                 SensitiveParams = sensitiveParams;
-                RegexSensitiveParamPatterns = regexSensitiveParamPatterns ?? defualtRegexSensitiveParamPatterns;
+                RegexSensitiveParamPatterns = regexSensitiveParamPatterns ?? defaultRegexSensitiveParamPatterns;
             }
 
             return this;
         }
 
-        public WebLoggingSession EnableLogHttpHeader()
+        public WebLoggingConfiguration LogHttpHeaderInfo()
         {
-            EnabledLogHttpHeader = true;
+            EnabledLogHttpHeader = true;            
 
             return this;
         }
 
-        public WebLoggingSession EnableLogHttpSession()
+        public WebLoggingConfiguration LogSessionInfo()
         {
             EnabledLogHttpSession = true;
+
+            return this;
+        }
+
+        public WebLoggingConfiguration AddIgnoreExceptionTypes(params Type[] exceptionTypes)
+        {
+            IgnoredExceptionTypes.AddRange(exceptionTypes);
+
+            return this;
+        }
+
+        public WebLoggingConfiguration IgnoreException<TException>()
+        {
+            IgnoredExceptionTypes.Add(typeof(TException));
 
             return this;
         }

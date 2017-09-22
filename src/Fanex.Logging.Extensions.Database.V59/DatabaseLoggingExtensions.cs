@@ -3,7 +3,7 @@
     using System;
     using System.Data.SqlClient;
 
-    public static class DatabaseLoggingUtility
+    public static class DatabaseLoggingExtensions
     {
         public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception ex)
         {

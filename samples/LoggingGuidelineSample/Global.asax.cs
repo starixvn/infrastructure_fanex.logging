@@ -2,14 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
+    using System.Threading;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
-    using Fanex.Logging;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions.Web;
 
@@ -19,7 +18,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //DbSettingProviderManager.Current.Start();
+            //DbSettingProviderManager.Current.SetConfig();
             // Fanex.Data version 2
             DbSettingProviderManager
                 .StartNewSession()
@@ -27,19 +26,21 @@
                 .UseDefaultDbSettingProvider(
                     resourcePath: "~/App_Data/")
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
-                .Run();
+                .Run();        
 
-            WebLoggingManager
-                .StartNewSession()
-                .UseGetDatabaseInfoFunc(DatabaseLoggingUtility.GetSqlExceptionInfo)
-                .EnableLogHttpHeader()
-                .EnableLogHttpSession()
+            WebApplicationExceptionHandler
+                .SetConfig(new WebLoggingConfiguration()
+                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
+                .LogHttpHeaderInfo()
+                .LogSessionInfo()
+                .IgnoreException<HttpException>()
+                .IgnoreException<ThreadAbortException>()
                 .CensorSensitiveValueForTheseParams(
                 new List<string>
                 {
                     "password",
                     "securitycode"
-                });
+                }));
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -48,12 +49,14 @@
 
             // Don't write log for HTTP exception
 
-            var customInfo = LogUtility.CombineInfo(
-                                        "USER INFO",
-                                        "User Id: dummyId",
-                                        "Username: dummyname");
+            //var customInfo = LogUtility.CombineInfo(
+            //                            "USER INFO",
+            //                            "User Id: dummyId",
+            //                            "Username: dummyname");
 
-            WebLoggingManager.Log(exception, customInfo);
+            WebApplicationExceptionHandler.Handle(exception);
+
+            //HttpApplicationExceptionHandler.Handle(exception, customInfo);
         }
     }
 }

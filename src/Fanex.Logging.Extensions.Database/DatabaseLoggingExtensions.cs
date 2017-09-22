@@ -6,7 +6,7 @@
     using System.Linq;
     using Data.CrossCutting.WrappingException;
 
-    public static class DatabaseLoggingUtility
+    public static class DatabaseLoggingExtensions
     {
         public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception ex)
         {
@@ -44,7 +44,7 @@
 
         private static string GetSqlExceptionInfo(SqlException ex) =>
             LogUtility.CombineInfo(
-                "DATABASE INFO",
+                "DATABASE INFO", 
                 $"SQL Server: {ex.Server}",
                 $"Stored Procedure: {ex.Procedure}",
                 $"Line Number: {ex.LineNumber}");

@@ -1,15 +1,13 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
-    using System.Collections.Specialized;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
     using System.Web.SessionState;
 
-    public static class WebLoggingUltility
+    public static class WebLoggingExtensions
     {
         public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request)
         {
@@ -20,13 +18,13 @@
 
             return logEntry.AddInfo(
                     LogUtility.CombineInfo(
-                      "REQUEST & BROWSER INFO",
+                      "REQUEST & BROWSER INFO",                      
                       $"Url: {request.Url}",
                       $"Url Referrer: {request.UrlReferrer}",
                       $"Form Variables: {request.Form}",
-                      $"Body Data: {GetRequestBodyData(request.InputStream)}",
+                      $"Body: {GetRequestBodyData(request.InputStream)}",
                       $"Client IP: {GetClientIP(request)}",
-                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
+                      $"Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
                       BuildClientBrowserInfo(request.Browser),
                       $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
         }
@@ -65,17 +63,17 @@
                       sessionData.ToArray()));
         }
 
-        private static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)
+        static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)
             => browser == null
                     ? string.Empty
                     : string.Join(
                         "\r\n\t",
-                        $"Browser: {browser.Browser} {browser.Version}.",
-                        $"Client Platform: {browser.Platform}",
-                        $"Is Beta Version: {browser.Beta}",
-                        $"Is Search Engine WEB Crawler: {browser.Crawler}",
-                        $"Ecma Script Version: {browser.EcmaScriptVersion}",
-                        $"Mobile Device: {browser.MobileDeviceModel}");
+                        $"Browser: {browser.Browser} {browser.Version} ({browser.Beta})",
+                        $"Platform: {browser.Platform}",
+                        $"Crawler: {browser.Crawler}",
+                        $"ECMAScript: {browser.EcmaScriptVersion}",
+                        $"Mobile: {browser.MobileDeviceModel} {browser.MobileDeviceManufacturer}",
+                        $"Screen(w&h): {browser.ScreenPixelsWidth}&{browser.ScreenPixelsHeight}");
 
         private static string GetRequestBodyData(Stream requestStream)
         {

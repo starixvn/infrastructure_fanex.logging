@@ -79,7 +79,7 @@
         private static void SimulateSqlException()
         {
             // Fanex.Data version 1
-            //DbSettingProviderManager.Current.Start();
+            //DbSettingProviderManager.Current.SetConfig();
 
             // Fanex.Data version 2
             DbSettingProviderManager
