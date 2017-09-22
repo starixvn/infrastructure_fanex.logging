@@ -18,7 +18,7 @@
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //DbSettingProviderManager.Current.SetConfig();
+            //DbSettartiderManager.Current.SetConfig();
             // Fanex.Data version 2
             DbSettingProviderManager
                 .StartNewSession()
@@ -26,21 +26,21 @@
                 .UseDefaultDbSettingProvider(
                     resourcePath: "~/App_Data/")
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
-                .Run();        
+                .Run();
 
             WebApplicationExceptionHandler
-                .SetConfig(new WebLoggingConfiguration()
-                            .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
-                            .LogHttpHeaderInfo()
-                            .LogSessionInfo()
-                            .IgnoreException<HttpException>()
-                            .IgnoreException<ThreadAbortException>()
-                            .CensorSensitiveValueForTheseParams(
-                            new List<string>
-                            {
-                                "password",
-                                "securitycode"
-                            }));
+             .Configure(new WebLoggingConfiguration()
+                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
+                .LogHttpHeaderInfo()
+                .LogSessionInfo()
+                .IgnoreException<HttpException>()
+                .IgnoreException<ThreadAbortException>()
+                .CensorSensitiveValueForTheseParams(
+                new List<string>
+                {
+                    "password",
+                    "securitycode"
+                }));
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -56,7 +56,7 @@
 
             WebApplicationExceptionHandler.Handle(exception);
 
-            //HttpApplicationExceptionHandler.Handle(exception, customInfo);
+            //WebApplicationExceptionHandler.Handle(exception, customInfo);
         }
     }
 }

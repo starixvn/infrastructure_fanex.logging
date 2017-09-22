@@ -23,7 +23,7 @@
                       $"Form Variables: {request.Form}",
                       $"Body: {GetRequestBodyData(request.InputStream)}",
                       $"Client IP: {GetClientIP(request)}",
-                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));                      
         }
 
         public static ILogEntry AddBrowserInfo(this ILogEntry logEntry, HttpRequest request)
@@ -38,12 +38,11 @@
             return logEntry.AddInfo(
                    LogUtility.CombineInfo(
                      "BROWSER INFO",
-                        $"Browser: {browser.Browser} {browser.Version} ({browser.Beta})",
-                        $"Client Platform: {browser.Platform}",                       
+                        $"Browser: {browser.Browser} {browser.Version} (beta: {browser.Beta})",
+                        $"Platform: {browser.Platform}",                       
                         $"Crawler: {browser.Crawler}",
                         $"ECMAScript: {browser.EcmaScriptVersion}",
-                        $"Mobile: {browser.MobileDeviceModel} {browser.MobileDeviceManufacturer}",
-                        $"Screen(w&h): {browser.ScreenPixelsWidth}&{browser.ScreenPixelsHeight}",
+                        $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",                        
                         $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
         }
 

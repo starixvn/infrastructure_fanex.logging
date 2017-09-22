@@ -8,7 +8,7 @@
     {
         static WebLoggingConfiguration config;
 
-        public static WebLoggingConfiguration SetConfig(WebLoggingConfiguration loggingConfiguration)
+        public static WebLoggingConfiguration Configure(WebLoggingConfiguration loggingConfiguration)
         {
             if (loggingConfiguration == null)
             {
@@ -29,6 +29,7 @@
         {
             Handle(exception, TraceEventType.Error, customInfo);
         }
+
 
         public static void Handle(
             Exception exception,
