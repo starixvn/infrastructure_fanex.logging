@@ -32,7 +32,7 @@
              .Configure(new WebLoggingConfiguration()
                 .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
                 .LogHttpHeaderInfo()
-                .LogSessionInfo()                
+                .LogHttpSessionInfo()                
                 .CensorSensitiveValueForTheseParams(
                 new List<string>
                 {

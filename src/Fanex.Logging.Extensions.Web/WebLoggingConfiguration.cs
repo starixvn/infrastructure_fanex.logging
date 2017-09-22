@@ -51,7 +51,7 @@
             return this;
         }
 
-        public WebLoggingConfiguration LogSessionInfo()
+        public WebLoggingConfiguration LogHttpSessionInfo()
         {
             EnabledLogHttpSession = true;
 
@@ -63,7 +63,7 @@
         /// </summary>
         /// <param name="exceptionTypes"></param>
         /// <returns>instance of WebLoggingConfiguration</returns>
-        public WebLoggingConfiguration AddIgnoreExceptionTypes(params Type[] exceptionTypes)
+        public WebLoggingConfiguration IgnoreExceptionTypes(params Type[] exceptionTypes)
         {
             IgnoredExceptionTypes.AddRange(exceptionTypes);
 
