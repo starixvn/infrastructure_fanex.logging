@@ -30,15 +30,7 @@
 
             WebApplicationExceptionHandler
              .Configure(new WebLoggingConfiguration()
-                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
-                .GetHttpHeaderInfo()
-                .GetHttpSessionInfo()                
-                .CensorSensitiveValueForTheseParams(
-                new List<string>
-                {
-                    "password",
-                    "securitycode"
-                }));
+                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo));
         }
 
         protected void Application_Error(object sender, EventArgs e)

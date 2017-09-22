@@ -8,6 +8,11 @@
     {
         static WebLoggingConfiguration config;
 
+        static WebApplicationExceptionHandler()
+        {
+            config = new WebLoggingConfiguration();
+        }
+
         public static WebLoggingConfiguration Configure(WebLoggingConfiguration loggingConfiguration)
         {
             if (loggingConfiguration == null)
