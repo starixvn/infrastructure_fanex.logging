@@ -26,7 +26,7 @@
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));
         }
 
-        public static ILogEntry AddClientBrowserInfo(this ILogEntry logEntry, HttpRequest request)
+        public static ILogEntry AddBrowserInfo(this ILogEntry logEntry, HttpRequest request)
         {
             if (logEntry == null || request == null)
             {

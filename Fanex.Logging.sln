@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Sample.Databa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.DatabaseV62", "samples\Fanex.Logging.Samples.DatabaseV62\Fanex.Logging.Samples.DatabaseV62.csproj", "{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9CFB29AE-BCCF-414C-B15C-3081B72DB853}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

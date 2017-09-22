@@ -44,6 +44,7 @@
             var currentRequest = HttpContext.Current.Request;
             var logEntry = new LogEntry(exception.Message)
                                 .AddRequestInfo(currentRequest)
+                                .AddBrowserInfo(currentRequest)
                                 .CensorSensitiveInfo(
                                         config.SensitiveParams,
                                         config.RegexSensitiveParamPatterns)
@@ -63,6 +64,13 @@
             }
 
             LogService.Write(logEntry, traceEventType);
+
+#if DEBUG
+            //// this code for dev to view message on browser, dont bring it to production
+            HttpContext.Current.Response.Write(logEntry.ToString().Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
+            HttpContext.Current.Response.End();
+            HttpContext.Current.Response.Close();
+#endif
         }
     }
 }
