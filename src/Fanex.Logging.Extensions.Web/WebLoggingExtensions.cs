@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Threading;
     using System.Web;
-    using System.Web.Configuration;
     using System.Web.SessionState;
 
     public static class WebLoggingExtensions
@@ -18,15 +17,34 @@
 
             return logEntry.AddInfo(
                     LogUtility.CombineInfo(
-                      "REQUEST & BROWSER INFO",                      
+                      "REQUEST INFO",
                       $"Url: {request.Url}",
                       $"Url Referrer: {request.UrlReferrer}",
                       $"Form Variables: {request.Form}",
                       $"Body: {GetRequestBodyData(request.InputStream)}",
                       $"Client IP: {GetClientIP(request)}",
-                      $"Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
-                      BuildClientBrowserInfo(request.Browser),
-                      $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));
+        }
+
+        public static ILogEntry AddClientBrowserInfo(this ILogEntry logEntry, HttpRequest request)
+        {
+            if (logEntry == null || request == null)
+            {
+                return logEntry;
+            }
+
+            var browser = request.Browser;
+
+            return logEntry.AddInfo(
+                   LogUtility.CombineInfo(
+                     "BROWSER INFO",
+                     $"Browser: {browser.Browser} {browser.Version}.",
+                        $"Client Platform: {browser.Platform}",
+                        $"Is Beta Version: {browser.Beta}",
+                        $"Is Search Engine WEB Crawler: {browser.Crawler}",
+                        $"Ecma Script Version: {browser.EcmaScriptVersion}",
+                        $"Mobile Device: {browser.MobileDeviceModel}",
+                        $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
         }
 
         public static ILogEntry AddHeaderInfo(this ILogEntry logEntry, HttpRequest request)
@@ -64,17 +82,12 @@
         }
 
         static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)
-            => browser == null
-                    ? string.Empty
-                    : string.Join(
-                        "\r\n\t",
                         $"Browser: {browser.Browser} {browser.Version} ({browser.Beta})",
                         $"Platform: {browser.Platform}",
                         $"Crawler: {browser.Crawler}",
                         $"ECMAScript: {browser.EcmaScriptVersion}",
                         $"Mobile: {browser.MobileDeviceModel} {browser.MobileDeviceManufacturer}",
                         $"Screen(w&h): {browser.ScreenPixelsWidth}&{browser.ScreenPixelsHeight}");
-
         private static string GetRequestBodyData(Stream requestStream)
         {
             if (requestStream != null)
