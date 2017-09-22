@@ -1,11 +1,15 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
+    using System.Collections.Specialized;
     using System.IO;
+    using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
+    using System.Web.SessionState;
 
-    public static class WebLoggingUtility
+    public static class WebLoggingUltility
     {
         public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request)
         {
@@ -25,6 +29,40 @@
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}",
                       BuildClientBrowserInfo(request.Browser),
                       $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
+        }
+
+        public static ILogEntry AddHeaderInfo(this ILogEntry logEntry, HttpRequest request)
+        {
+            if (logEntry == null || request == null)
+            {
+                return logEntry;
+            }
+
+            return logEntry.AddInfo(
+                    LogUtility.CombineInfo(
+                      "HTTP HEADERS",
+                      request.Headers
+                            .AllKeys
+                            .Select(key => $"{key}: {request.Headers[key]}")
+                            .ToArray()));
+        }
+
+        public static ILogEntry AddSessionInfo(this ILogEntry logEntry, HttpSessionState session)
+        {
+            if (logEntry == null || session == null)
+            {
+                return logEntry;
+            }
+
+            var sessionData = session
+                        .Keys
+                        .Cast<object>()
+                        .Select(key => $"{key}: {session[key.ToString()]}");
+
+            return logEntry.AddInfo(
+                    LogUtility.CombineInfo(
+                      "HTTP SESSION",
+                      sessionData.ToArray()));
         }
 
         private static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)

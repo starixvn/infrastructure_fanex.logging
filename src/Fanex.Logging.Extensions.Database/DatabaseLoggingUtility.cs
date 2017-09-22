@@ -15,22 +15,31 @@
                 return logEntry;
             }
 
-            if (ex is ObjectDbException)
+            var sqlInfo = GetSqlExceptionInfo(ex);
+
+            return string.IsNullOrWhiteSpace(sqlInfo)
+                        ? logEntry
+                        : logEntry.AddInfo(sqlInfo);
+        }
+
+        public static string GetSqlExceptionInfo(Exception exception)
+        {
+            if (exception is ObjectDbException)
             {
-                return logEntry.AddInfo(GetObjectDbExceptionInfo(ex as ObjectDbException));
+                return GetObjectDbExceptionInfo(exception as ObjectDbException);
             }
 
-            if (ex is SqlException)
+            if (exception is SqlException)
             {
-                return logEntry.AddInfo(GetSqlExceptionInfo(ex as SqlException));
+                return GetSqlExceptionInfo(exception as SqlException);
             }
 
-            if (ex.GetBaseException() is SqlException)
+            if (exception.GetBaseException() is SqlException)
             {
-                return logEntry.AddInfo(GetSqlExceptionInfo(ex.GetBaseException() as SqlException));
+                return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
             }
 
-            return logEntry;
+            return string.Empty;
         }
 
         private static string GetSqlExceptionInfo(SqlException ex) =>

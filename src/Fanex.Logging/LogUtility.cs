@@ -32,6 +32,14 @@
                         $"Details: {exception}"));
         }
 
+        /// <summary>
+        /// Combine information with format:
+        /// <para>Info group:</para>
+        ///     <para>_____Info item 1</para>
+        ///     <para>_____Info item 2</para>
+        ///     <para>_____Info item n</para>
+        /// </summary>
+        /// <returns></returns>
         public static string CombineInfo(string infoGroup, params string[] infoItems)
             => string.Join(
                 "\r\n",

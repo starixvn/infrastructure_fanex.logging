@@ -28,6 +28,18 @@
                     resourcePath: "~/App_Data/")
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                 .Run();
+
+            WebLoggingManager
+                .StartNewSession()
+                .UseGetDatabaseInfoFunc(DatabaseLoggingUtility.GetSqlExceptionInfo)
+                .EnableLogHttpHeader()
+                .EnableLogHttpSession()
+                .CensorSensitiveValueForTheseParams(
+                new List<string>
+                {
+                    "password",
+                    "securitycode"
+                });
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -35,40 +47,13 @@
             Exception exception = Server.GetLastError();
 
             // Don't write log for HTTP exception
-            if (exception is HttpException)
-            {
-                return;
-            }
 
-            var sensitiveParams = new List<string>
-            {
-                "password",
-                "securitycode"
-            };
-
-            var logEntry = new LogEntry(exception.Message)
-                                .AddRequestInfo(HttpContext.Current.Request)
-                                .CensorSensitiveInfo(
-                                        sensitiveParams,
-                                        LogUtility.QueryStringParamRegexPattern, // For query string & form
-                                        LogUtility.BodyDataJsonParamRegexPattern) // For body json data
-                                .AddSqlInfo(exception)
-                                .AddWebServerInfo()
-                                .AddExceptionInfo(exception)
-                                .AddInfo(
-                                    LogUtility.CombineInfo(
+            var customInfo = LogUtility.CombineInfo(
                                         "USER INFO",
                                         "User Id: dummyId",
-                                        "Username: dummyname"));
+                                        "Username: dummyname");
 
-            LogService.Write(logEntry, TraceEventType.Error);
-
-#if DEBUG
-            //// this code for dev to view message on browser, dont bring it to production
-            HttpContext.Current.Response.Write(logEntry.ToString().Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
-            HttpContext.Current.Response.End();
-            HttpContext.Current.Response.Close();
-#endif
+            WebLoggingManager.Log(exception, customInfo);
         }
     }
 }
