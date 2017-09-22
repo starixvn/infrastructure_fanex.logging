@@ -31,8 +31,8 @@
             WebApplicationExceptionHandler
              .Configure(new WebLoggingConfiguration()
                 .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
-                .LogHttpHeaderInfo()
-                .LogHttpSessionInfo()                
+                .GetHttpHeaderInfo()
+                .GetHttpSessionInfo()                
                 .CensorSensitiveValueForTheseParams(
                 new List<string>
                 {

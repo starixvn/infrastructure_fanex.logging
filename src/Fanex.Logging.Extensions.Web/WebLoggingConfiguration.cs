@@ -44,14 +44,14 @@
             return this;
         }
 
-        public WebLoggingConfiguration LogHttpHeaderInfo()
+        public WebLoggingConfiguration GetHttpHeaderInfo()
         {
             EnabledLogHttpHeader = true;            
 
             return this;
         }
 
-        public WebLoggingConfiguration LogHttpSessionInfo()
+        public WebLoggingConfiguration GetHttpSessionInfo()
         {
             EnabledLogHttpSession = true;
 
