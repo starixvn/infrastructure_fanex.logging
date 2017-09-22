@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using System.Threading;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
@@ -31,17 +30,17 @@
 
             WebApplicationExceptionHandler
                 .SetConfig(new WebLoggingConfiguration()
-                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
-                .LogHttpHeaderInfo()
-                .LogSessionInfo()
-                .IgnoreException<HttpException>()
-                .IgnoreException<ThreadAbortException>()
-                .CensorSensitiveValueForTheseParams(
-                new List<string>
-                {
-                    "password",
-                    "securitycode"
-                }));
+                            .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo)
+                            .LogHttpHeaderInfo()
+                            .LogSessionInfo()
+                            .IgnoreException<HttpException>()
+                            .IgnoreException<ThreadAbortException>()
+                            .CensorSensitiveValueForTheseParams(
+                            new List<string>
+                            {
+                                "password",
+                                "securitycode"
+                            }));
         }
 
         protected void Application_Error(object sender, EventArgs e)

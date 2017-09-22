@@ -38,12 +38,12 @@
             return logEntry.AddInfo(
                    LogUtility.CombineInfo(
                      "BROWSER INFO",
-                     $"Browser: {browser.Browser} {browser.Version}.",
-                        $"Client Platform: {browser.Platform}",
-                        $"Is Beta Version: {browser.Beta}",
-                        $"Is Search Engine WEB Crawler: {browser.Crawler}",
-                        $"Ecma Script Version: {browser.EcmaScriptVersion}",
-                        $"Mobile Device: {browser.MobileDeviceModel}",
+                        $"Browser: {browser.Browser} {browser.Version} ({browser.Beta})",
+                        $"Client Platform: {browser.Platform}",                       
+                        $"Crawler: {browser.Crawler}",
+                        $"ECMAScript: {browser.EcmaScriptVersion}",
+                        $"Mobile: {browser.MobileDeviceModel} {browser.MobileDeviceManufacturer}",
+                        $"Screen(w&h): {browser.ScreenPixelsWidth}&{browser.ScreenPixelsHeight}",
                         $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
         }
 
@@ -81,14 +81,7 @@
                       sessionData.ToArray()));
         }
 
-        static string BuildClientBrowserInfo(HttpCapabilitiesBase browser)
-                        $"Browser: {browser.Browser} {browser.Version} ({browser.Beta})",
-                        $"Platform: {browser.Platform}",
-                        $"Crawler: {browser.Crawler}",
-                        $"ECMAScript: {browser.EcmaScriptVersion}",
-                        $"Mobile: {browser.MobileDeviceModel} {browser.MobileDeviceManufacturer}",
-                        $"Screen(w&h): {browser.ScreenPixelsWidth}&{browser.ScreenPixelsHeight}");
-        private static string GetRequestBodyData(Stream requestStream)
+        static string GetRequestBodyData(Stream requestStream)
         {
             if (requestStream != null)
             {
