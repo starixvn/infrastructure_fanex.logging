@@ -6,16 +6,16 @@
 
     public static class WebLoggingManager
     {
-        private static WebLoggingSession webLoggingSession;
+        private static WebLoggingSetting webLoggingSetting;
 
-        public static WebLoggingSession StartNewSession()
+        public static WebLoggingSetting StartNewSession()
         {
-            if (webLoggingSession == null)
+            if (webLoggingSetting == null)
             {
-                webLoggingSession = new WebLoggingSession();
+                webLoggingSetting = new WebLoggingSetting();
             }
 
-            return webLoggingSession;
+            return webLoggingSetting;
         }
 
         public static void Log(
@@ -39,20 +39,21 @@
             var currentRequest = HttpContext.Current.Request;
             var logEntry = new LogEntry(exception.Message)
                                 .AddRequestInfo(currentRequest)
+                                .AddClientBrowserInfo(currentRequest)
                                 .CensorSensitiveInfo(
-                                        webLoggingSession.SensitiveParams,
-                                        webLoggingSession.RegexSensitiveParamPatterns)
-                                .AddInfo(webLoggingSession.GetDatabaseInfoFunc(exception))
+                                        webLoggingSetting.SensitiveParams,
+                                        webLoggingSetting.RegexSensitiveParamPatterns)
+                                .AddInfo(webLoggingSetting.GetDatabaseInfoFunc(exception))
                                 .AddInfo(customInfo)
                                 .AddWebServerInfo()
                                 .AddExceptionInfo(exception);
 
-            if (webLoggingSession.EnabledLogHttpHeader)
+            if (webLoggingSetting.EnabledLogHttpHeader)
             {
                 logEntry.AddHeaderInfo(currentRequest);
             }
 
-            if (webLoggingSession.EnabledLogHttpSession)
+            if (webLoggingSetting.EnabledLogHttpSession)
             {
                 logEntry.AddSessionInfo(HttpContext.Current.Session);
             }

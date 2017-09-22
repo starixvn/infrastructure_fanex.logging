@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public class WebLoggingSession
+    public class WebLoggingSetting
     {
         private static string[] defualtRegexSensitiveParamPatterns = new string[]
         {
@@ -17,7 +17,7 @@
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
 
-        public WebLoggingSession UseGetDatabaseInfoFunc(Func<Exception, string> getDatabaseInfoFunc)
+        public WebLoggingSetting UseGetDatabaseInfoFunc(Func<Exception, string> getDatabaseInfoFunc)
         {
             if (GetDatabaseInfoFunc == null
                 && getDatabaseInfoFunc != null)
@@ -28,7 +28,7 @@
             return this;
         }
 
-        public WebLoggingSession CensorSensitiveValueForTheseParams(
+        public WebLoggingSetting CensorSensitiveValueForTheseParams(
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParamPatterns)
         {
@@ -42,14 +42,14 @@
             return this;
         }
 
-        public WebLoggingSession EnableLogHttpHeader()
+        public WebLoggingSetting EnableLogHttpHeader()
         {
             EnabledLogHttpHeader = true;
 
             return this;
         }
 
-        public WebLoggingSession EnableLogHttpSession()
+        public WebLoggingSetting EnableLogHttpSession()
         {
             EnabledLogHttpSession = true;
 
