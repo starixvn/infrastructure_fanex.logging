@@ -87,8 +87,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\LogAdapter.cs" />
+    <Compile Include="Adapters\LogEngineAdapter.cs" />
     <Compile Include="Adapters\LogEntryAdapter.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogEntry.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="Logger.cs" />

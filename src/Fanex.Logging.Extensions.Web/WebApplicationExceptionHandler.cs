@@ -40,7 +40,7 @@
             var logEntry = new LogEntry(exception.Message)
                                 .AddRequestInfo(currentRequest)
                                 .AddBrowserInfo(currentRequest)
-                                .CensorSensitiveInfo(
+                                .HideSensitiveInfo(
                                         config.SensitiveParams,
                                         config.RegexSensitiveParamPatterns)
                                 .AddInfo(config.GetDatabaseInfoFunc(exception))

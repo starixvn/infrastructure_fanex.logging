@@ -100,10 +100,8 @@
         private static string GetClientIP(HttpRequest request)
         {
             var ip = request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? request.ServerVariables["REMOTE_ADDR"];
-#pragma warning disable S1313 // IP addresses should not be hardcoded
             return string.IsNullOrEmpty(ip) || ip.Equals("::1")
                 ? "127.0.0.1"
-#pragma warning restore S1313 // IP addresses should not be hardcoded
                 : ip.Split(',')[0];
         }
     }

@@ -30,7 +30,7 @@
             return this;
         }
 
-        public WebLoggingConfiguration CensorSensitiveValueForTheseParams(
+        public WebLoggingConfiguration HideSensitiveInfo(
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParamPatterns)
         {

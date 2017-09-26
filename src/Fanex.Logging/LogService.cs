@@ -5,26 +5,42 @@
 
     public static class LogService
     {
+        [ThreadStatic]
+        private static ILogger loggerInstance;
+
+        internal static ILogger LoggerInstance
+        {
+            get
+            {
+                return loggerInstance ?? LoggerInstance;
+            }
+
+            set
+            {
+                loggerInstance = value;
+            }
+        }
+
         #region Debug
 
         public static void Debug(string message)
         {
-            Logger.Log.Debug(message);
+            LoggerInstance.Debug(message);
         }
 
         public static void Debug(string message, string category)
         {
-            Logger.Log.Debug(message, category);
+            LoggerInstance.Debug(message, category);
         }
 
         public static void Debug(string format, params object[] args)
         {
-            Logger.Log.Debug(format, args);
+            LoggerInstance.Debug(format, args);
         }
 
         public static void Debug(string format, string category, params object[] args)
         {
-            Logger.Log.Debug(format, category, args);
+            LoggerInstance.Debug(format, category, args);
         }
 
         #endregion
@@ -33,22 +49,22 @@
 
         public static void Info(string message)
         {
-            Logger.Log.Info(message);
+            LoggerInstance.Info(message);
         }
 
         public static void Info(string message, string category)
         {
-            Logger.Log.Info(message, category);
+            LoggerInstance.Info(message, category);
         }
 
         public static void Info(string format, params object[] args)
         {
-            Logger.Log.Info(format, args);
+            LoggerInstance.Info(format, args);
         }
 
         public static void Info(string format, string category, params object[] args)
         {
-            Logger.Log.Debug(format, category, args);
+            LoggerInstance.Info(format, category, args);
         }
 
         #endregion
@@ -57,22 +73,22 @@
 
         public static void Warn(string message)
         {
-            Logger.Log.Warn(message);
+            LoggerInstance.Warn(message);
         }
 
         public static void Warn(string message, string category)
         {
-            Logger.Log.Warn(message, category);
+            LoggerInstance.Warn(message, category);
         }
 
         public static void Warn(string format, params object[] args)
         {
-            Logger.Log.Warn(format, args);
+            LoggerInstance.Warn(format, args);
         }
 
         public static void Warn(string format, string category, params object[] args)
         {
-            Logger.Log.Warn(format, category, args);
+            LoggerInstance.Warn(format, category, args);
         }
 
         #endregion
@@ -81,22 +97,22 @@
 
         public static void Error(string message)
         {
-            Logger.Log.Error(message);
+            LoggerInstance.Error(message);
         }
 
         public static void Error(string message, string category)
         {
-            Logger.Log.Error(message, category);
+            LoggerInstance.Error(message, category);
         }
 
         public static void Error(string message, Exception exception)
         {
-            Logger.Log.Error(message, exception);
+            LoggerInstance.Error(message, exception);
         }
 
         public static void Error(string message, string category, Exception exception)
         {
-            Logger.Log.Error(message, category, exception);
+            LoggerInstance.Error(message, category, exception);
         }
 
         #endregion
@@ -105,34 +121,34 @@
 
         public static void Critical(string message)
         {
-            Logger.Log.Critical(message);
+            LoggerInstance.Critical(message);
         }
 
         public static void Critical(string message, string category)
         {
-            Logger.Log.Critical(message, category);
+            LoggerInstance.Critical(message, category);
         }
 
         public static void Critical(string format, params object[] args)
         {
-            Logger.Log.Critical(format, args);
+            LoggerInstance.Critical(format, args);
         }
 
         public static void Critical(string format, string category, params object[] args)
         {
-            Logger.Log.Critical(format, category, args);
+            LoggerInstance.Critical(format, category, args);
         }
 
         #endregion
 
         public static void Write(ILogEntry logEntry, TraceEventType traceEventType)
         {
-            Logger.Log.Write(logEntry, traceEventType);
+            LoggerInstance.Write(logEntry, traceEventType);
         }
 
         public static void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
         {
-            Logger.Log.Write(logEntry, traceEventType, category);
+            LoggerInstance.Write(logEntry, traceEventType, category);
         }
     }
 }

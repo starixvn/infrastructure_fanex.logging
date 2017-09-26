@@ -1,0 +1,75 @@
+﻿namespace Fanex.Logging.UnitTests
+{
+    using System;
+    using Xunit;
+
+    [Trait("Category", "LogUtility.cs")]
+    public class LogUtilityTests
+    {
+        [Fact]
+        public void AddExceptionInfo_LogEntryIsNull_ReturnNull()
+        {
+            // Arrange
+            LogEntry logEntry = null;
+
+            // Act
+            logEntry.AddExceptionInfo(new Exception());
+
+            // Assert
+            Assert.Null(logEntry);
+        }
+
+        [Fact]
+        public void AddExceptionInfo_ExceptionIsNull_ReturnLogEntry()
+        {
+            // Arrange
+            var logEntry = new LogEntry();
+
+            // Act
+            var actualLogEntry = logEntry.AddExceptionInfo(null);
+
+            // Assert
+            Assert.Same(logEntry, actualLogEntry);
+        }
+
+        [Fact]
+        public void AddExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
+        {
+            // Arrange
+            var logEntry = new LogEntry();
+            var customException = new DllNotFoundException();
+
+            // Act
+            logEntry.AddExceptionInfo(customException);
+
+            // Assert
+            Assert.Equal(
+                "EXCEPTION:"
+                    + "\r\n\tSource: "
+                    + "\r\n\tType: System.DllNotFoundException"
+                    + "\r\n\tTarget Site: "
+                    + "\r\n\tStack Trace: "
+                    + "\r\n\tDetails: System.DllNotFoundException: Dll was not found.", 
+                logEntry.ToString());
+        }
+
+
+        [Fact]
+        public void CombineInfo_Always_ReturnCombinedMessage()
+        {
+            // Arrange
+            var infoGroup = "infoGroup";
+            var infoItems = new string[] { "Item1", string.Empty, "Item2" };
+
+            // Act
+            var actualCombinedMessage = LogUtility.CombineInfo(infoGroup, infoItems);
+
+            // Assert
+            Assert.Equal(
+                "infoGroup:"
+                + "\r\n\tItem1"
+                + "\r\n\tItem2", 
+                actualCombinedMessage);
+        }
+    }
+}

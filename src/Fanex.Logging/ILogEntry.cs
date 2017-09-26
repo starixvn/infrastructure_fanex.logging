@@ -6,6 +6,6 @@
     {
         ILogEntry AddInfo(string information);
 
-        ILogEntry CensorSensitiveInfo(IEnumerable<string> sensitiveParams, params string[] regexSensitiveParams);
+        ILogEntry HideSensitiveInfo(IEnumerable<string> sensitiveParams, params string[] regexSensitiveParams);
     }
 }

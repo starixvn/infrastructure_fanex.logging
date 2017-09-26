@@ -26,8 +26,9 @@
                 .Run();
 
             WebApplicationExceptionHandler
-             .Configure(new WebLoggingConfiguration()
-                .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo));
+             .Configure(
+                new WebLoggingConfiguration()
+                    .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo));
         }
 
         protected void Application_Error(object sender, EventArgs e)

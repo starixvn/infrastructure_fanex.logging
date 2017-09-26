@@ -7,19 +7,25 @@
 
     public sealed class Logger : ILogger
     {
-        private static readonly string DefaultLogCategory = LoggerConfiguration.Setting.DefaultCategory;
         private static volatile Logger logger;
         private static object syncRoot = new object();
-        internal readonly ILogAdapter logAdapter;
 
-        private Logger() : this(null)
+        private readonly string defaultLogCategory;
+        internal readonly ILogEngineAdapter logAdapter;
+
+        private Logger() 
+            : this(null, null, LoggerConfiguration.Run)
         {
-            LoggerConfiguration.Run();
         }
 
-        internal Logger(ILogAdapter logAdapter)
+        internal Logger(
+            ILogEngineAdapter logAdapter, 
+            string defaultLogCategory,
+            Action initLogConfig)
         {
-            this.logAdapter = logAdapter ?? new LogAdapter();
+            this.logAdapter = logAdapter ?? new LogEngineAdapter();
+            this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
+            initLogConfig();
         }
 
         public static ILogger Log
@@ -50,7 +56,7 @@
 
         public void Debug(string message)
         {
-            this.Debug(message, DefaultLogCategory);
+            this.Debug(message, defaultLogCategory);
         }
 
         public void Debug(string format, params object[] args)
@@ -74,7 +80,7 @@
 
         public void Info(string message)
         {
-            Info(message, DefaultLogCategory);
+            Info(message, defaultLogCategory);
         }
 
         public void Info(string format, params object[] args)
@@ -98,7 +104,7 @@
 
         public void Warn(string message)
         {
-            Warn(message, DefaultLogCategory);
+            Warn(message, defaultLogCategory);
         }
 
         public void Warn(string format, params object[] args)
@@ -122,12 +128,12 @@
 
         public void Error(string message)
         {
-            Error(message, LoggerConfiguration.Setting.DefaultCategory);
+            Error(message, defaultLogCategory);
         }
 
         public void Error(string message, Exception exception)
         {
-            Error(message, DefaultLogCategory, exception);
+            Error(message, defaultLogCategory, exception);
         }
 
         public void Error(string message, string category, Exception exception)
@@ -146,7 +152,7 @@
 
         public void Critical(string message)
         {
-            Critical(message, DefaultLogCategory);
+            Critical(message, defaultLogCategory);
         }
 
         public void Critical(string format, params object[] args)
@@ -163,29 +169,16 @@
 
         #region WriteLog functions
 
-        private static void WriteLog(string message, string category, TraceEventType traceEventType)
+        private void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            var severity = GetSevirity(traceEventType);
-
-            // Create log entry instance title temporarily set by value category
             var logEntry = new LogEntryAdapter
             {
-                Severity = severity,
+                Severity = GetSevirity(traceEventType),
                 Message = message,
-                Title = category
+                Category = string.IsNullOrEmpty(category) ? defaultLogCategory : category
             };
 
-            if (string.IsNullOrEmpty(category))
-            {
-                // Write log with default category
-                WriteLog(message, traceEventType);
-            }
-            else
-            {
-                logEntry.Category = category;
-            }
-
-            logger.logAdapter.Write(logEntry);
+            logAdapter.Write(logEntry);
         }
 
         private static TraceEventType GetSevirity(TraceEventType traceEventType)
@@ -203,12 +196,10 @@
             }
         }
 
-        private static void WriteLog(string message, TraceEventType traceEventType)
-            => WriteLog(message, DefaultLogCategory, traceEventType);
-
         public void Write(ILogEntry logEntry, TraceEventType traceEventType)
             => WriteLog(
                 (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
+                defaultLogCategory,
                 traceEventType);
 
         public void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
