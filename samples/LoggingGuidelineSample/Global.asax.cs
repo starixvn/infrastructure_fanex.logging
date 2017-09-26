@@ -1,9 +1,6 @@
 ﻿namespace LoggingGuidelineSample
 {
     using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Data;
@@ -37,16 +34,7 @@
         {
             Exception exception = Server.GetLastError();
 
-            // Don't write log for HTTP exception
-
-            //var customInfo = LogUtility.CombineInfo(
-            //                            "USER INFO",
-            //                            "User Id: dummyId",
-            //                            "Username: dummyname");
-
             WebApplicationExceptionHandler.Handle(exception);
-
-            //WebApplicationExceptionHandler.Handle(exception, customInfo);
         }
     }
 }

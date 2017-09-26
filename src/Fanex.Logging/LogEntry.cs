@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Logging
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     public class LogEntry : ILogEntry
@@ -55,7 +54,7 @@
             return this;
         }
 
-        public override string ToString() 
+        public override string ToString()
             => stringBuilder.ToString();
     }
 }

@@ -17,19 +17,19 @@
     {
         private static ICacheService _cacheManager = new CacheService();
 
-        private readonly string _toAddress = string.Empty;
-        private readonly string _fromAddress = string.Empty;
-        private readonly string _subjectLineStarter = string.Empty;
-        private readonly string _subjectLineEnder = string.Empty;
-        private readonly string _smtpServer = string.Empty;
-        private readonly int _smtpPort = 25;
+        private readonly string _toAddress;
+        private readonly string _fromAddress;
+        private readonly string _subjectLineStarter;
+        private readonly string _subjectLineEnder;
+        private readonly string _smtpServer;
+        private readonly int _smtpPort;
         private readonly EmailAuthenticationMode _authenticationMode = EmailAuthenticationMode.None;
         private readonly string _userName = string.Empty;
         private readonly string _password = string.Empty;
-        private readonly bool _useSSL = false;
-        private readonly string _umAddress = string.Empty;
-        private readonly bool _isCheckingDowntimeEnabled = true;
-        private readonly int _cacheDuplicatedEmailTimeOut = 120;
+        private readonly bool _useSSL;
+        private readonly string _umAddress;
+        private readonly bool _isCheckingDowntimeEnabled;
+        private readonly int _cacheDuplicatedEmailTimeOut;
 
         /// <summary>
         /// Initializes a new instance of <see cref="EmailTraceListener"/> with a toaddress, fromaddress,
@@ -322,12 +322,12 @@
                 logCategory = logEntry.Categories.First();
             }
 
-            var message = string.Join(string.Empty, new string[] { logEntry.Message, logEntry.MachineName, logEntry.Severity.ToString(), logCategory });
+            var message = string.Join(string.Empty, new [] { logEntry.Message, logEntry.MachineName, logEntry.Severity.ToString(), logCategory });
 
             return message;
         }
 
-        private string GetMd5Hash(string input)
+        private static string GetMd5Hash(string input)
         {
             using (MD5 md5Hash = MD5.Create())
             {
@@ -355,7 +355,7 @@
         /// </summary>
         protected override string[] GetSupportedAttributes()
         {
-            return new string[] { "formatter", "toAddress", "fromAddress", "subjectLineStarter", "subjectLineEnder", "smtpServer", "smtpPort", "umAddress", "isCheckingDowntimeEnabled", "cacheDuplicatedEmailTimeOut" };
+            return new [] { "formatter", "toAddress", "fromAddress", "subjectLineStarter", "subjectLineEnder", "smtpServer", "smtpPort", "umAddress", "isCheckingDowntimeEnabled", "cacheDuplicatedEmailTimeOut" };
         }
     }
 }

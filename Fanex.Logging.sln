@@ -31,6 +31,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.Datab
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9CFB29AE-BCCF-414C-B15C-3081B72DB853}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{F8EFB047-9E1F-48AC-9229-31C8256C9179}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\Fanex.LoggingCSharp.ruleset = SonarQube\Fanex.LoggingCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unittests", "unittests", "{4B588921-BA80-4965-914A-93C70DBE8D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.UnitTests", "tests\unittests\Fanex.Logging.UnitTests\Fanex.Logging.UnitTests.csproj", "{FA3DA2A7-F154-4992-BD63-F546E7307CE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +128,14 @@ Global
 		{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2}.Release|x86.ActiveCfg = Release|Any CPU
 		{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2}.Release|x86.Build.0 = Release|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Debug|x86.Build.0 = Debug|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|x86.ActiveCfg = Release|Any CPU
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,5 +152,7 @@ Global
 		{C0A8FBB9-0184-4BC0-808A-17FDCBCC0A98} = {F38BE2C2-4382-4857-AF4E-F42F257C4176}
 		{9CD9F55A-EF27-4C11-91CB-70AB6F4D346A} = {3A35E630-28E6-4529-BA6C-D4316FD5B5CF}
 		{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2} = {3A35E630-28E6-4529-BA6C-D4316FD5B5CF}
+		{4B588921-BA80-4965-914A-93C70DBE8D99} = {9CFB29AE-BCCF-414C-B15C-3081B72DB853}
+		{FA3DA2A7-F154-4992-BD63-F546E7307CE1} = {4B588921-BA80-4965-914A-93C70DBE8D99}
 	EndGlobalSection
 EndGlobal

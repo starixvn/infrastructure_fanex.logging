@@ -6,15 +6,6 @@
 
     public class HomeController : Controller
     {
-        public HomeController()
-        {
-        }
-        //// GET: Home
-        //// http://localhost:54426/?password=3434343&securitycode=344545
-        //// {
-        ////	"password":"44444",
-        ////	"secuRITYCODE": "555"
-        ////}
         public ActionResult Index()
         {
             SetSampleSession();

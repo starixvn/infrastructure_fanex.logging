@@ -9,8 +9,8 @@
 
     internal static class LoggerConfiguration
     {
-        private static volatile LoggingSettings _loggingSetting;
-        private static volatile bool _hasRunConfig = false;
+        private static volatile LoggingSettings loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
+        private static volatile bool hasRunConfig;
         private static object syncRoot = new object();
 
         private static TraceOptions traceOptions =
@@ -21,28 +21,18 @@
                                 | TraceOptions.ThreadId
                                 | TraceOptions.Timestamp;
 
-        static LoggerConfiguration()
-        {
-            if (_loggingSetting == null)
-            {
-                _loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
-            }
-        }
-
-        public static LoggingSettings Setting
-        {
-            get { return _loggingSetting; }
-        }
+        public static LoggingSettings Setting => loggingSetting;
 
         public static void Run()
         {
-            if (_hasRunConfig)
+            if (hasRunConfig)
             {
                 return;
             }
+
             lock (syncRoot)
             {
-                if (!_hasRunConfig)
+                if (!hasRunConfig)
                 {
                     var builder = new ConfigurationSourceBuilder();
                     var configSource = new DictionaryConfigurationSource();
@@ -59,7 +49,7 @@
                     builder.UpdateConfigurationWithReplace(configSource);
 
                     EnterpriseLibraryContainer.Current = EnterpriseLibraryContainer.CreateDefaultContainer(configSource);
-                    _hasRunConfig = true;
+                    hasRunConfig = true;
                 }
             }
         }

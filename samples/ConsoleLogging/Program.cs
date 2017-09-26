@@ -1,7 +1,6 @@
 ﻿namespace ConsoleLogging
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading;
     using Fanex.Data;
@@ -10,15 +9,8 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions.Database;
 
-    /// <summary>
-    /// The testing application.
-    /// </summary>
     public class Program
     {
-        /// <summary>
-        /// Defines the entry point of the application.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
         public static void Main(string[] args)
         {
             try

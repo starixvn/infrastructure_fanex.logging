@@ -2,17 +2,24 @@
 {
     using System;
     using System.Diagnostics;
-    using Fanex.Logging.Configuration;
+    using Adapters;
+    using Configuration;
 
     public sealed class Logger : ILogger
     {
         private static readonly string DefaultLogCategory = LoggerConfiguration.Setting.DefaultCategory;
-        private static volatile ILogger logger;
+        private static volatile Logger logger;
         private static object syncRoot = new object();
+        internal readonly ILogAdapter logAdapter;
 
-        private Logger()
+        private Logger() : this(null)
         {
             LoggerConfiguration.Run();
+        }
+
+        internal Logger(ILogAdapter logAdapter)
+        {
+            this.logAdapter = logAdapter ?? new LogAdapter();
         }
 
         public static ILogger Log
@@ -39,9 +46,7 @@
         #region Debug functions
 
         public void Debug(string message, string category)
-        {
-            WriteLog(message, category, TraceEventType.Verbose);
-        }
+            => WriteLog(message, category, TraceEventType.Verbose);
 
         public void Debug(string message)
         {
@@ -160,78 +165,57 @@
 
         private static void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            try
+            var severity = GetSevirity(traceEventType);
+
+            // Create log entry instance title temporarily set by value category
+            var logEntry = new LogEntryAdapter
             {
-                var severity = TraceEventType.Information;
-                switch (traceEventType)
-                {
-                    case TraceEventType.Verbose:
-                        severity = TraceEventType.Verbose;
-                        break;
+                Severity = severity,
+                Message = message,
+                Title = category
+            };
 
-                    case TraceEventType.Warning:
-                        severity = TraceEventType.Warning;
-                        break;
-
-                    case TraceEventType.Critical:
-                        severity = TraceEventType.Critical;
-                        break;
-
-                    case TraceEventType.Error:
-                        severity = TraceEventType.Error;
-                        break;
-                }
-
-                // Create log entry instance title temporarily set by value category
-                var logEntry = new Microsoft.Practices.EnterpriseLibrary.Logging.LogEntry
-                {
-                    Severity = severity,
-                    Message = message,
-                    Title = category
-                };
-
-                if (string.IsNullOrEmpty(category))
-                {
-                    // Write log with default category
-                    WriteLog(message, traceEventType);
-                }
-                else
-                {
-                    logEntry.Categories.Add(category);
-                }
-
-                Microsoft.Practices.EnterpriseLibrary.Logging.Logger.Write(logEntry);
+            if (string.IsNullOrEmpty(category))
+            {
+                // Write log with default category
+                WriteLog(message, traceEventType);
             }
-            catch
+            else
             {
-                throw;
+                logEntry.Category = category;
+            }
+
+            logger.logAdapter.Write(logEntry);
+        }
+
+        private static TraceEventType GetSevirity(TraceEventType traceEventType)
+        {
+            switch (traceEventType)
+            {
+                case TraceEventType.Verbose:
+                case TraceEventType.Warning:
+                case TraceEventType.Critical:
+                case TraceEventType.Error:
+                    return traceEventType;
+
+                default:
+                    return TraceEventType.Information;
             }
         }
 
         private static void WriteLog(string message, TraceEventType traceEventType)
-        {
-            WriteLog(message, DefaultLogCategory, traceEventType);
-        }
+            => WriteLog(message, DefaultLogCategory, traceEventType);
 
         public void Write(ILogEntry logEntry, TraceEventType traceEventType)
-        {
-            if (logEntry == null)
-            {
-                logEntry = LogEntry.NoInformationLogEntry;
-            }
-
-            WriteLog(logEntry.ToString(), traceEventType);
-        }
+            => WriteLog(
+                (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
+                traceEventType);
 
         public void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
-        {
-            if (logEntry == null)
-            {
-                logEntry = LogEntry.NoInformationLogEntry;
-            }
-
-            WriteLog(logEntry.ToString(), category, traceEventType);
-        }
+             => WriteLog(
+                    (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
+                    category,
+                    traceEventType);
 
         #endregion WriteLog functions
 

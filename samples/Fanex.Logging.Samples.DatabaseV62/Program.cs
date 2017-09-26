@@ -1,12 +1,11 @@
 ﻿namespace Fanex.Logging.Samples.DatabaseV62
 {
     using System;
-    using System.Collections.Generic;
     using Data;
     using Data.Configuration;
     using Extensions.Database.V62;
 
-    public class Program
+    public static class Program
     {
         private static void Main(string[] args)
         {

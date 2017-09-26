@@ -6,12 +6,7 @@
 
     public static class WebApplicationExceptionHandler
     {
-        static WebLoggingConfiguration config;
-
-        static WebApplicationExceptionHandler()
-        {
-            config = new WebLoggingConfiguration();
-        }
+        static WebLoggingConfiguration config = new WebLoggingConfiguration();
 
         public static WebLoggingConfiguration Configure(WebLoggingConfiguration loggingConfiguration)
         {
@@ -64,13 +59,6 @@
             }
 
             LogService.Write(logEntry, traceEventType);
-
-#if DEBUG
-            //// this code for dev to view message on browser, dont bring it to production
-            HttpContext.Current.Response.Write(logEntry.ToString().Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
-            HttpContext.Current.Response.End();
-            HttpContext.Current.Response.Close();
-#endif
         }
     }
 }
