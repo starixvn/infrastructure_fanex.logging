@@ -27,6 +27,8 @@
                 .Run();
 
             ExceptionHandler               
+                // To ignore exceptions 
+                //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
                 .UseGetDbExceptionInfo(GetSqlExceptionInfo);
         }
 
