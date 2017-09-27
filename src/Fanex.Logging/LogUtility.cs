@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Net;
     using System.Net.Sockets;
+    using static Constants;
 
     public static class LogUtility
     {
@@ -37,9 +38,9 @@
         /// <returns></returns>
         public static string CombineInfo(string infoGroup, params string[] infoItems)
             => string.Join(
-                "\r\n",
+                NewLine,
                 $"{infoGroup}:",
-                $"\t{JoinWithoutEmptyItem("\r\n\t", infoItems)}");
+                $"{Tab}{JoinWithoutEmptyItem(NewLine+Tab, infoItems)}");
 
         public static string JoinWithoutEmptyItem(string separator, params string[] values)
         {
@@ -54,7 +55,7 @@
             : logEntry.AddInfo(CombineInfo(
                         "WEB SERVER INFO",
                         $"Server IP: {GetMachineIP()}",
-                        $"Machine Name: {Environment.MachineName}",
+                        $"Machine: {Environment.MachineName}",
                         $"OS: {Environment.OSVersion}",
                         $"System Time: {DateTime.Now}",
                         $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}"));

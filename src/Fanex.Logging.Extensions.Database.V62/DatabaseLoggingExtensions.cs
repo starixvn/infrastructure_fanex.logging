@@ -50,7 +50,7 @@
             return LogUtility.CombineInfo(
                 "DATABASE INFO",
                 $"SQL Server: {sqlConnectionString.DataSource}",
-                $"Database Name: {databaseName}",
+                $"Database:  {databaseName}",
                 $"Account: {sqlConnectionString.UserID}",
                 $"Stored Procedure: {storedProcedureName}",
                 $"Line Number: {lineNumber}");

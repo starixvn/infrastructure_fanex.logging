@@ -8,6 +8,7 @@
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions.Web;
+    using static Fanex.Logging.Extensions.Database.DatabaseLoggingExtensions;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -25,17 +26,14 @@
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                 .Run();
 
-            WebApplicationExceptionHandler
-             .Configure(
-                new WebLoggingConfiguration()
-                    .UseGetDatabaseInfoFunc(DatabaseLoggingExtensions.GetSqlExceptionInfo));
+            ExceptionHandler
+                .UseGetDbExceptionMethod(GetSqlExceptionInfo);                    
         }
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Exception exception = Server.GetLastError();
-
-            WebApplicationExceptionHandler.Handle(exception);
+            ExceptionHandler
+                .Handle(() => Server.GetLastError());
         }
     }
 }

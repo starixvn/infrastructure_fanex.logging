@@ -1,11 +1,12 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
+    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Web;
     using System.Web.SessionState;
-
     public static class WebLoggingExtensions
     {
         public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request)

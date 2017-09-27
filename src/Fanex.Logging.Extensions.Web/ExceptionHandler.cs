@@ -4,11 +4,11 @@
     using System.Diagnostics;
     using System.Web;
 
-    public static class WebApplicationExceptionHandler
+    public static class ExceptionManager
     {
         static WebLoggingConfiguration config = new WebLoggingConfiguration();
 
-        public static WebLoggingConfiguration Configure(WebLoggingConfiguration loggingConfiguration)
+        public static WebLoggingConfiguration AddConfig(WebLoggingConfiguration loggingConfiguration)
         {
             if (loggingConfiguration == null)
             {
@@ -20,21 +20,39 @@
             return config;
         }
 
-        public static void Handle(Exception exception)
-            => Handle(exception, string.Empty);
-        public static void Handle(Exception exception, string customInfo)
-            => Handle(exception, TraceEventType.Error, customInfo);
+        public static void UseGetDbExceptionMethod(Func<Exception, string> getDbExceptionInfo)
+        {
+            if (getDbExceptionInfo == null)
+            {
+                throw new ArgumentNullException(nameof(getDbExceptionInfo));
+            }
+
+            config.GetDatabaseInfoFunc = getDbExceptionInfo;
+        }
+
+        public static void Handle(Func<Exception> exceptionGetter)
+            => Handle(exceptionGetter, string.Empty);
+
+        public static void Handle(Func<Exception> exceptionGetter, string customInfo)
+            => Handle(exceptionGetter, TraceEventType.Error, customInfo);
 
         public static void Handle(
-            Exception exception,
+            Func<Exception> exceptionGetter,
             TraceEventType traceEventType,
             string customInfo = null)
         {
+            if (exceptionGetter == null)
+            {
+                throw new ArgumentNullException(nameof(exceptionGetter));
+            }
+
+            var exception = exceptionGetter();
+
             if (HttpContext.Current == null
                 || config.IgnoredExceptionTypes.Contains(exception.GetType()))
             {
                 return;
-            }
+            }            
 
             var currentRequest = HttpContext.Current.Request;
             var logEntry = new LogEntry(exception.Message)
