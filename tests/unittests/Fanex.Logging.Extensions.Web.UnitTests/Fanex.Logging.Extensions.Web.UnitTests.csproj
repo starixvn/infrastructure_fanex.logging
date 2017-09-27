@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebLoggingExtensionsTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Fanex.Logging.Extensions.Web\Fanex.Logging.Extensions.Web.csproj">
+      <Project>{5fddcdf7-2ed0-4fab-9571-1e6d190a3160}</Project>
+      <Name>Fanex.Logging.Extensions.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
+      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
+      <Name>Fanex.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

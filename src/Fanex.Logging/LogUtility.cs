@@ -8,9 +8,6 @@
 
     public static class LogUtility
     {
-        public const string QueryStringParamRegexPattern = "(?:{0}=)(?<paramValue>[^&|^\\s]+)";
-        public const string BodyDataJsonParamRegexPattern = "(\"{0}\":)(?<paramValue>[^,|^\r]+)";
-
         public static ILogEntry AddExceptionInfo(this ILogEntry logEntry, Exception exception)
         {
             if (logEntry == null || exception == null)

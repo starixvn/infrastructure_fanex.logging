@@ -37,4 +37,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.2.0")]
 [assembly: InternalsVisibleTo("Fanex.Logging.UnitTests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Web")]
 

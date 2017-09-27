@@ -8,8 +8,8 @@
     public class WebLoggingConfiguration
     {
         static string[] defaultRegexSensitiveParamPatterns = {
-            LogUtility.QueryStringParamRegexPattern,
-            LogUtility.BodyDataJsonParamRegexPattern
+            Constants.QueryStringParamRegexPattern,
+            Constants.BodyDataJsonParamRegexPattern
         };
 
         internal Func<Exception, string> GetDatabaseInfoFunc;

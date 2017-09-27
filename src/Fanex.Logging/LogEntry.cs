@@ -8,8 +8,8 @@
     public class LogEntry : ILogEntry
     {
         private const string paramValue = "paramValue";
-        public const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
-        public static readonly ILogEntry NoInformationLogEntry = new LogEntry("This log has no information.");
+        internal const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
+        internal static readonly ILogEntry NoInformationLogEntry = new LogEntry("This log has no information.");
         private readonly StringBuilder stringBuilder;
 
         public LogEntry() : this(string.Empty)
@@ -68,15 +68,13 @@
             string paramPattern, 
             IEnumerable<string> sensitiveParams)
         {
-            if (sensitiveParams == null
-                || !sensitiveParams.Any())
+            if (sensitiveParams != null
+                && sensitiveParams.Any())
             {
-                return information;
-            }
-
-            foreach (var sensitiveParam in sensitiveParams)
-            {
-                information = HideSensitiveInfo(information, paramPattern, sensitiveParam);
+                foreach (var sensitiveParam in sensitiveParams)
+                {
+                    information = HideSensitiveInfo(information, paramPattern, sensitiveParam);
+                }
             }
 
             return information;
