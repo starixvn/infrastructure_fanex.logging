@@ -33,7 +33,7 @@
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler
-                .Handle(() => Server.GetLastError());
+                .Handle(Server.GetLastError());
         }
     }
 }
