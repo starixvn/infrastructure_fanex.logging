@@ -26,8 +26,8 @@
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                 .Run();
 
-            ExceptionHandler
-                .UseGetDbExceptionMethod(GetSqlExceptionInfo);                    
+            ExceptionHandler               
+                .UseGetDbExceptionInfo(GetSqlExceptionInfo);
         }
 
         protected void Application_Error(object sender, EventArgs e)

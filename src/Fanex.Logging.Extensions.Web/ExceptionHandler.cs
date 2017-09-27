@@ -6,9 +6,9 @@
 
     public static class ExceptionHandler
     {
-        static WebLoggingConfiguration config = new WebLoggingConfiguration();
+        static LoggingConfiguration config = new LoggingConfiguration();
 
-        public static WebLoggingConfiguration AddConfig(WebLoggingConfiguration loggingConfiguration)
+        public static LoggingConfiguration UseConfig(LoggingConfiguration loggingConfiguration)
         {
             if (loggingConfiguration == null)
             {
@@ -20,14 +20,16 @@
             return config;
         }
 
-        public static void UseGetDbExceptionMethod(Func<Exception, string> getDbExceptionInfo)
+        public static LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, string> getDbExceptionInfo)
         {
             if (getDbExceptionInfo == null)
             {
                 throw new ArgumentNullException(nameof(getDbExceptionInfo));
             }
 
-            config.GetDatabaseInfoFunc = getDbExceptionInfo;
+            config.GetDbExceptionInfo = getDbExceptionInfo;
+
+            return config;
         }
 
         public static void Handle(Exception exception)
@@ -54,7 +56,7 @@
                                 .HideSensitiveInfo(
                                         config.SensitiveParams,
                                         config.RegexSensitiveParamPatterns)
-                                .AddInfo(config.GetDatabaseInfoFunc(exception))
+                                .AddInfo(config.GetDbExceptionInfo(exception))
                                 .AddInfo(customInfo)
                                 .AddWebServerInfo()
                                 .AddExceptionInfo(exception);
