@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging.UnitTests
 {
     using System;
+    using System.Net;
     using Xunit;
 
     [Trait("Category", "LogUtility.cs")]
@@ -49,10 +50,9 @@
                     + "\r\n\tType: System.DllNotFoundException"
                     + "\r\n\tTarget Site: "
                     + "\r\n\tStack Trace: "
-                    + "\r\n\tDetails: System.DllNotFoundException: Dll was not found.", 
+                    + "\r\n\tDetails: System.DllNotFoundException: Dll was not found.",
                 logEntry.ToString());
         }
-
 
         [Fact]
         public void CombineInfo_Always_ReturnCombinedMessage()
@@ -68,8 +68,40 @@
             Assert.Equal(
                 "infoGroup:"
                 + "\r\n\tItem1"
-                + "\r\n\tItem2", 
+                + "\r\n\tItem2",
                 actualCombinedMessage);
+        }
+
+        [Fact]
+        public void GetMachineIP_IPAddressFamilyIsInterNetwork_ReturnIP()
+        {
+            // Arrange
+            var hostEntry = new IPHostEntry
+            {
+                AddressList = new IPAddress[] { new IPAddress(100000) }
+            };
+
+            // Act
+            var machineIP = LogUtility.GetMachineIP(hostEntry);
+
+            // Assert
+            Assert.Equal("160.134.1.0", machineIP);
+        }
+
+        [Fact]
+        public void GetMachineIP_NotFoundIP_ReturnEmpty()
+        {
+            // Arrange
+            var hostEntry = new IPHostEntry
+            {
+                AddressList = new IPAddress[] { }
+            };
+
+            // Act
+            var machineIP = LogUtility.GetMachineIP(hostEntry);
+
+            // Assert
+            Assert.Empty(machineIP);
         }
     }
 }

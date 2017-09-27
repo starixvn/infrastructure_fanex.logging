@@ -12,7 +12,7 @@
         {
             get
             {
-                return loggerInstance ?? LoggerInstance;
+                return loggerInstance ?? Logger.Log;
             }
 
             set

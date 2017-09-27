@@ -54,21 +54,22 @@
             ? logEntry
             : logEntry.AddInfo(CombineInfo(
                         "WEB SERVER INFO",
-                        $"Server IP: {GetMachineIP()}",
+                        $"Server IP: {GetMachineIP(Dns.GetHostEntry(Dns.GetHostName()))}",
                         $"Machine: {Environment.MachineName}",
                         $"OS: {Environment.OSVersion}",
                         $"System Time: {DateTime.Now}",
                         $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}"));
 
-        private static string GetMachineIP()
+        internal static string GetMachineIP(IPHostEntry hostEntry)
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-
-            foreach (var ip in host.AddressList)
+            if (hostEntry.AddressList != null)
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                foreach (var ip in hostEntry.AddressList)
                 {
-                    return ip.ToString();
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return ip.ToString();
+                    }
                 }
             }
 

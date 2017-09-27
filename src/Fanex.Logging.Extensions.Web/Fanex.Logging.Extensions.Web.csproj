@@ -62,11 +62,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExceptionHandler.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InfoLogConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebApplicationExceptionHandler.cs" />
     <Compile Include="WebLoggingExtensions.cs" />
-    <Compile Include="WebLoggingConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{3A35
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.LoggingTest", "samples\ConsoleLogging\Fanex.LoggingTest.csproj", "{675A57E8-E268-4970-AF8A-AE0387795361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingGuidelineSample", "samples\LoggingGuidelineSample\LoggingGuidelineSample.csproj", "{2C752BD2-ED29-4006-B60F-3C98BFF052C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.Web", "samples\Fanex.Logging.Samples.Web\Fanex.Logging.Samples.Web.csproj", "{2C752BD2-ED29-4006-B60F-3C98BFF052C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web", "src\Fanex.Logging.Extensions.Web\Fanex.Logging.Extensions.Web.csproj", "{5FDDCDF7-2ED0-4FAB-9571-1E6D190A3160}"
 EndProject
@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database", "src\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj", "{C0A8FBB9-0184-4BC0-808A-17FDCBCC0A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Sample.DatabaseV59", "samples\Fanex.Logging.Sample.DatabaseV59\Fanex.Logging.Sample.DatabaseV59.csproj", "{9CD9F55A-EF27-4C11-91CB-70AB6F4D346A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.DatabaseV59", "samples\Fanex.Logging.Samples.DatabaseV59\Fanex.Logging.Samples.DatabaseV59.csproj", "{9CD9F55A-EF27-4C11-91CB-70AB6F4D346A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.DatabaseV62", "samples\Fanex.Logging.Samples.DatabaseV62\Fanex.Logging.Samples.DatabaseV62.csproj", "{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2}"
 EndProject
@@ -40,6 +40,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unittests", "unittests", "{4B588921-BA80-4965-914A-93C70DBE8D99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.UnitTests", "tests\unittests\Fanex.Logging.UnitTests\Fanex.Logging.UnitTests.csproj", "{FA3DA2A7-F154-4992-BD63-F546E7307CE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", "{DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Web.UnitTests\Fanex.Logging.Extensions.Web.UnitTests.csproj", "{FB308993-84A7-48CD-8CC8-3E1D734DAB65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -136,6 +140,14 @@ Global
 		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|x86.ActiveCfg = Release|Any CPU
 		{FA3DA2A7-F154-4992-BD63-F546E7307CE1}.Release|x86.Build.0 = Release|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Debug|x86.Build.0 = Debug|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|x86.ActiveCfg = Release|Any CPU
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,5 +166,7 @@ Global
 		{BE777B84-A8BE-4BD5-8ABE-5763FF3459F2} = {3A35E630-28E6-4529-BA6C-D4316FD5B5CF}
 		{4B588921-BA80-4965-914A-93C70DBE8D99} = {9CFB29AE-BCCF-414C-B15C-3081B72DB853}
 		{FA3DA2A7-F154-4992-BD63-F546E7307CE1} = {4B588921-BA80-4965-914A-93C70DBE8D99}
+		{DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB} = {4B588921-BA80-4965-914A-93C70DBE8D99}
+		{FB308993-84A7-48CD-8CC8-3E1D734DAB65} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 	EndGlobalSection
 EndGlobal

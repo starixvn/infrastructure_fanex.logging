@@ -45,8 +45,7 @@
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParams)
         {
-            if (sensitiveParams != null
-                && regexSensitiveParams != null)
+            if (sensitiveParams != null && regexSensitiveParams != null)
             {
                 var message = stringBuilder.ToString();
                 stringBuilder.Clear();
@@ -64,7 +63,10 @@
 
         public override string ToString() => stringBuilder.ToString();
 
-        private static string HideSensitiveInfo(string information, string paramPattern, IEnumerable<string> sensitiveParams)
+        private static string HideSensitiveInfo(
+            string information, 
+            string paramPattern, 
+            IEnumerable<string> sensitiveParams)
         {
             if (sensitiveParams == null
                 || !sensitiveParams.Any())
@@ -74,20 +76,29 @@
 
             foreach (var sensitiveParam in sensitiveParams)
             {
-                var pattern = string.Format(paramPattern, sensitiveParam);
-                var regexMatchCollection = Regex.Matches(information, pattern, RegexOptions.IgnoreCase);
-
-                foreach (Match regexMatch in regexMatchCollection)
-                {
-                    if (regexMatch.Success)
-                    {
-                        information = information.Replace(regexMatch.Groups[paramValue].ToString(), string.Empty);
-                    }
-                }
+                information = HideSensitiveInfo(information, paramPattern, sensitiveParam);
             }
 
             return information;
         }
 
+        private static string HideSensitiveInfo(
+            string information, 
+            string paramPattern, 
+            string sensitiveParam)
+        {
+            var pattern = string.Format(paramPattern, sensitiveParam);
+            var regexMatchCollection = Regex.Matches(information, pattern, RegexOptions.IgnoreCase);
+
+            foreach (Match regexMatch in regexMatchCollection)
+            {
+                if (regexMatch.Success)
+                {
+                    information = information.Replace(regexMatch.Groups[paramValue].ToString(), string.Empty);
+                }
+            }
+
+            return information;
+        }
     }
 }

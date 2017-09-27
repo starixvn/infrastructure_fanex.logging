@@ -4,7 +4,7 @@
     using System.Diagnostics;
     using System.Web;
 
-    public static class ExceptionManager
+    public static class ExceptionHandler
     {
         static WebLoggingConfiguration config = new WebLoggingConfiguration();
 

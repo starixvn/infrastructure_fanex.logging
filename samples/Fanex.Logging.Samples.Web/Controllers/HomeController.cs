@@ -1,4 +1,4 @@
-﻿namespace LoggingGuidelineSample.Controllers
+﻿namespace Fanex.Logging.Samples.Web.Controllers
 {
     using System.Web.Mvc;
     using Fanex.Data;

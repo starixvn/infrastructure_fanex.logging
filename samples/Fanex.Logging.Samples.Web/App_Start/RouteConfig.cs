@@ -1,4 +1,4 @@
-﻿namespace LoggingGuidelineSample
+﻿namespace Fanex.Logging.Samples.Web
 {
     using System;
     using System.Collections.Generic;

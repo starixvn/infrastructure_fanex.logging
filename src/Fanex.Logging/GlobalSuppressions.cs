@@ -5,3 +5,5 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1226:Method parameters and caught exceptions should not be reassigned", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.LogEntry.HideSensitiveInfo(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})~System.String")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1226:Method parameters and caught exceptions should not be reassigned", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.LogEntry.HideSensitiveInfo(System.String,System.String,System.String)~System.String")]
+

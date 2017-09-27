@@ -15,7 +15,29 @@
             }
             catch (Exception exception)
             {
-                var errorInfo = new LogEntry(exception.Message)
+                Handle(exception);
+            }
+
+            Console.ReadLine();
+        }
+
+        public static void SimulateSqlException()
+        {
+            DbSettingProviderManager.Current.Start();
+
+            using (var db = new ObjectDb("Logging_UpdateMachine"))
+            {
+                db.ExecuteNonQuery(new
+                {
+                    MachineIP = "45454 1 1 22",
+                    Timezone = "GMT8 2323 "
+                });
+            }
+        }
+
+        public static void Handle(Exception exception)
+        {
+            var errorInfo = new LogEntry(exception.Message)
                                .AddSqlInfo(exception)
                                .AddWebServerInfo()
                                .AddExceptionInfo(exception)
@@ -26,25 +48,8 @@
                                         "Info 2"))
                                        .ToString();
 
-                LogService.Error(errorInfo);
-                Console.WriteLine(errorInfo);
-            }
-
-            Console.ReadLine();
-        }
-
-        private static void SimulateSqlException()
-        {
-            DbSettingProviderManager.Current.Start();
-
-            using (var db = new ObjectDb("Logging_UpdateMachine"))
-            {
-                db.ExecuteNonQuery(new
-                {
-                    MachineIP = "45454",
-                    Timezone = "GMT8"
-                });
-            }
+            LogService.Error(errorInfo);
+            Console.WriteLine(errorInfo);
         }
     }
 }

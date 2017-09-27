@@ -1,4 +1,4 @@
-﻿namespace LoggingGuidelineSample.Models
+﻿namespace Fanex.Logging.Samples.Web.Models
 {
     using System;
 
