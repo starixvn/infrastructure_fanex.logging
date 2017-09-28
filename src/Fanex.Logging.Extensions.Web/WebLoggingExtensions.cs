@@ -2,15 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Web;
+    using System.Web.Configuration;
     using System.Web.SessionState;
 
     public static class WebLoggingExtensions
     {
-        public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request)
+        public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request, NameValueCollection serverVariables = null)
         {
             if (logEntry == null || request == null)
             {
@@ -24,18 +26,19 @@
                       $"Url Referrer: {request.UrlReferrer}",
                       $"Form Variables: {request.Form}",
                       $"Body: {GetRequestBodyData(request.InputStream)}",
-                      $"Client IP: {GetClientIP(request)}",
+                      $"Client IP: {GetClientIP(serverVariables ?? request.ServerVariables)}",
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));                      
         }
 
-        public static ILogEntry AddBrowserInfo(this ILogEntry logEntry, HttpRequest request)
+        public static ILogEntry AddBrowserInfo(
+            this ILogEntry logEntry, 
+            HttpCapabilitiesBase browser, 
+            NameValueCollection serverVariables)
         {
-            if (logEntry == null || request == null)
+            if (logEntry == null || browser == null)
             {
                 return logEntry;
             }
-
-            var browser = request.Browser;
 
             return logEntry.AddInfo(
                    LogUtility.CombineInfo(
@@ -45,12 +48,14 @@
                         $"Crawler: {browser.Crawler}",
                         $"ECMAScript: {browser.EcmaScriptVersion}",
                         $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",                        
-                        $"User Agent: {request.ServerVariables["HTTP_USER_AGENT"]}"));
+                        $"User Agent: {serverVariables["HTTP_USER_AGENT"]}"));
         }
 
-        public static ILogEntry AddHeaderInfo(this ILogEntry logEntry, HttpRequest request)
+        public static ILogEntry AddHeaderInfo(
+            this ILogEntry logEntry, 
+            NameValueCollection headers)
         {
-            if (logEntry == null || request == null)
+            if (logEntry == null || headers == null)
             {
                 return logEntry;
             }
@@ -58,9 +63,9 @@
             return logEntry.AddInfo(
                     LogUtility.CombineInfo(
                       "HTTP HEADERS",
-                      request.Headers
+                            headers
                             .AllKeys
-                            .Select(key => $"{key}: {request.Headers[key]}")
+                            .Select(key => $"{key}: {headers[key]}")
                             .ToArray()));
         }
 
@@ -82,7 +87,7 @@
                       sessionData.ToArray()));
         }
 
-        static string GetRequestBodyData(Stream requestStream)
+        internal static string GetRequestBodyData(Stream requestStream)
         {
             if (requestStream != null)
             {
@@ -99,12 +104,15 @@
             return string.Empty;
         }
 
-        private static string GetClientIP(HttpRequest request)
+        internal static string GetClientIP(NameValueCollection serverVariables)
         {
-            var ip = request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? request.ServerVariables["REMOTE_ADDR"];
-            return string.IsNullOrEmpty(ip) || ip.Equals("::1")
+            var clientIP = serverVariables["HTTP_X_FORWARDED_FOR"] 
+                ?? serverVariables["REMOTE_ADDR"] 
+                ?? string.Empty;
+
+            return string.IsNullOrEmpty(clientIP) || clientIP.Equals("::1")
                 ? "127.0.0.1"
-                : ip.Split(',')[0];
+                : clientIP;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿namespace Fanex.Logging.UnitTests
+﻿using Xunit;
+namespace Fanex.Logging.UnitTests
 {
     using System;
     using System.Net;
@@ -102,6 +103,39 @@
 
             // Assert
             Assert.Empty(machineIP);
+        }
+
+        [Fact]
+        public void AddWebServerInfo_LogEntryIsNull_ReturnNull()
+        {
+            // Arrange
+            LogEntry logEntry = null;
+
+            // Act
+            logEntry.AddWebServerInfo();
+
+            // Assert
+            Assert.Null(logEntry);
+        }
+
+        [Fact]
+        public void AddWebServerInfo_Always_ReturnLogEntryWithServerInformation()
+        {
+            // Arrange
+            var logEntry = new LogEntry();
+
+            // Act
+            logEntry.AddWebServerInfo();
+
+            // Assert
+            var logResult = logEntry.ToString();
+            Assert.True(
+                logResult.Contains("WEB SERVER INFO")
+                && logResult.Contains("Server IP:")
+                && logResult.Contains("Machine:")
+                && logResult.Contains("OS:")
+                && logResult.Contains("System Time:")
+                && logResult.Contains("User Domain:"));
         }
     }
 }

@@ -6,7 +6,7 @@
 
     public static class ExceptionHandler
     {
-        static LoggingConfiguration config = new LoggingConfiguration();
+        internal static LoggingConfiguration config = new LoggingConfiguration();
 
         public static LoggingConfiguration UseConfig(LoggingConfiguration loggingConfiguration)
         {
@@ -38,10 +38,14 @@
         public static void Handle(Exception exception, string customInfo)
             => Handle(exception, TraceEventType.Error, customInfo);
 
+        public static void Handle(Exception exception, TraceEventType traceEventType, string category)
+            => Handle(exception, traceEventType, string.Empty, category);
+
         public static void Handle(
             Exception exception,
             TraceEventType traceEventType,
-            string customInfo = null)
+            string customInfo,
+            string category)
         {
             if (HttpContext.Current == null
                 || config.IgnoredExceptionTypes.Contains(exception.GetType()))
@@ -52,7 +56,7 @@
             var currentRequest = HttpContext.Current.Request;
             var logEntry = new LogEntry(exception.Message)
                                 .AddRequestInfo(currentRequest)
-                                .AddBrowserInfo(currentRequest)
+                                .AddBrowserInfo(currentRequest.Browser, currentRequest.ServerVariables)
                                 .HideSensitiveInfo(
                                         config.SensitiveParams,
                                         config.RegexSensitiveParamPatterns)
@@ -63,7 +67,7 @@
 
             if (config.EnabledLogHttpHeader)
             {
-                logEntry.AddHeaderInfo(currentRequest);
+                logEntry.AddHeaderInfo(currentRequest.Headers);
             }
 
             if (config.EnabledLogHttpSession)
@@ -71,7 +75,7 @@
                 logEntry.AddSessionInfo(HttpContext.Current.Session);
             }
 
-            LogService.Write(logEntry, traceEventType);
+            LogService.Write(logEntry, traceEventType, category);
         }
     }
 }

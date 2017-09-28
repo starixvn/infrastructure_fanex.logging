@@ -7,7 +7,7 @@
 
     public class LoggingConfiguration
     {
-        static string[] defaultRegexSensitiveParamPatterns = {
+        private static string[] defaultRegexSensitiveParamPatterns = {
             Constants.QueryStringParamRegexPattern,
             Constants.BodyDataJsonParamRegexPattern
         };
@@ -17,15 +17,16 @@
         internal string[] RegexSensitiveParamPatterns;
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
-        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(HttpException), typeof(ThreadAbortException)};
+        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(HttpException), typeof(ThreadAbortException) };
 
         public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, string> getDbExceptionInfo)
         {
-            if (GetDbExceptionInfo == null
-                && getDbExceptionInfo != null)
+            if (getDbExceptionInfo == null)
             {
-                GetDbExceptionInfo = getDbExceptionInfo;
+                throw new ArgumentNullException(nameof(getDbExceptionInfo));
             }
+
+            GetDbExceptionInfo = getDbExceptionInfo;
 
             return this;
         }
@@ -34,8 +35,7 @@
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParamPatterns)
         {
-            if (SensitiveParams == null
-                && sensitiveParams != null)
+            if (sensitiveParams != null)
             {
                 SensitiveParams = sensitiveParams;
                 RegexSensitiveParamPatterns = regexSensitiveParamPatterns ?? defaultRegexSensitiveParamPatterns;
@@ -46,7 +46,7 @@
 
         public LoggingConfiguration GetHttpHeaderInfo()
         {
-            EnabledLogHttpHeader = true;            
+            EnabledLogHttpHeader = true;
 
             return this;
         }
@@ -71,7 +71,7 @@
         }
 
         /// <summary>
-        /// Ingore HttpException and ThreadAbortException 
+        /// Ingore HttpException and ThreadAbortException
         /// </summary>
         /// <typeparam name="TException"></typeparam>
         /// <returns>instance of WebLoggingConfiguration</returns>

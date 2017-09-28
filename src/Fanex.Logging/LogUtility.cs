@@ -55,7 +55,7 @@
                         $"Machine: {Environment.MachineName}",
                         $"OS: {Environment.OSVersion}",
                         $"System Time: {DateTime.Now}",
-                        $"User Domain Name: {Environment.UserDomainName}/{Environment.UserName}"));
+                        $"User Domain: {Environment.UserDomainName}/{Environment.UserName}"));
 
         internal static string GetMachineIP(IPHostEntry hostEntry)
         {
