@@ -45,6 +45,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Web.UnitTests\Fanex.Logging.Extensions.Web.UnitTests.csproj", "{FB308993-84A7-48CD-8CC8-3E1D734DAB65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Database.UnitTests\Fanex.Logging.Extensions.Database.UnitTests.csproj", "{B6EB39A7-0405-4863-B8B1-C81C84D3D140}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,14 @@ Global
 		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|x86.ActiveCfg = Release|Any CPU
 		{FB308993-84A7-48CD-8CC8-3E1D734DAB65}.Release|x86.Build.0 = Release|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Debug|x86.Build.0 = Debug|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,5 +178,6 @@ Global
 		{FA3DA2A7-F154-4992-BD63-F546E7307CE1} = {4B588921-BA80-4965-914A-93C70DBE8D99}
 		{DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB} = {4B588921-BA80-4965-914A-93C70DBE8D99}
 		{FB308993-84A7-48CD-8CC8-3E1D734DAB65} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
+		{B6EB39A7-0405-4863-B8B1-C81C84D3D140} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 	EndGlobalSection
 EndGlobal

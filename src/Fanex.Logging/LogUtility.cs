@@ -8,14 +8,14 @@
 
     public static class LogUtility
     {
-        public static ILogEntry AddExceptionInfo(this ILogEntry logEntry, Exception exception)
+        public static ILogData AddExceptionInfo(this ILogData logData, Exception exception)
         {
-            if (logEntry == null || exception == null)
+            if (logData == null || exception == null)
             {
-                return logEntry;
+                return logData;
             }                      
 
-            return logEntry.AddInfo(
+            return logData.AddInfo(
                         CombineInfo(
                         "EXCEPTION",
                         $"Source: {exception.Source}",
@@ -46,10 +46,10 @@
             return string.Join(separator, removedEmptyItemValues);
         }
 
-        public static ILogEntry AddWebServerInfo(this ILogEntry logEntry)
-            => logEntry == null
-            ? logEntry
-            : logEntry.AddInfo(CombineInfo(
+        public static ILogData AddWebServerInfo(this ILogData logData)
+            => logData == null
+            ? logData
+            : logData.AddInfo(CombineInfo(
                         "WEB SERVER INFO",
                         $"Server IP: {GetMachineIP(Dns.GetHostEntry(Dns.GetHostName()))}",
                         $"Machine: {Environment.MachineName}",

@@ -12,14 +12,14 @@
 
     public static class WebLoggingExtensions
     {
-        public static ILogEntry AddRequestInfo(this ILogEntry logEntry, HttpRequest request, NameValueCollection serverVariables = null)
+        public static ILogData AddRequestInfo(this ILogData logData, HttpRequest request, NameValueCollection serverVariables = null)
         {
-            if (logEntry == null || request == null)
+            if (logData == null || request == null)
             {
-                return logEntry;
+                return logData;
             }
 
-            return logEntry.AddInfo(
+            return logData.AddInfo(
                     LogUtility.CombineInfo(
                       "REQUEST INFO",
                       $"Url: {request.Url}",
@@ -30,17 +30,17 @@
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));                      
         }
 
-        public static ILogEntry AddBrowserInfo(
-            this ILogEntry logEntry, 
+        public static ILogData AddBrowserInfo(
+            this ILogData logData, 
             HttpCapabilitiesBase browser, 
             NameValueCollection serverVariables)
         {
-            if (logEntry == null || browser == null)
+            if (logData == null || browser == null)
             {
-                return logEntry;
+                return logData;
             }
 
-            return logEntry.AddInfo(
+            return logData.AddInfo(
                    LogUtility.CombineInfo(
                      "BROWSER INFO",
                         $"Browser: {browser.Browser} {browser.Version} (beta: {browser.Beta})",
@@ -51,16 +51,16 @@
                         $"User Agent: {serverVariables["HTTP_USER_AGENT"]}"));
         }
 
-        public static ILogEntry AddHeaderInfo(
-            this ILogEntry logEntry, 
+        public static ILogData AddHeaderInfo(
+            this ILogData logData, 
             NameValueCollection headers)
         {
-            if (logEntry == null || headers == null)
+            if (logData == null || headers == null)
             {
-                return logEntry;
+                return logData;
             }
 
-            return logEntry.AddInfo(
+            return logData.AddInfo(
                     LogUtility.CombineInfo(
                       "HTTP HEADERS",
                             headers
@@ -69,11 +69,11 @@
                             .ToArray()));
         }
 
-        public static ILogEntry AddSessionInfo(this ILogEntry logEntry, HttpSessionState session)
+        public static ILogData AddSessionInfo(this ILogData logData, HttpSessionState session)
         {
-            if (logEntry == null || session == null)
+            if (logData == null || session == null)
             {
-                return logEntry;
+                return logData;
             }
 
             var sessionData = session
@@ -81,7 +81,7 @@
                         .Cast<object>()
                         .Select(key => $"{key}: {session[key.ToString()]}");
 
-            return logEntry.AddInfo(
+            return logData.AddInfo(
                     LogUtility.CombineInfo(
                       "HTTP SESSION",
                       sessionData.ToArray()));

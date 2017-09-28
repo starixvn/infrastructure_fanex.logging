@@ -8,18 +8,18 @@
 
     public static class DatabaseLoggingExtensions
     {
-        public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception ex)
+        public static ILogData AddSqlInfo(this ILogData logData, Exception ex)
         {
-            if (logEntry == null || ex == null)
+            if (logData == null || ex == null)
             {
-                return logEntry;
+                return logData;
             }
 
             var sqlInfo = GetSqlExceptionInfo(ex);
 
             return string.IsNullOrWhiteSpace(sqlInfo)
-                        ? logEntry
-                        : logEntry.AddInfo(sqlInfo);
+                        ? logData
+                        : logData.AddInfo(sqlInfo);
         }
 
         public static string GetSqlExceptionInfo(Exception exception)
@@ -66,7 +66,7 @@
             return LogUtility.CombineInfo(
                 "DATABASE INFO",
                 $"SQL Server: {sqlConnectionString.DataSource}",
-                $"Database:  {ex.DbSetting.DbName}",
+                $"Database: {ex.DbSetting.DbName}",
                 $"Account: {sqlConnectionString.UserID}",
                 $"Stored Procedure: {ex.DbSetting.SpName}",
                 $"Line Number: {lineNumber}",

@@ -1,5 +1,4 @@
-﻿using Xunit;
-namespace Fanex.Logging.Extensions.Web.UnitTests
+﻿namespace Fanex.Logging.Extensions.Web.UnitTests
 {
     using System;
     using System.Collections;
@@ -18,7 +17,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
     public class WebLoggingExtensionsTests
     {
         private readonly HttpRequest request;
-        private ILogEntry logEntry;
+        private ILogData logData;
         private const string requestUrl = "/url/suburl?querystring=1";
         private const string Message = "Message";
         private readonly SessionStateItemCollection sessionStateItemCollection;
@@ -26,43 +25,42 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
         public WebLoggingExtensionsTests()
         {
             sessionStateItemCollection = new SessionStateItemCollection();
-            logEntry = new LogEntry(Message);
+            logData = new LogData(Message);
             request = CreateFakeHttpRequest(requestUrl);
         }
 
         [Fact]
-        public void AddRequestInfo_LogEntryIsNull_ReturnNull()
+        public void AddRequestInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            logEntry = null;
+            logData = null;
 
             // Act
-            logEntry = logEntry.AddRequestInfo(request);
+            logData = logData.AddRequestInfo(request);
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddRequestInfo_HttpRequestIsNull_ReturnLogEntry()
+        public void AddRequestInfo_HttpRequestIsNull_ReturnLogData()
         {
             // Act
-            var actualLogEntry = logEntry.AddRequestInfo(null);
+            var actualLogData = logData.AddRequestInfo(null);
 
             // Assert
-            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
+            Assert.Equal(logData.ToString(), actualLogData.ToString());
         }
 
-
         [Fact]
-        public void AddRequestInfo_Always_ReturnLogEntryWithRequestInfo()
+        public void AddRequestInfo_Always_ReturnLogDataWithRequestInfo()
         {
             // Arrange
             var serverVariables = new NameValueCollection();
             serverVariables.Add("HTTP_X_FORWARDED_FOR", "10.19.10.52");
 
             // Act
-            var actualLogEntry = logEntry.AddRequestInfo(HttpContext.Current.Request, serverVariables);
+            var actualLogData = logData.AddRequestInfo(HttpContext.Current.Request, serverVariables);
 
             // Assert
             Assert.Equal("Message"
@@ -74,7 +72,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
                         + "\r\n\tBody: "
                         + "\r\n\tClient IP: 10.19.10.52"
                         + "\r\n\tCurrent Thread Culture: en-US",
-                        actualLogEntry.ToString());
+                        actualLogData.ToString());
         }
 
         [Fact]
@@ -146,7 +144,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
         [InlineData("{ 'demo': 1, 'demo2': '33333' }", "{ 'demo': 1, 'demo2': '33333' }")]
         [InlineData("{ \\\"demo\\\": 1, \\\"demo2\\\": '33333' }", "{ \"demo\": 1, \"demo2\": '33333' }")]
         public void GetRequestBodyData_RequestStreamContainsJsonData_ReturnEmpty(
-            string requestJson, 
+            string requestJson,
             string expectedJson)
         {
             // Arrange
@@ -161,30 +159,30 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
         }
 
         [Fact]
-        public void AddSessionInfo_LogEntryIsNull_ReturnNull()
+        public void AddSessionInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            logEntry = null;
+            logData = null;
 
             // Act
-            logEntry = logEntry.AddSessionInfo(null);
+            logData = logData.AddSessionInfo(null);
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddSessionInfo_SessionIsNull_ReturnLogEntry()
+        public void AddSessionInfo_SessionIsNull_ReturnLogData()
         {
             // Act
-            var actualLogEntry = logEntry.AddSessionInfo(null);
+            var actualLogData = logData.AddSessionInfo(null);
 
             // Assert
-            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
+            Assert.Equal(logData.ToString(), actualLogData.ToString());
         }
 
         [Fact]
-        public void AddSessionInfo_SessionContainsData_ReturnLogEntryWithSessionData()
+        public void AddSessionInfo_SessionContainsData_ReturnLogDataWithSessionData()
         {
             // Arrange
             sessionStateItemCollection["sessiondata1"] = 1;
@@ -192,7 +190,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
             sessionStateItemCollection["sessiondata3"] = new object();
 
             // Act
-            var actualLogEntry = logEntry.AddSessionInfo(HttpContext.Current.Session);
+            var actualLogData = logData.AddSessionInfo(HttpContext.Current.Session);
 
             // Assert
             Assert.Equal("Message"
@@ -200,35 +198,35 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
                         + "HTTP SESSION:"
                         + "\r\n\tsessiondata1: 1"
                         + "\r\n\tsessiondata2: data"
-                        + "\r\n\tsessiondata3: System.Object", 
-                        actualLogEntry.ToString());
+                        + "\r\n\tsessiondata3: System.Object",
+                        actualLogData.ToString());
         }
 
         [Fact]
-        public void AddHeaderInfo_LogEntryIsNull_ReturnNull()
+        public void AddHeaderInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            logEntry = null;
+            logData = null;
 
             // Act
-            logEntry = logEntry.AddHeaderInfo(null);
+            logData = logData.AddHeaderInfo(null);
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddHeaderInfo_HeadersIsNull_ReturnLogEntry()
+        public void AddHeaderInfo_HeadersIsNull_ReturnLogData()
         {
             // Act
-            var actualLogEntry = logEntry.AddHeaderInfo(null);
+            var actualLogData = logData.AddHeaderInfo(null);
 
             // Assert
-            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
+            Assert.Equal(logData.ToString(), actualLogData.ToString());
         }
 
         [Fact]
-        public void AddHeaderInfo_HeadersContainsData_ReturnLogEntryWithHeaderData()
+        public void AddHeaderInfo_HeadersContainsData_ReturnLogDataWithHeaderData()
         {
             // Arrange
             var headers = new NameValueCollection();
@@ -236,7 +234,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
             headers.Add("headerdata2", "data");
 
             // Act
-            var actualLogEntry = logEntry.AddHeaderInfo(headers);
+            var actualLogData = logData.AddHeaderInfo(headers);
 
             // Assert
             Assert.Equal("Message"
@@ -244,34 +242,34 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
                         + "HTTP HEADERS:"
                         + "\r\n\theaderdata1: 1"
                         + "\r\n\theaderdata2: data",
-                        actualLogEntry.ToString());
+                        actualLogData.ToString());
         }
 
         [Fact]
-        public void AddBrowserInfo_LogEntryIsNull_ReturnNull()
+        public void AddBrowserInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            logEntry = null;
+            logData = null;
 
             // Act
-            logEntry = logEntry.AddBrowserInfo(Substitute.For<HttpCapabilitiesBase>(), new NameValueCollection());
+            logData = logData.AddBrowserInfo(Substitute.For<HttpCapabilitiesBase>(), new NameValueCollection());
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddBrowserInfo_BrowserIsNull_ReturnLogEntry()
+        public void AddBrowserInfo_BrowserIsNull_ReturnLogData()
         {
             // Act
-            var actualLogEntry = logEntry.AddBrowserInfo(null, new NameValueCollection());
+            var actualLogData = logData.AddBrowserInfo(null, new NameValueCollection());
 
             // Assert
-            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
+            Assert.Equal(logData.ToString(), actualLogData.ToString());
         }
 
         [Fact]
-        public void AddBrowserInfo_Always_ReturnLogEntryWithBrowserData()
+        public void AddBrowserInfo_Always_ReturnLogDataWithBrowserData()
         {
             // Arrange
             var userAgent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.10) Gecko/20100914 Firefox/3.6.10";
@@ -287,7 +285,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
             serverVariables.Add("HTTP_USER_AGENT", "Browser UserAgent");
 
             // Act
-            var actualLogEntry = logEntry.AddBrowserInfo(browser, serverVariables);
+            var actualLogData = logData.AddBrowserInfo(browser, serverVariables);
 
             // Assert
             Assert.Equal("Message"
@@ -299,9 +297,8 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
                         + "\r\n\tECMAScript: 3.0"
                         + "\r\n\tMobile: False (Unknown Unknown)"
                         + "\r\n\tUser Agent: Browser UserAgent",
-                        actualLogEntry.ToString());
+                        actualLogData.ToString());
         }
-
 
         private static Stream GenerateStreamFromString(string s)
         {
@@ -356,9 +353,11 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
                     case "MakeReadWrite":
                         makeReadWrite = method;
                         break;
+
                     case "MakeReadOnly":
                         makeReadOnly = method;
                         break;
+
                     case "AddStatic":
                         addStatic = method;
                         break;

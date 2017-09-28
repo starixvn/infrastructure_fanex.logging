@@ -404,10 +404,10 @@ namespace Fanex.Logging.UnitTests
         #region General Write Log
 
         [Fact]
-        public void Write_LogEntryIsNull_ExecuteWriteLogEntryWithDefaultMessage()
+        public void Write_LogDataIsNull_ExecuteWriteLogEntryWithDefaultMessage()
         {
             // Arrange
-            ILogEntry logEntry = null;
+            ILogData logEntry = null;
 
             // Act
             logger.Write(logEntry, TraceEventType.Error);
@@ -431,12 +431,12 @@ namespace Fanex.Logging.UnitTests
         [InlineData(TraceEventType.Suspend, TraceEventType.Information)]
         [InlineData(TraceEventType.Resume, TraceEventType.Information)]
         [InlineData(TraceEventType.Transfer, TraceEventType.Information)]
-        public void Write_LogEntryWithTraceEventType_ExecuteWriteLogEntry(
+        public void Write_LogDataWithTraceEventType_ExecuteWriteLogEntry(
             TraceEventType traceEventType,
             TraceEventType expectedTraceEventType)
         {
             // Arrange
-            ILogEntry logEntry = null;
+            ILogData logEntry = null;
 
             // Act
             logger.Write(logEntry, traceEventType);
@@ -451,12 +451,12 @@ namespace Fanex.Logging.UnitTests
 
 
         [Fact]
-        public void Write_LogEntryWithSpecificCategory_ExecuteWriteLogEntry()
+        public void Write_LogDataWithSpecificCategory_ExecuteWriteLogEntry()
         {
             // Arrange
             var message = "Message";
             var category = "SpecificCategory";
-            var logEntry = new LogEntry(message);
+            var logEntry = new LogData(message);
 
             // Act
             logger.Write(logEntry, TraceEventType.Error, category);
@@ -478,7 +478,7 @@ namespace Fanex.Logging.UnitTests
         {
             // Arrange
             var message = "Message";
-            var logEntry = new LogEntry(message);
+            var logEntry = new LogData(message);
 
             // Act
             logger.Write(logEntry, TraceEventType.Error, category);

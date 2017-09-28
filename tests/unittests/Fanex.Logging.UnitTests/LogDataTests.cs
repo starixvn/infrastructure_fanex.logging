@@ -5,14 +5,14 @@
     using Logging;
     using Xunit;
 
-    [Trait("Category", "LogEntry.cs")]
-    public class LogEntryTests
+    [Trait("Category", "LogData.cs")]
+    public class LogDataTests
     {
         [Fact]
         public void Constructor_DefaultConstructor_ReturnEmptyMessage()
         {
             // Act
-            var actualMessage = new LogEntry().ToString();
+            var actualMessage = new LogData().ToString();
 
             // Assert
             Assert.Empty(actualMessage);
@@ -25,7 +25,7 @@
             var message = "Message";
 
             // Act
-            var actualMessage = new LogEntry(message).ToString();
+            var actualMessage = new LogData(message).ToString();
 
             // Assert
             Assert.Equal(message, actualMessage);
@@ -38,68 +38,68 @@
         public void AddInfo_InfomationIsNullOrWhiteSpace_ReturnEmptyMessage(string information)
         {
             // Arrange
-            var logEntry = new LogEntry();
+            var logData = new LogData();
 
             // Act
-            logEntry.AddInfo(information);
+            logData.AddInfo(information);
 
             // Assert
-            Assert.Empty(logEntry.ToString());
+            Assert.Empty(logData.ToString());
         }
 
         [Fact]
         public void AddInfo_InformationIsNotEmpty_ReturnFormattedMessage()
         {
             // Arrange
-            var logEntry = new LogEntry();
+            var logData = new LogData();
             var information = "Information";
 
             // Act
-            logEntry.AddInfo(information);
+            logData.AddInfo(information);
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information", logData.ToString());
         }
 
         [Fact]
-        public void AddInfo_LogEntryHadInformation_InformationIsNotEmpty_ReturnFormattedMessage()
+        public void AddInfo_LogDataHadInformation_InformationIsNotEmpty_ReturnFormattedMessage()
         {
             // Arrange
-            var logEntry = new LogEntry("Information");
+            var logData = new LogData("Information");
             var information = "New Information";
 
             // Act
-            logEntry.AddInfo(information);
+            logData.AddInfo(information);
 
             // Assert
             Assert.Equal(
                 "Information" 
                 + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                 + "New Information", 
-                logEntry.ToString());
+                logData.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_NoSensitiveParam_ReturnMessage()
         {
             // Arrange
-            var logEntry = new LogEntry("Information");
+            var logData = new LogData("Information");
 
             // Act
-            logEntry.HideSensitiveInfo(Enumerable.Empty<string>(), "regexParam1");
+            logData.HideSensitiveInfo(Enumerable.Empty<string>(), "regexParam1");
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information", logData.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_NoSensitiveRegex_ReturnMessage()
         {
             // Arrange
-            var logEntry = new LogEntry("Information");
+            var logData = new LogData("Information");
 
             // Act
-            logEntry.HideSensitiveInfo(
+            logData.HideSensitiveInfo(
                 new List<string>
                 {
                     "password",
@@ -107,20 +107,20 @@
                 });
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information", logData.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_MessageContainsSensitiveInfo_RemoveSensitiveInfo()
         {
             // Arrange
-            var logEntry = 
-                new LogEntry("Information?securitycode=122323&password=434334&passerfdf=3434")
+            var logData = 
+                new LogData("Information?securitycode=122323&password=434334&passerfdf=3434")
                 .AddInfo("SECURITYCODE=43434")
                 .AddInfo("PASSword=43333klkldkflkdf");
 
             // Act
-            logEntry.HideSensitiveInfo(
+            logData.HideSensitiveInfo(
                 new List<string>
                 {
                     "password",
@@ -136,7 +136,7 @@
                 + "SECURITYCODE="
                 + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                 + "PASSword=",
-                logEntry.ToString());
+                logData.ToString());
         }
     }
 }

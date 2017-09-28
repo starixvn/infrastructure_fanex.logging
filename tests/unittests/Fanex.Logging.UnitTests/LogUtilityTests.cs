@@ -9,40 +9,40 @@ namespace Fanex.Logging.UnitTests
     public class LogUtilityTests
     {
         [Fact]
-        public void AddExceptionInfo_LogEntryIsNull_ReturnNull()
+        public void AddExceptionInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            LogEntry logEntry = null;
+            LogData logData = null;
 
             // Act
-            logEntry.AddExceptionInfo(new Exception());
+            logData.AddExceptionInfo(new Exception());
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddExceptionInfo_ExceptionIsNull_ReturnLogEntry()
+        public void AddExceptionInfo_ExceptionIsNull_ReturnLogData()
         {
             // Arrange
-            var logEntry = new LogEntry();
+            var logData = new LogData();
 
             // Act
-            var actualLogEntry = logEntry.AddExceptionInfo(null);
+            var actualLogData = logData.AddExceptionInfo(null);
 
             // Assert
-            Assert.Same(logEntry, actualLogEntry);
+            Assert.Same(logData, actualLogData);
         }
 
         [Fact]
-        public void AddExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
+        public void AddExceptionInfo_Always_ReturnLogDataWithExceptionInfo()
         {
             // Arrange
-            var logEntry = new LogEntry();
+            var logData = new LogData();
             var customException = new DllNotFoundException();
 
             // Act
-            logEntry.AddExceptionInfo(customException);
+            logData.AddExceptionInfo(customException);
 
             // Assert
             Assert.Equal(
@@ -52,7 +52,7 @@ namespace Fanex.Logging.UnitTests
                     + "\r\n\tTarget Site: "
                     + "\r\n\tStack Trace: "
                     + "\r\n\tDetails: System.DllNotFoundException: Dll was not found.",
-                logEntry.ToString());
+                logData.ToString());
         }
 
         [Fact]
@@ -106,29 +106,29 @@ namespace Fanex.Logging.UnitTests
         }
 
         [Fact]
-        public void AddWebServerInfo_LogEntryIsNull_ReturnNull()
+        public void AddWebServerInfo_LogDataIsNull_ReturnNull()
         {
             // Arrange
-            LogEntry logEntry = null;
+            LogData logData = null;
 
             // Act
-            logEntry.AddWebServerInfo();
+            logData.AddWebServerInfo();
 
             // Assert
-            Assert.Null(logEntry);
+            Assert.Null(logData);
         }
 
         [Fact]
-        public void AddWebServerInfo_Always_ReturnLogEntryWithServerInformation()
+        public void AddWebServerInfo_Always_ReturnLogDataWithServerInformation()
         {
             // Arrange
-            var logEntry = new LogEntry();
+            var logData = new LogData();
 
             // Act
-            logEntry.AddWebServerInfo();
+            logData.AddWebServerInfo();
 
             // Assert
-            var logResult = logEntry.ToString();
+            var logResult = logData.ToString();
             Assert.True(
                 logResult.Contains("WEB SERVER INFO")
                 && logResult.Contains("Server IP:")
