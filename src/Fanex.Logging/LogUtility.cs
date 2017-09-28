@@ -13,7 +13,7 @@
             if (logEntry == null || exception == null)
             {
                 return logEntry;
-            }
+            }                      
 
             return logEntry.AddInfo(
                         CombineInfo(
@@ -37,7 +37,7 @@
             => string.Join(
                 NewLine,
                 $"{infoGroup}:",
-                $"{Tab}{JoinWithoutEmptyItem(NewLine+Tab, infoItems)}");
+                $"{Tab}{JoinWithoutEmptyItem(Segment, infoItems)}");
 
         public static string JoinWithoutEmptyItem(string separator, params string[] values)
         {
