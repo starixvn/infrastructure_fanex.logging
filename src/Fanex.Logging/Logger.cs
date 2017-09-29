@@ -11,7 +11,7 @@
         private static object syncRoot = new object();
 
         private readonly string defaultLogCategory;
-        internal readonly ILogEngineAdapter logAdapter;
+        internal readonly ILoggingEngineAdapter logAdapter;
 
         private Logger() 
             : this(null, null, LoggerConfiguration.Run)
@@ -19,11 +19,11 @@
         }
 
         internal Logger(
-            ILogEngineAdapter logAdapter, 
+            ILoggingEngineAdapter logAdapter, 
             string defaultLogCategory,
             Action initLogConfig)
         {
-            this.logAdapter = logAdapter ?? new LogEngineAdapter();
+            this.logAdapter = logAdapter ?? new EntlibLoggingEngine();
             this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
             initLogConfig();
         }
@@ -156,17 +156,18 @@
             }
         }
 
-        public void Write(ILogData logData, TraceEventType traceEventType)
+        public void Write(ILogContentBuilder logData, TraceEventType traceEventType)
             => WriteLog(
-                (logData ?? LogData.NoInformationLogData).ToString(),
+                (logData ?? LogContentBuilder.NoInformationLogData).ToString(),
                 defaultLogCategory,
                 traceEventType);
 
-        public void Write(ILogData logData, TraceEventType traceEventType, string category)
+        public void Write(ILogContentBuilder logData, TraceEventType traceEventType, string category)
              => WriteLog(
-                    (logData ?? LogData.NoInformationLogData).ToString(),
+                    (logData ?? LogContentBuilder.NoInformationLogData).ToString(),
                     category,
                     traceEventType);
+
 
         #endregion WriteLog functions
     }

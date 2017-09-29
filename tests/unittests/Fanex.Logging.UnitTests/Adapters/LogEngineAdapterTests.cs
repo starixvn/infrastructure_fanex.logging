@@ -11,15 +11,15 @@
     [Trait("Category", "Adapters/LogEngineAdapter.cs")]
     public class LogEngineAdapterTests
     {
-        private readonly LogEngineAdapter logEngineAdapter;
+        private readonly EntlibLogging logEngineAdapter;
         private readonly Action<MPEL.LogEntry> writeLog;
 
         public LogEngineAdapterTests()
         {
-            logEngineAdapter = new LogEngineAdapter();
+            logEngineAdapter = new EntlibLogging();
             writeLog = Substitute.For<Action<MPEL.LogEntry>>();
 
-            LogEngineAdapter.WriteLog = writeLog;
+            EntlibLogging.WriteLog = writeLog;
         }
 
         [Fact]

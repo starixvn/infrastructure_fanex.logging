@@ -1,23 +1,18 @@
 ﻿namespace Fanex.Logging.Adapters
 {
     using System;
-    using MPEL = Microsoft.Practices.EnterpriseLibrary.Logging;
+    using Microsoft.Practices.EnterpriseLibrary.Logging;
 
-    internal interface ILogEngineAdapter
-    {
-        void Write(LogEntryAdapter logEntryAdapter);
-    }
-
-    internal class LogEngineAdapter : ILogEngineAdapter
+    internal class EntlibLogging : ILoggingEngine
     {
         [ThreadStatic]
-        private static Action<MPEL.LogEntry> writeLog;
+        private static Action<LogEntry> writeLog;
 
-        internal static Action<MPEL.LogEntry> WriteLog
+        internal static Action<LogEntry> WriteLog
         {
             get
             {
-                return writeLog ?? MPEL.Logger.Write;
+                return writeLog ?? Logger.Write;
             }
 
             set
@@ -28,7 +23,7 @@
 
         public void Write(LogEntryAdapter logEntryAdapter)
         {
-            var logEntry = new MPEL.LogEntry
+            var logEntry = new LogEntry
             {
                 Message = logEntryAdapter.Message,
                 Title = logEntryAdapter.Category,
