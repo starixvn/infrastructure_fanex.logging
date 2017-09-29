@@ -4,6 +4,9 @@
     using System.Net;
     using Xunit;
     using Fanex.Logging;
+    using static Fanex.Logging.DefaultLogContentExtractors;
+
+
 
     [Trait("Category", "LogUtility.cs")]
     public class LogUtilityTests
@@ -84,7 +87,7 @@
             };
 
             // Act
-            var machineIP = LogUtility.GetMachineIP(hostEntry);
+            var machineIP = GetMachineIP(hostEntry);
 
             // Assert
             Assert.Equal("160.134.1.0", machineIP);
@@ -100,7 +103,7 @@
             };
 
             // Act
-            var machineIP = LogUtility.GetMachineIP(hostEntry);
+            var machineIP = GetMachineIP(hostEntry);
 
             // Assert
             Assert.Empty(machineIP);

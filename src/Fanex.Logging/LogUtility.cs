@@ -22,20 +22,6 @@
                 $"{infoGroup}:",
                 $"{Tab}{string.Join(Segment, infoItems)}");
 
-        internal static string GetMachineIP(IPHostEntry hostEntry)
-        {
-            if (hostEntry.AddressList != null)
-            {
-                foreach (var ip in hostEntry.AddressList)
-                {
-                    if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return ip.ToString();
-                    }
-                }
-            }
-
-            return string.Empty;
-        }
+       
     }
 }

@@ -20,7 +20,7 @@
                 return logEntry;
             }
 
-            return logEntry.AddInfo(GetRequsetInfo(request, serverVariables));
+            return logEntry.AddContent(GetRequsetInfo(request, serverVariables));
         }
 
         public static ILogEntry AddBrowserInfo(
@@ -33,8 +33,8 @@
                 return logEntry;
             }
 
-            return logEntry.AddInfo(GetBrowserInfo(browser, serverVariables));
-        }   
+            return logEntry.AddContent(GetBrowserInfo(browser, serverVariables));
+        }
 
         public static ILogEntry AddHeaderInfo(
             this ILogEntry logEntry,
@@ -45,8 +45,8 @@
                 return logEntry;
             }
 
-            return logEntry.AddInfo(GetRequestHeader(headers));
-        }     
+            return logEntry.AddContent(GetRequestHeader(headers));
+        }
 
         public static ILogEntry AddSessionInfo(this ILogEntry logEntry, HttpSessionState session)
         {
@@ -55,7 +55,7 @@
                 return logEntry;
             }
 
-            return logEntry.AddInfo(GetSessionInfo(session));
-        }          
+            return logEntry.AddContent(GetSessionInfo(session));
+        }
     }
 }

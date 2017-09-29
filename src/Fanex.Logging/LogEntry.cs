@@ -61,6 +61,30 @@
             return this;
         }
 
+        public ILogEntry Section(string sectionName)
+        {
+            if (!string.IsNullOrWhiteSpace(sectionName))
+            {
+                stringBuilder.AppendLine(sectionName);
+            }
+
+            return this;
+        }
+
+        public ILogEntry AddContent(List<string> contents)
+        {
+            if (contents == null)
+            {
+                throw new ArgumentNullException(nameof(contents));
+            }
+
+            contents.ForEach(content => {
+                stringBuilder.AppendLine($"\t{content}");
+            });
+
+            return this;
+        }
+
         public ILogEntry HideSensitiveInfo(
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParams)

@@ -62,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogEntryExtensions.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="WebLogContentExtractors.cs" />
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="GlobalSuppressions.cs" />

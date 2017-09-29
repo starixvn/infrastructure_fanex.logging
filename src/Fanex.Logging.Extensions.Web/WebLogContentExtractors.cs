@@ -10,42 +10,38 @@
     using System.Web;
     using System.Web.Configuration;
     using System.Web.SessionState;
-    using Fanex.Logging;
 
     public static class WebLogContentExtractors
     {
-        public static string GetRequsetInfo(HttpRequest request, NameValueCollection serverVariables = null)
-            => LogUtility.CombineInfo(
-                      "REQUEST INFO",
+        public static List<string> GetRequsetInfo(HttpRequest request, NameValueCollection serverVariables = null)
+                => new List<string> {
                       $"Url: {request.Url}",
                       $"Url Referrer: {request.UrlReferrer}",
                       $"Form Variables: {request.Form}",
                       $"Body: {request.InputStream.GetRequestBodyData()}",
                       $"Client IP: {(serverVariables ?? request.ServerVariables).GetClientIP()}",
-                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}");
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"};
 
-        public static string GetBrowserInfo(HttpCapabilitiesBase browser, NameValueCollection serverVariables)
-              => LogUtility.CombineInfo(
-                   "BROWSER INFO",
+        public static List<string> GetBrowserInfo(HttpCapabilitiesBase browser, NameValueCollection serverVariables)
+                => new List<string> {
                       $"{nameof(browser.Browser)}: {browser.Browser} {browser.Version} ({nameof(browser.Beta)}: {browser.Beta})",
                       $"{nameof(browser.Platform)}: {browser.Platform}",
                       $"{nameof(browser.Crawler)}: {browser.Crawler}",
                       $"{nameof(browser.EcmaScriptVersion)}: {browser.EcmaScriptVersion}",
                       $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",
-                      $"User Agent: {serverVariables["HTTP_USER_AGENT"]}");
+                      $"User Agent: {serverVariables["HTTP_USER_AGENT"]}" };
 
-        public static string GetSessionInfo(HttpSessionState session)
-             => LogUtility.CombineInfo("HTTP SESSION", session
+        public static List<string> GetSessionInfo(HttpSessionState session)
+                => session
                         .Keys
                         .Cast<object>()
-                        .Select(key => $"{key}: {session[key.ToString()]}").ToArray());
+                        .Select(key => $"{key}: {session[key.ToString()]}").ToList();
 
-        public static string GetRequestHeader(NameValueCollection headers)
-            => LogUtility.CombineInfo(
-                   "REQUEST HEADERS",
-                         headers
+        public static List<string> GetRequestHeader(NameValueCollection headers)
+                => headers
                          .AllKeys
                          .Select(key => $"{key}: {headers[key]}")
-                         .ToArray());
+                         .ToList();
+
     }
 }

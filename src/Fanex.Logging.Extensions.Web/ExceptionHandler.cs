@@ -59,23 +59,23 @@
 
             var logEntry = new LogEntry()
                 .AddContent(() => exception.Message)
-                .AddContent(() => GetRequsetInfo(request))
-                .AddContent(() => GetBrowserInfo(request.Browser, request.ServerVariables))
+                .Section("REQUEST INFO").AddContent(GetRequsetInfo(request))
+                .Section("BROWSER INFO").AddContent(GetBrowserInfo(request.Browser, request.ServerVariables))                
                 .HideSensitiveInfo(config.SensitiveParams, config.RegexSensitiveParamPatterns)
-                .AddContent(() => config.GetDbExceptionInfo(exception))
-                .AddContent(() => GetWebServerInfo())
-                .AddContent(() => GetRequestHeader(request.Headers))
-                .AddContent(() => GetSessionInfo(HttpContext.Current.Session))
+                .Section("DATABASE").AddContent(() => config.GetDbExceptionInfo(exception))
+                .Section("WEB SERVER").AddContent(GetServerInfo())      
                 .AddContent(() => GetExceptionInfo(exception));
 
             if (config.EnabledLogHttpHeader)
             {
-                logEntry.AddContent(() => GetRequestHeader(request.Headers));                
+                logEntry
+                    .Section("REQUEST HEADERS").AddContent(GetRequestHeader(request.Headers));             
             }
 
             if (config.EnabledLogHttpSession)
             {
-                logEntry.AddContent(() => GetSessionInfo(HttpContext.Current.Session));
+                logEntry
+                     .Section("REQUEST SESSION").AddContent(GetSessionInfo(HttpContext.Current.Session));
             }
 
             LogService.Write(logEntry, traceEventType, category);

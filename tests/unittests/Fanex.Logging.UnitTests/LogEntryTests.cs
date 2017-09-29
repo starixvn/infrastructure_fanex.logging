@@ -62,13 +62,13 @@
             Assert.Equal("Information", logEntry.ToString());
         }
 
-        [Fact]
-        public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
-        {
-            var logEntry = new LogEntry();
+        //[Fact]
+        //public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
+        //{
+        //    var logEntry = new LogEntry();
 
-            Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(null));
-        }
+        //    Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(null));
+        //}
 
         [Theory]
         [InlineData("initial message 1", "message to be append 1" )]
