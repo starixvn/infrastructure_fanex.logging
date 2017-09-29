@@ -69,6 +69,7 @@
             Assert.Equal(
                 "infoGroup:"
                 + "\r\n\tItem1"
+                + "\r\n\t"
                 + "\r\n\tItem2",
                 actualCombinedMessage);
         }
