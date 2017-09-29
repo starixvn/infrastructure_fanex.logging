@@ -94,6 +94,10 @@
       <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
       <Name>Fanex.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\extensions\Fanex.Logging.Extensions.Database.V59.UnitTests\Fanex.Logging.Extensions.Database.V59.UnitTests.csproj">
+      <Project>{c90bf9f0-6d69-4916-b441-76fe72490014}</Project>
+      <Name>Fanex.Logging.Extensions.Database.V59.UnitTests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

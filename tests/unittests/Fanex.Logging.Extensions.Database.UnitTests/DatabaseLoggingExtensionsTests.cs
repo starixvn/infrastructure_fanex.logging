@@ -85,7 +85,7 @@
         public void AddSqlInfo_ExceptionIsSqlException_ReturnLogEntryWithDbInfo()
         {
             // Arrange
-            var sqlException = CreateSqlException(10);
+            var sqlException = V59.UnitTests.DatabaseLoggingExtensionsTests.CreateSqlException("server", "proccedure");
 
             // Act
             logEntry.AddSqlInfo(sqlException);
@@ -104,11 +104,11 @@
         public void AddSqlInfo_InnerExceptionIsSqlException_ReturnLogEntryWithDbInfo()
         {
             // Arrange
-            var sqlException = CreateSqlException(10);
+            var sqlException = V59.UnitTests.DatabaseLoggingExtensionsTests.CreateSqlException("server", "proccedure");
             var exception = new Exception("message", sqlException);
 
             // Act
-            logEntry.AddSqlInfo(sqlException);
+            logEntry.AddSqlInfo(exception);
 
             // Assert
             Assert.Equal("Message"
@@ -118,30 +118,6 @@
                         + "\r\n\tStored Procedure: proccedure"
                         + "\r\n\tLine Number: 100",
                         logEntry.ToString());
-        }
-
-        private SqlException CreateSqlException(int number)
-        {
-            var collectionConstructor = typeof(SqlErrorCollection)
-              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
-              null, //binder
-              new Type[0],
-              null);
-            var addMethod = typeof(SqlErrorCollection).GetMethod("Add", BindingFlags.NonPublic | BindingFlags.Instance);
-            var errorCollection = (SqlErrorCollection)collectionConstructor.Invoke(null);
-            var errorConstructor = typeof(SqlError).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
-              new[]
-              { typeof (int), typeof (byte), typeof (byte), typeof (string), typeof(string), typeof (string), typeof (int), typeof (uint)
-              }, null);
-            var error =
-              errorConstructor.Invoke(new object[] { number, (byte)0, (byte)0, "server", "errMsg", "proccedure", 100, (uint)0 });
-            addMethod.Invoke(errorCollection, new[] { error });
-            var constructor = typeof(SqlException)
-              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
-                null, //binder
-                new[] { typeof(string), typeof(SqlErrorCollection), typeof(Exception), typeof(Guid) },
-                null); //param modifiers
-            return (SqlException)constructor.Invoke(new object[] { "Error message", errorCollection, new DataException(), Guid.NewGuid() });
         }
     }
 }
