@@ -67,7 +67,8 @@
 
             logEntry
                 .AddContent(() => exception.Message)
-                .AddContent(() => WebLoggingExtensions.GetRequsetInfo(currentRequest));
+                .AddContent(() => WebLoggingExtensions.GetRequsetInfo(currentRequest))
+                .AddContent(() => WebLoggingExtensions.GetRequestHeader(currentRequest.Headers));
 
                 
                 

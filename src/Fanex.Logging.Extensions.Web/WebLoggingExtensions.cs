@@ -87,7 +87,15 @@
                             .AllKeys
                             .Select(key => $"{key}: {headers[key]}")
                             .ToArray()));
-        }        
+        }
+
+        public static string GetRequestHeader(NameValueCollection headers)
+            => LogUtility.CombineInfo(
+                      "HTTP HEADERS",
+                            headers
+                            .AllKeys
+                            .Select(key => $"{key}: {headers[key]}")
+                            .ToArray());
 
         public static ILogEntry AddSessionInfo(this ILogEntry logEntry, HttpSessionState session)
         {
