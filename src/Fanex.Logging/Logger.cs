@@ -19,11 +19,11 @@
         }
 
         internal Logger(
-            ILoggingEngine logAdapter,
+            ILoggingEngine loggingEngine,
             string defaultLogCategory,
             Action initLogConfig)
         {
-            this.loggingEngine = logAdapter ?? new EntlibLogging();
+            this.loggingEngine = loggingEngine ?? new EntlibLogging();
             this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
             initLogConfig();
         }
