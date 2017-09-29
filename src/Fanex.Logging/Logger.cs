@@ -11,7 +11,7 @@
         private static object syncRoot = new object();
 
         private readonly string defaultLogCategory;
-        internal readonly ILoggingEngineAdapter logAdapter;
+        internal readonly ILoggingEngine loggingEngine;
 
         private Logger() 
             : this(null, null, LoggerConfiguration.Run)
@@ -19,11 +19,11 @@
         }
 
         internal Logger(
-            ILoggingEngineAdapter logAdapter, 
+            ILoggingEngine logAdapter, 
             string defaultLogCategory,
             Action initLogConfig)
         {
-            this.logAdapter = logAdapter ?? new EntlibLoggingEngine();
+            this.loggingEngine = logAdapter ?? new EntlibLogging();
             this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
             initLogConfig();
         }
@@ -138,7 +138,7 @@
                 Category = string.IsNullOrEmpty(category) ? defaultLogCategory : category
             };
 
-            logAdapter.Write(logEntry);
+            loggingEngine.Write(logEntry);
         }
 
         private static TraceEventType GetSevirity(TraceEventType traceEventType)
@@ -156,15 +156,15 @@
             }
         }
 
-        public void Write(ILogContentBuilder logData, TraceEventType traceEventType)
+        public void Write(ILogData logData, TraceEventType traceEventType)
             => WriteLog(
-                (logData ?? LogContentBuilder.NoInformationLogData).ToString(),
+                (logData ?? LogData.NoInformationLogData).ToString(),
                 defaultLogCategory,
                 traceEventType);
 
-        public void Write(ILogContentBuilder logData, TraceEventType traceEventType, string category)
+        public void Write(ILogData logData, TraceEventType traceEventType, string category)
              => WriteLog(
-                    (logData ?? LogContentBuilder.NoInformationLogData).ToString(),
+                    (logData ?? LogData.NoInformationLogData).ToString(),
                     category,
                     traceEventType);
 

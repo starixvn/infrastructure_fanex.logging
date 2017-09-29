@@ -11,14 +11,14 @@ namespace Fanex.Logging.UnitTests
     public class LoggerTests
     {
         private readonly Logger logger;
-        private readonly ILogEngineAdapter logAdapter;
+        private readonly ILoggingEngine logEngine;
         private readonly string defaultCategory;
 
         public LoggerTests()
         {
-            logAdapter = Substitute.For<ILogEngineAdapter>();
+            logEngine = Substitute.For<ILoggingEngine>();
             defaultCategory = "defaultCategory";
-            logger = new Logger(logAdapter, defaultCategory, () => { });
+            logger = new Logger(logEngine, defaultCategory, () => { });
         }
 
         #region Write Debug Log
@@ -33,7 +33,7 @@ namespace Fanex.Logging.UnitTests
             logger.Debug(message);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Verbose
@@ -51,7 +51,7 @@ namespace Fanex.Logging.UnitTests
             logger.Debug(message, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Verbose
@@ -69,7 +69,7 @@ namespace Fanex.Logging.UnitTests
             logger.Debug(message, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Verbose
@@ -88,7 +88,7 @@ namespace Fanex.Logging.UnitTests
             logger.Debug(message, category, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Verbose
@@ -109,7 +109,7 @@ namespace Fanex.Logging.UnitTests
             logger.Info(message);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Information
@@ -127,7 +127,7 @@ namespace Fanex.Logging.UnitTests
             logger.Info(message, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Information
@@ -145,7 +145,7 @@ namespace Fanex.Logging.UnitTests
             logger.Info(message, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Information
@@ -164,7 +164,7 @@ namespace Fanex.Logging.UnitTests
             logger.Info(message, category, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Information
@@ -185,7 +185,7 @@ namespace Fanex.Logging.UnitTests
             logger.Warn(message);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Warning
@@ -203,7 +203,7 @@ namespace Fanex.Logging.UnitTests
             logger.Warn(message, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Warning
@@ -221,7 +221,7 @@ namespace Fanex.Logging.UnitTests
             logger.Warn(message, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Warning
@@ -240,7 +240,7 @@ namespace Fanex.Logging.UnitTests
             logger.Warn(message, category, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Warning
@@ -261,7 +261,7 @@ namespace Fanex.Logging.UnitTests
             logger.Critical(message);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Critical
@@ -279,7 +279,7 @@ namespace Fanex.Logging.UnitTests
             logger.Critical(message, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Critical
@@ -297,7 +297,7 @@ namespace Fanex.Logging.UnitTests
             logger.Critical(message, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Critical
@@ -316,7 +316,7 @@ namespace Fanex.Logging.UnitTests
             logger.Critical(message, category, args);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
                                 && logEntry.Severity == TraceEventType.Critical
@@ -337,7 +337,7 @@ namespace Fanex.Logging.UnitTests
             logger.Error(message);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Error
@@ -355,7 +355,7 @@ namespace Fanex.Logging.UnitTests
             logger.Error(message, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == message
                                 && logEntry.Severity == TraceEventType.Error
@@ -373,7 +373,7 @@ namespace Fanex.Logging.UnitTests
             logger.Error(message, exception);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message\nSystem.NotSupportedException: Specified method is not supported."
                                 && logEntry.Severity == TraceEventType.Error
@@ -392,7 +392,7 @@ namespace Fanex.Logging.UnitTests
             logger.Error(message, category, exception);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     logEntry => logEntry.Message == "Message\nSystem.NotSupportedException: Specified method is not supported."
                                 && logEntry.Severity == TraceEventType.Error
@@ -413,7 +413,7 @@ namespace Fanex.Logging.UnitTests
             logger.Write(logEntry, TraceEventType.Error);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     le => le.Message == "This log has no information."
                                 && le.Severity == TraceEventType.Error
@@ -442,7 +442,7 @@ namespace Fanex.Logging.UnitTests
             logger.Write(logEntry, traceEventType);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     le => le.Message == "This log has no information."
                                 && le.Severity == expectedTraceEventType
@@ -462,7 +462,7 @@ namespace Fanex.Logging.UnitTests
             logger.Write(logEntry, TraceEventType.Error, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     le => le.Message == message
                                 && le.Severity == TraceEventType.Error
@@ -484,7 +484,7 @@ namespace Fanex.Logging.UnitTests
             logger.Write(logEntry, TraceEventType.Error, category);
 
             // Assert
-            logAdapter.Received().Write(
+            logEngine.Received().Write(
                 Arg.Is<LogEntryAdapter>(
                     le => le.Message == message
                                 && le.Severity == TraceEventType.Error
