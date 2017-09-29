@@ -49,7 +49,7 @@
                 throw new ArgumentNullException(nameof(contentExtractor));
             }
 
-            stringBuilder.Append(contentExtractor());
+            stringBuilder.AppendLine(contentExtractor());
 
             return this;
         }

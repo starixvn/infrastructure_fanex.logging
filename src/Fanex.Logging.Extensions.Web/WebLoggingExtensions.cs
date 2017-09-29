@@ -30,6 +30,16 @@
                       $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));
         }
 
+        public static string GetRequsetInfo(HttpRequest request, NameValueCollection serverVariables = null)
+            => LogUtility.CombineInfo(
+                      "REQUEST INFO",
+                      $"Url: {request.Url}",
+                      $"Url Referrer: {request.UrlReferrer}",
+                      $"Form Variables: {request.Form}",
+                      $"Body: {GetRequestBodyData(request.InputStream)}",
+                      $"Client IP: {GetClientIP(serverVariables ?? request.ServerVariables)}",
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}");
+
         public static ILogData AddBrowserInfo(
             this ILogData logData,
             HttpCapabilitiesBase browser,
@@ -51,6 +61,16 @@
                         $"User Agent: {serverVariables["HTTP_USER_AGENT"]}"));
         }
 
+        public static string GetBrowserInfo(HttpCapabilitiesBase browser, NameValueCollection serverVariables)
+                => LogUtility.CombineInfo(
+                     "BROWSER INFO",
+                        $"Browser: {browser.Browser} {browser.Version} (beta: {browser.Beta})",
+                        $"Platform: {browser.Platform}",
+                        $"Crawler: {browser.Crawler}",
+                        $"ECMAScript: {browser.EcmaScriptVersion}",
+                        $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",
+                        $"User Agent: {serverVariables["HTTP_USER_AGENT"]}");
+
         public static ILogData AddHeaderInfo(
             this ILogData logData,
             NameValueCollection headers)
@@ -67,7 +87,7 @@
                             .AllKeys
                             .Select(key => $"{key}: {headers[key]}")
                             .ToArray()));
-        }
+        }        
 
         public static ILogData AddSessionInfo(this ILogData logData, HttpSessionState session)
         {

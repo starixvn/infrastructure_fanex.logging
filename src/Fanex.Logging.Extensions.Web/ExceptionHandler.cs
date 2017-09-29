@@ -65,6 +65,13 @@
                                 .AddWebServerInfo()
                                 .AddExceptionInfo(exception);
 
+            logData
+                .AddContent(() => exception.Message)
+                .AddContent(() => WebLoggingExtensions.GetRequsetInfo(currentRequest));
+
+                
+                
+
             if (config.EnabledLogHttpHeader)
             {
                 logData.AddHeaderInfo(currentRequest.Headers);
