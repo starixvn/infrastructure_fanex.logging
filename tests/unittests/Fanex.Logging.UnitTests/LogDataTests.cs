@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Logging.UnitTests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Logging;
@@ -59,6 +60,26 @@
 
             // Assert
             Assert.Equal("Information", logData.ToString());
+        }
+
+        [Fact]
+        public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
+        {
+            var logData = new LogData();
+
+            Assert.Throws<ArgumentNullException>(() => logData.AddContent(null));
+        }
+
+        [Theory]
+        [InlineData("initial message 1", "message to be append 1" )]
+        [InlineData("initial message 2", "message to be append 2" )]        
+        public void AddContent_ExtractorIsNotNull_AppendMessageToLogData(string initialMessage, string appendMessage)
+        {
+            var logData = new LogData(initialMessage);
+            
+            logData.AddContent(() => appendMessage);
+
+            Assert.Equal(logData.ToString(), initialMessage + appendMessage);
         }
 
         [Fact]

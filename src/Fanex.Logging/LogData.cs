@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Logging
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -37,6 +38,18 @@
 
                 stringBuilder.Append(information);
             }
+
+            return this;
+        }
+
+        public ILogData AddContent(Func<string> contentExtractor)
+        {
+            if (contentExtractor == null)
+            {
+                throw new ArgumentNullException(nameof(contentExtractor));
+            }
+
+            stringBuilder.Append(contentExtractor());
 
             return this;
         }
