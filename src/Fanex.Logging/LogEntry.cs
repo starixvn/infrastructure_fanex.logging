@@ -49,7 +49,14 @@
                 throw new ArgumentNullException(nameof(contentExtractor));
             }
 
-            stringBuilder.AppendLine(contentExtractor());
+            string content = contentExtractor();
+
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                stringBuilder
+                    .AppendLine(contentExtractor())
+                    .AppendLine();
+            }
 
             return this;
         }

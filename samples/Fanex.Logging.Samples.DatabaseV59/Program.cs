@@ -4,6 +4,7 @@
     using Data;
     using Data.Configuration;
     using Extensions.Database.V59;
+    using Logging.Extensions.Database.V59;
 
     public static class Program
     {
@@ -25,7 +26,7 @@
         {
             var errorInfo = new LogEntry(exception.Message)
                                .AddSqlInfo(exception)
-                               .AddWebServerInfo()
+                               .AddServerInfo()
                                .AddExceptionInfo(exception)
                                .AddInfo(
                                    LogUtility.CombineInfo(

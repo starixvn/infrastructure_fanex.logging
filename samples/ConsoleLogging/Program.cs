@@ -13,37 +13,37 @@
     {
         public static void Main(string[] args)
         {
-            try
-            {
-                //TestLogging();
-                SimulateSqlException();
-            }
-            catch (Exception exception)
-            {
-                var logEntry = new LogEntry(exception.Message)
-                               .AddSqlInfo(exception)
-                               .AddWebServerInfo()
-                               .AddExceptionInfo(exception)
-                               .AddInfo(
-                                   LogUtility.CombineInfo(
-                                       "INFO GROUP",
-                                        "Info 1",
-                                        "Info 2"));
+            //try
+            //{
+            //    //TestLogging();
+            //    SimulateSqlException();
+            //}
+            //catch (Exception exception)
+            //{
+            //    var logEntry = new LogEntry(exception.Message)
+            //                   .AddSqlInfo(exception)
+            //                   .AddServerInfo()
+            //                   .AddExceptionInfo(exception)
+            //                   .AddInfo(
+            //                       LogUtility.CombineInfo(
+            //                           "INFO GROUP",
+            //                            "Info 1",
+            //                            "Info 2"));
 
-                LogService.Write(logEntry, TraceEventType.Error);
-                LogService.Write(logEntry, TraceEventType.Warning);
-                LogService.Write(logEntry, TraceEventType.Verbose);
-                LogService.Write(logEntry, TraceEventType.Critical);
-                LogService.Write(logEntry, TraceEventType.Information);
-                LogService.Write(logEntry, TraceEventType.Start);
-                LogService.Write(logEntry, TraceEventType.Stop);
+            //    LogService.Write(logEntry, TraceEventType.Error);
+            //    LogService.Write(logEntry, TraceEventType.Warning);
+            //    LogService.Write(logEntry, TraceEventType.Verbose);
+            //    LogService.Write(logEntry, TraceEventType.Critical);
+            //    LogService.Write(logEntry, TraceEventType.Information);
+            //    LogService.Write(logEntry, TraceEventType.Start);
+            //    LogService.Write(logEntry, TraceEventType.Stop);
 
-                LogService.Write(logEntry, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
+            //    LogService.Write(logEntry, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
 
-                Console.WriteLine(logEntry);
-            }
+            //    Console.WriteLine(logEntry);
+            //}
 
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         private static void TestLogging()

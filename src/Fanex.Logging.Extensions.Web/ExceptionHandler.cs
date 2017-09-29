@@ -3,6 +3,8 @@
     using System;
     using System.Diagnostics;
     using System.Web;
+    using static WebLogContentExtractors;
+    using static Fanex.Logging.DefaultLogContentExtractors;
 
     public static class ExceptionHandler
     {
@@ -53,37 +55,37 @@
                 return;
             }
 
-            var currentRequest = HttpContext.Current.Request;
-            var logEntry = new LogEntry(exception.Message)
-                                .AddRequestInfo(currentRequest)
-                                .AddBrowserInfo(currentRequest.Browser, currentRequest.ServerVariables)
-                                .HideSensitiveInfo(
-                                        config.SensitiveParams,
-                                        config.RegexSensitiveParamPatterns)
-                                .AddInfo(config.GetDbExceptionInfo(exception))
-                                .AddInfo(customInfo)
-                                .AddWebServerInfo()
-                                .AddExceptionInfo(exception);
+            var request = HttpContext.Current.Request;
 
-            logEntry
+            var logEntry = new LogEntry()
                 .AddContent(() => exception.Message)
-                .AddContent(() => WebLoggingExtensions.GetRequsetInfo(currentRequest))
-                .AddContent(() => WebLoggingExtensions.GetRequestHeader(currentRequest.Headers));
-
-                
-                
+                .AddContent(() => GetRequsetInfo(request))
+                .AddContent(() => GetBrowserInfo(request.Browser, request.ServerVariables))
+                .HideSensitiveInfo(config.SensitiveParams, config.RegexSensitiveParamPatterns)
+                .AddContent(() => config.GetDbExceptionInfo(exception))
+                .AddContent(() => GetWebServerInfo())
+                .AddContent(() => GetRequestHeader(request.Headers))
+                .AddContent(() => GetSessionInfo(HttpContext.Current.Session))
+                .AddContent(() => GetExceptionInfo(exception));
 
             if (config.EnabledLogHttpHeader)
             {
-                logEntry.AddHeaderInfo(currentRequest.Headers);
+                logEntry.AddContent(() => GetRequestHeader(request.Headers));                
             }
 
             if (config.EnabledLogHttpSession)
             {
-                logEntry.AddSessionInfo(HttpContext.Current.Session);
+                logEntry.AddContent(() => GetSessionInfo(HttpContext.Current.Session));
             }
 
             LogService.Write(logEntry, traceEventType, category);
+
+#if DEBUG
+            //// this code for dev to view message on browser, dont bring it to production
+            HttpContext.Current.Response.Write(logEntry.ToString().Replace("\n", "<br/>").Replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;"));
+            HttpContext.Current.Response.End();
+            HttpContext.Current.Response.Close();
+#endif
         }
     }
 }

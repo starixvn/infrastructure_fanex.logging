@@ -10,5 +10,5 @@
         ILogEntry AddContent(Func<string> contentExtractor);
 
         ILogEntry HideSensitiveInfo(IEnumerable<string> sensitiveParams, params string[] regexSensitiveParams);
-    }
+    }    
 }

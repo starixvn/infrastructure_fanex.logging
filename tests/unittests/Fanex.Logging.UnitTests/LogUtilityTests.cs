@@ -3,6 +3,7 @@
     using System;
     using System.Net;
     using Xunit;
+    using Fanex.Logging;
 
     [Trait("Category", "LogUtility.cs")]
     public class LogUtilityTests
@@ -111,7 +112,7 @@
             LogEntry logEntry = null;
 
             // Act
-            logEntry.AddWebServerInfo();
+            logEntry.AddServerInfo();
 
             // Assert
             Assert.Null(logEntry);
@@ -124,7 +125,7 @@
             var logEntry = new LogEntry();
 
             // Act
-            logEntry.AddWebServerInfo();
+            logEntry.AddServerInfo();
 
             // Assert
             var logResult = logEntry.ToString();

@@ -37,19 +37,19 @@
 
         public static void Handle(Exception exception)
         {
-            var errorInfo = new LogEntry(exception.Message)
-                               .AddSqlInfo(exception)
-                               .AddWebServerInfo()
-                               .AddExceptionInfo(exception)
-                               .AddInfo(
-                                   LogUtility.CombineInfo(
-                                       "INFO GROUP",
-                                        "Info 1",
-                                        "Info 2"))
-                                       .ToString();
+            //var errorInfo = new LogEntry(exception.Message)
+            //                   .AddSqlInfo(exception)
+            //                   .AddServerInfo()
+            //                   .AddExceptionInfo(exception)
+            //                   .AddInfo(
+            //                       LogUtility.CombineInfo(
+            //                           "INFO GROUP",
+            //                            "Info 1",
+            //                            "Info 2"))
+            //                           .ToString();
 
-            LogService.Error(errorInfo);
-            Console.WriteLine(errorInfo);
+            //LogService.Error(errorInfo);
+            //Console.WriteLine(errorInfo);
         }
     }
 }

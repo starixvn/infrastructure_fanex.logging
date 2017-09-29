@@ -79,7 +79,7 @@
             
             logEntry.AddContent(() => appendMessage);
 
-            Assert.Equal(logEntry.ToString(), initialMessage + appendMessage + Environment.NewLine);
+            Assert.Equal(logEntry.ToString(), initialMessage + appendMessage + Environment.NewLine + Environment.NewLine);
         }
 
         [Fact]

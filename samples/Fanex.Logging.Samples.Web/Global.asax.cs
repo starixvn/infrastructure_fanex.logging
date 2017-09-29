@@ -6,7 +6,6 @@
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
-    using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions.Web;
     using static Fanex.Logging.Extensions.Database.DatabaseLoggingExtensions;
 
@@ -25,6 +24,7 @@
                     resourcePath: "~/App_Data/")
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                 .Run();
+
             ExceptionHandler
                 // To ignore exceptions
                 //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
