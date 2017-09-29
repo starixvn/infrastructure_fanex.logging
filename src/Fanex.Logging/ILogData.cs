@@ -7,5 +7,5 @@
         ILogData AddInfo(string information);
 
         ILogData HideSensitiveInfo(IEnumerable<string> sensitiveParams, params string[] regexSensitiveParams);
-    }    
+    }
 }

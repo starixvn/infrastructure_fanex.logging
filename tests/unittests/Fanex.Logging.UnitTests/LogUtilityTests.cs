@@ -1,5 +1,4 @@
-﻿using Xunit;
-namespace Fanex.Logging.UnitTests
+﻿namespace Fanex.Logging.UnitTests
 {
     using System;
     using System.Net;

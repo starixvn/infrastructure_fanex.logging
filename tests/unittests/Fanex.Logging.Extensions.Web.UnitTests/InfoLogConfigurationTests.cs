@@ -1,11 +1,9 @@
 ﻿using Xunit;
+
 namespace Fanex.Logging.Extensions.Web.UnitTests
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     [Trait("Category", "Extensions/InfoLogConfiguration.cs")]
     public class InfoLogConfigurationTests

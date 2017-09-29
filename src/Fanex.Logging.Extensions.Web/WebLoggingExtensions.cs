@@ -27,12 +27,12 @@
                       $"Form Variables: {request.Form}",
                       $"Body: {GetRequestBodyData(request.InputStream)}",
                       $"Client IP: {GetClientIP(serverVariables ?? request.ServerVariables)}",
-                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));                      
+                      $"Current Thread Culture: {Thread.CurrentThread.CurrentUICulture}"));
         }
 
         public static ILogData AddBrowserInfo(
-            this ILogData logData, 
-            HttpCapabilitiesBase browser, 
+            this ILogData logData,
+            HttpCapabilitiesBase browser,
             NameValueCollection serverVariables)
         {
             if (logData == null || browser == null)
@@ -44,15 +44,15 @@
                    LogUtility.CombineInfo(
                      "BROWSER INFO",
                         $"Browser: {browser.Browser} {browser.Version} (beta: {browser.Beta})",
-                        $"Platform: {browser.Platform}",                       
+                        $"Platform: {browser.Platform}",
                         $"Crawler: {browser.Crawler}",
                         $"ECMAScript: {browser.EcmaScriptVersion}",
-                        $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",                        
+                        $"Mobile: {browser.IsMobileDevice} ({browser.MobileDeviceModel} {browser.MobileDeviceManufacturer})",
                         $"User Agent: {serverVariables["HTTP_USER_AGENT"]}"));
         }
 
         public static ILogData AddHeaderInfo(
-            this ILogData logData, 
+            this ILogData logData,
             NameValueCollection headers)
         {
             if (logData == null || headers == null)
@@ -106,8 +106,8 @@
 
         internal static string GetClientIP(NameValueCollection serverVariables)
         {
-            var clientIP = serverVariables["HTTP_X_FORWARDED_FOR"] 
-                ?? serverVariables["REMOTE_ADDR"] 
+            var clientIP = serverVariables["HTTP_X_FORWARDED_FOR"]
+                ?? serverVariables["REMOTE_ADDR"]
                 ?? string.Empty;
 
             return string.IsNullOrEmpty(clientIP) || clientIP.Equals("::1")

@@ -13,7 +13,7 @@
             if (logData == null || exception == null)
             {
                 return logData;
-            }                      
+            }
 
             return logData.AddInfo(
                         CombineInfo(

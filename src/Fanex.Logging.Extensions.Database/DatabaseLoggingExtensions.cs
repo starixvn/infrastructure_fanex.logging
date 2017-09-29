@@ -51,11 +51,11 @@
 
         private static string GetObjectDbExceptionInfo(ObjectDbException ex)
         {
-            var sqlConnectionString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);                        
+            var sqlConnectionString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
             var lineNumber = ex.InnerException is SqlException
                 ? (ex.InnerException as SqlException).LineNumber
                 : 0;
-                        
+
             // Passed Parameters for fanex.data 2+
             var passedParameters = ex.Parameters.Count > 0
                 ? ex.Parameters.Cast<DbParameter>()

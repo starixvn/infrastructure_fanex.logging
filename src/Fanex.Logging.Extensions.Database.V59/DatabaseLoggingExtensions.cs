@@ -25,7 +25,7 @@
             return logData;
         }
 
-        private static string GetSqlExceptionInfo(SqlException ex) 
+        private static string GetSqlExceptionInfo(SqlException ex)
             => LogUtility.CombineInfo(
                 "DATABASE INFO",
                 $"SQL Server: {ex.Server}",

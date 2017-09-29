@@ -1,11 +1,8 @@
 ﻿using Xunit;
+
 namespace Fanex.Logging.UnitTests
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using NSubstitute;
 
     [Trait("Category", "LogService.cs")]
@@ -77,7 +74,7 @@ namespace Fanex.Logging.UnitTests
             logger.Received().Debug(message, category, args);
         }
 
-        #endregion
+        #endregion Debug
 
         #region Info
 
@@ -137,7 +134,7 @@ namespace Fanex.Logging.UnitTests
             logger.Received().Info(message, category, args);
         }
 
-        #endregion
+        #endregion Info
 
         #region Warn
 
@@ -197,7 +194,7 @@ namespace Fanex.Logging.UnitTests
             logger.Received().Warn(message, category, args);
         }
 
-        #endregion
+        #endregion Warn
 
         #region Critical
 
@@ -257,7 +254,7 @@ namespace Fanex.Logging.UnitTests
             logger.Received().Critical(message, category, args);
         }
 
-        #endregion
+        #endregion Critical
 
         #region Error
 
@@ -317,6 +314,6 @@ namespace Fanex.Logging.UnitTests
             logger.Received().Error(message, category, exception);
         }
 
-        #endregion
+        #endregion Error
     }
 }

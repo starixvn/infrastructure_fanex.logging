@@ -64,8 +64,8 @@
         public override string ToString() => stringBuilder.ToString();
 
         private static string HideSensitiveInfo(
-            string information, 
-            string paramPattern, 
+            string information,
+            string paramPattern,
             IEnumerable<string> sensitiveParams)
         {
             if (sensitiveParams != null
@@ -81,8 +81,8 @@
         }
 
         private static string HideSensitiveInfo(
-            string information, 
-            string paramPattern, 
+            string information,
+            string paramPattern,
             string sensitiveParam)
         {
             var pattern = string.Format(paramPattern, sensitiveParam);

@@ -73,9 +73,9 @@
 
             // Assert
             Assert.Equal(
-                "Information" 
+                "Information"
                 + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
-                + "New Information", 
+                + "New Information",
                 logData.ToString());
         }
 
@@ -114,7 +114,7 @@
         public void HideSensitiveInfo_MessageContainsSensitiveInfo_RemoveSensitiveInfo()
         {
             // Arrange
-            var logData = 
+            var logData =
                 new LogData("Information?securitycode=122323&password=434334&passerfdf=3434")
                 .AddInfo("SECURITYCODE=43434")
                 .AddInfo("PASSword=43333klkldkflkdf");

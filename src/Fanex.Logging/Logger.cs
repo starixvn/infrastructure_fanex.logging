@@ -13,13 +13,13 @@
         private readonly string defaultLogCategory;
         internal readonly ILoggingEngine loggingEngine;
 
-        private Logger() 
+        private Logger()
             : this(null, null, LoggerConfiguration.Run)
         {
         }
 
         internal Logger(
-            ILoggingEngine logAdapter, 
+            ILoggingEngine logAdapter,
             string defaultLogCategory,
             Action initLogConfig)
         {
@@ -167,7 +167,6 @@
                     (logData ?? LogData.NoInformationLogData).ToString(),
                     category,
                     traceEventType);
-
 
         #endregion WriteLog functions
     }

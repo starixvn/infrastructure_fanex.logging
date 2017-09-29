@@ -1,11 +1,10 @@
-﻿using Xunit;
-namespace Fanex.Logging.UnitTests
+﻿namespace Fanex.Logging.UnitTests
 {
+    using System;
     using System.Diagnostics;
+    using Logging.Adapters;
     using NSubstitute;
     using Xunit;
-    using System;
-    using Logging.Adapters;
 
     [Trait("Category", "Logger.cs")]
     public class LoggerTests
@@ -171,7 +170,9 @@ namespace Fanex.Logging.UnitTests
                                 && logEntry.Category == category));
         }
 
-        #endregion 
+        #endregion Write Information Log
+
+
 
         #region Write Warning Log
 
@@ -247,7 +248,9 @@ namespace Fanex.Logging.UnitTests
                                 && logEntry.Category == category));
         }
 
-        #endregion 
+        #endregion Write Warning Log
+
+
 
         #region Write Critical Log
 
@@ -323,7 +326,7 @@ namespace Fanex.Logging.UnitTests
                                 && logEntry.Category == category));
         }
 
-        #endregion
+        #endregion Write Critical Log
 
         #region Write Error Log
 
@@ -399,7 +402,7 @@ namespace Fanex.Logging.UnitTests
                                 && logEntry.Category == category));
         }
 
-        #endregion
+        #endregion Write Error Log
 
         #region General Write Log
 
@@ -449,7 +452,6 @@ namespace Fanex.Logging.UnitTests
                                 && le.Category == defaultCategory));
         }
 
-
         [Fact]
         public void Write_LogDataWithSpecificCategory_ExecuteWriteLogEntry()
         {
@@ -469,7 +471,7 @@ namespace Fanex.Logging.UnitTests
                                 && le.Category == category));
         }
 
-        #endregion
+        #endregion General Write Log
 
         [Theory]
         [InlineData("")]

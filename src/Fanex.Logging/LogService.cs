@@ -35,7 +35,7 @@
         public static void Debug(string format, string category, params object[] args)
             => LoggerInstance.Debug(format, category, args);
 
-        #endregion
+        #endregion Debug
 
         #region Info
 
@@ -51,7 +51,7 @@
         public static void Info(string format, string category, params object[] args)
             => LoggerInstance.Info(format, category, args);
 
-        #endregion
+        #endregion Info
 
         #region Warn
 
@@ -67,7 +67,7 @@
         public static void Warn(string format, string category, params object[] args)
             => LoggerInstance.Warn(format, category, args);
 
-        #endregion
+        #endregion Warn
 
         #region Error
 
@@ -83,7 +83,7 @@
         public static void Error(string message, string category, Exception exception)
             => LoggerInstance.Error(message, category, exception);
 
-        #endregion
+        #endregion Error
 
         #region Critical
 
@@ -99,7 +99,7 @@
         public static void Critical(string format, string category, params object[] args)
             => LoggerInstance.Critical(format, category, args);
 
-        #endregion
+        #endregion Critical
 
         public static void Write(ILogData logData, TraceEventType traceEventType)
             => LoggerInstance.Write(logData, traceEventType);

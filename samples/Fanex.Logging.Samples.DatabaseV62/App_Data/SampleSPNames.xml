@@ -5,7 +5,7 @@
         <Setting Key="Logging_Sel_Padding" SpName="IS_SelLogPadding_All" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
         <Setting Key="Logging_Del" SpName="IS_DeleteLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
         <Setting Key="Logging_Monitor" SpName="Acc_AppLog_MonitorLogUpd_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-        <Setting Key="Logging_Machine_SelectAll" SpName="IS_SelLogMachine_ALL" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"  />
+        <Setting Key="Logging_Machine_SelectAll" SpName="IS_SelLogMachine_ALL" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
         <Setting Key="Logging_Machine_ByType" SpName="IS_SelLogMachine_ByType" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
         <Setting Key="Logging_Machine_ById" SpName="IS_SelLogMachine_ById" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
         <Setting Key="Logging_InsertMachine" SpName="Acc_AppLog_MachineIns" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />

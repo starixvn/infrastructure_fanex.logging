@@ -25,8 +25,8 @@
                     resourcePath: "~/App_Data/")
                 .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                 .Run();
-            ExceptionHandler               
-                // To ignore exceptions 
+            ExceptionHandler
+                // To ignore exceptions
                 //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
                 .UseGetDbExceptionInfo(GetSqlExceptionInfo);
         }
