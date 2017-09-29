@@ -101,10 +101,10 @@
 
         #endregion Critical
 
-        public static void Write(ILogData logData, TraceEventType traceEventType)
-            => LoggerInstance.Write(logData, traceEventType);
+        public static void Write(ILogEntry logEntry, TraceEventType traceEventType)
+            => LoggerInstance.Write(logEntry, traceEventType);
 
-        public static void Write(ILogData logData, TraceEventType traceEventType, string category)
-            => LoggerInstance.Write(logData, traceEventType, category);
+        public static void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
+            => LoggerInstance.Write(logEntry, traceEventType, category);
     }
 }

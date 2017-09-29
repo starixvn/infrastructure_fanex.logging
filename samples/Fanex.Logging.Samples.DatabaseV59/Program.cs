@@ -23,7 +23,7 @@
 
         public static void Handle(Exception exception)
         {
-            var errorInfo = new LogData(exception.Message)
+            var errorInfo = new LogEntry(exception.Message)
                                .AddSqlInfo(exception)
                                .AddWebServerInfo()
                                .AddExceptionInfo(exception)

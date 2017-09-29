@@ -156,15 +156,15 @@
             }
         }
 
-        public void Write(ILogData logData, TraceEventType traceEventType)
+        public void Write(ILogEntry logEntry, TraceEventType traceEventType)
             => WriteLog(
-                (logData ?? LogData.NoInformationLogData).ToString(),
+                (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
                 defaultLogCategory,
                 traceEventType);
 
-        public void Write(ILogData logData, TraceEventType traceEventType, string category)
+        public void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
              => WriteLog(
-                    (logData ?? LogData.NoInformationLogData).ToString(),
+                    (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
                     category,
                     traceEventType);
 

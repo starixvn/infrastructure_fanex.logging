@@ -54,7 +54,7 @@
             }
 
             var currentRequest = HttpContext.Current.Request;
-            var logData = new LogData(exception.Message)
+            var logEntry = new LogEntry(exception.Message)
                                 .AddRequestInfo(currentRequest)
                                 .AddBrowserInfo(currentRequest.Browser, currentRequest.ServerVariables)
                                 .HideSensitiveInfo(
@@ -65,7 +65,7 @@
                                 .AddWebServerInfo()
                                 .AddExceptionInfo(exception);
 
-            logData
+            logEntry
                 .AddContent(() => exception.Message)
                 .AddContent(() => WebLoggingExtensions.GetRequsetInfo(currentRequest));
 
@@ -74,15 +74,15 @@
 
             if (config.EnabledLogHttpHeader)
             {
-                logData.AddHeaderInfo(currentRequest.Headers);
+                logEntry.AddHeaderInfo(currentRequest.Headers);
             }
 
             if (config.EnabledLogHttpSession)
             {
-                logData.AddSessionInfo(HttpContext.Current.Session);
+                logEntry.AddSessionInfo(HttpContext.Current.Session);
             }
 
-            LogService.Write(logData, traceEventType, category);
+            LogService.Write(logEntry, traceEventType, category);
         }
     }
 }

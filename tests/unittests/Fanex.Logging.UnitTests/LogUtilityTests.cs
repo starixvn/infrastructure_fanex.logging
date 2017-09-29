@@ -8,40 +8,40 @@
     public class LogUtilityTests
     {
         [Fact]
-        public void AddExceptionInfo_LogDataIsNull_ReturnNull()
+        public void AddExceptionInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            LogData logData = null;
+            LogEntry logEntry = null;
 
             // Act
-            logData.AddExceptionInfo(new Exception());
+            logEntry.AddExceptionInfo(new Exception());
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddExceptionInfo_ExceptionIsNull_ReturnLogData()
+        public void AddExceptionInfo_ExceptionIsNull_ReturnLogEntry()
         {
             // Arrange
-            var logData = new LogData();
+            var logEntry = new LogEntry();
 
             // Act
-            var actualLogData = logData.AddExceptionInfo(null);
+            var actualLogEntry = logEntry.AddExceptionInfo(null);
 
             // Assert
-            Assert.Same(logData, actualLogData);
+            Assert.Same(logEntry, actualLogEntry);
         }
 
         [Fact]
-        public void AddExceptionInfo_Always_ReturnLogDataWithExceptionInfo()
+        public void AddExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
         {
             // Arrange
-            var logData = new LogData();
+            var logEntry = new LogEntry();
             var customException = new DllNotFoundException();
 
             // Act
-            logData.AddExceptionInfo(customException);
+            logEntry.AddExceptionInfo(customException);
 
             // Assert
             Assert.Equal(
@@ -51,7 +51,7 @@
                     + "\r\n\tTarget Site: "
                     + "\r\n\tStack Trace: "
                     + "\r\n\tDetails: System.DllNotFoundException: Dll was not found.",
-                logData.ToString());
+                logEntry.ToString());
         }
 
         [Fact]
@@ -105,29 +105,29 @@
         }
 
         [Fact]
-        public void AddWebServerInfo_LogDataIsNull_ReturnNull()
+        public void AddWebServerInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            LogData logData = null;
+            LogEntry logEntry = null;
 
             // Act
-            logData.AddWebServerInfo();
+            logEntry.AddWebServerInfo();
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddWebServerInfo_Always_ReturnLogDataWithServerInformation()
+        public void AddWebServerInfo_Always_ReturnLogEntryWithServerInformation()
         {
             // Arrange
-            var logData = new LogData();
+            var logEntry = new LogEntry();
 
             // Act
-            logData.AddWebServerInfo();
+            logEntry.AddWebServerInfo();
 
             // Assert
-            var logResult = logData.ToString();
+            var logResult = logEntry.ToString();
             Assert.True(
                 logResult.Contains("WEB SERVER INFO")
                 && logResult.Contains("Server IP:")

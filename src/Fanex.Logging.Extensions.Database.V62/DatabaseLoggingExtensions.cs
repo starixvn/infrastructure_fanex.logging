@@ -6,29 +6,29 @@
 
     public static class DatabaseLoggingExtensions
     {
-        public static ILogData AddSqlInfo(this ILogData logData, Exception exception)
+        public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception exception)
         {
-            if (logData == null || exception == null)
+            if (logEntry == null || exception == null)
             {
-                return logData;
+                return logEntry;
             }
 
             if (exception is ObjectDbException)
             {
-                return logData.AddInfo(GetObjectDbExceptionInfo(exception as ObjectDbException));
+                return logEntry.AddInfo(GetObjectDbExceptionInfo(exception as ObjectDbException));
             }
 
             if (exception is SqlException)
             {
-                return logData.AddInfo(GetSqlExceptionInfo(exception as SqlException));
+                return logEntry.AddInfo(GetSqlExceptionInfo(exception as SqlException));
             }
 
             if (exception.GetBaseException() is SqlException)
             {
-                return logData.AddInfo(GetSqlExceptionInfo(exception.GetBaseException() as SqlException));
+                return logEntry.AddInfo(GetSqlExceptionInfo(exception.GetBaseException() as SqlException));
             }
 
-            return logData;
+            return logEntry;
         }
 
         private static string GetSqlExceptionInfo(SqlException exception)

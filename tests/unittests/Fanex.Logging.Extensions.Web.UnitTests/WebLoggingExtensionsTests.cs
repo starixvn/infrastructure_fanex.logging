@@ -17,7 +17,7 @@
     public class WebLoggingExtensionsTests
     {
         private readonly HttpRequest request;
-        private ILogData logData;
+        private ILogEntry logEntry;
         private const string requestUrl = "/url/suburl?querystring=1";
         private const string Message = "Message";
         private readonly SessionStateItemCollection sessionStateItemCollection;
@@ -25,42 +25,42 @@
         public WebLoggingExtensionsTests()
         {
             sessionStateItemCollection = new SessionStateItemCollection();
-            logData = new LogData(Message);
+            logEntry = new LogEntry(Message);
             request = CreateFakeHttpRequest(requestUrl);
         }
 
         [Fact]
-        public void AddRequestInfo_LogDataIsNull_ReturnNull()
+        public void AddRequestInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            logData = null;
+            logEntry = null;
 
             // Act
-            logData = logData.AddRequestInfo(request);
+            logEntry = logEntry.AddRequestInfo(request);
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddRequestInfo_HttpRequestIsNull_ReturnLogData()
+        public void AddRequestInfo_HttpRequestIsNull_ReturnLogEntry()
         {
             // Act
-            var actualLogData = logData.AddRequestInfo(null);
+            var actualLogEntry = logEntry.AddRequestInfo(null);
 
             // Assert
-            Assert.Equal(logData.ToString(), actualLogData.ToString());
+            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddRequestInfo_Always_ReturnLogDataWithRequestInfo()
+        public void AddRequestInfo_Always_ReturnLogEntryWithRequestInfo()
         {
             // Arrange
             var serverVariables = new NameValueCollection();
             serverVariables.Add("HTTP_X_FORWARDED_FOR", "10.19.10.52");
 
             // Act
-            var actualLogData = logData.AddRequestInfo(HttpContext.Current.Request, serverVariables);
+            var actualLogEntry = logEntry.AddRequestInfo(HttpContext.Current.Request, serverVariables);
 
             // Assert
             Assert.Equal("Message"
@@ -72,7 +72,7 @@
                         + "\r\n\tBody: "
                         + "\r\n\tClient IP: 10.19.10.52"
                         + "\r\n\tCurrent Thread Culture: en-US",
-                        actualLogData.ToString());
+                        actualLogEntry.ToString());
         }
 
         [Fact]
@@ -159,30 +159,30 @@
         }
 
         [Fact]
-        public void AddSessionInfo_LogDataIsNull_ReturnNull()
+        public void AddSessionInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            logData = null;
+            logEntry = null;
 
             // Act
-            logData = logData.AddSessionInfo(null);
+            logEntry = logEntry.AddSessionInfo(null);
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddSessionInfo_SessionIsNull_ReturnLogData()
+        public void AddSessionInfo_SessionIsNull_ReturnLogEntry()
         {
             // Act
-            var actualLogData = logData.AddSessionInfo(null);
+            var actualLogEntry = logEntry.AddSessionInfo(null);
 
             // Assert
-            Assert.Equal(logData.ToString(), actualLogData.ToString());
+            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddSessionInfo_SessionContainsData_ReturnLogDataWithSessionData()
+        public void AddSessionInfo_SessionContainsData_ReturnLogEntryWithSessionData()
         {
             // Arrange
             sessionStateItemCollection["sessiondata1"] = 1;
@@ -190,7 +190,7 @@
             sessionStateItemCollection["sessiondata3"] = new object();
 
             // Act
-            var actualLogData = logData.AddSessionInfo(HttpContext.Current.Session);
+            var actualLogEntry = logEntry.AddSessionInfo(HttpContext.Current.Session);
 
             // Assert
             Assert.Equal("Message"
@@ -199,34 +199,34 @@
                         + "\r\n\tsessiondata1: 1"
                         + "\r\n\tsessiondata2: data"
                         + "\r\n\tsessiondata3: System.Object",
-                        actualLogData.ToString());
+                        actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddHeaderInfo_LogDataIsNull_ReturnNull()
+        public void AddHeaderInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            logData = null;
+            logEntry = null;
 
             // Act
-            logData = logData.AddHeaderInfo(null);
+            logEntry = logEntry.AddHeaderInfo(null);
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddHeaderInfo_HeadersIsNull_ReturnLogData()
+        public void AddHeaderInfo_HeadersIsNull_ReturnLogEntry()
         {
             // Act
-            var actualLogData = logData.AddHeaderInfo(null);
+            var actualLogEntry = logEntry.AddHeaderInfo(null);
 
             // Assert
-            Assert.Equal(logData.ToString(), actualLogData.ToString());
+            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddHeaderInfo_HeadersContainsData_ReturnLogDataWithHeaderData()
+        public void AddHeaderInfo_HeadersContainsData_ReturnLogEntryWithHeaderData()
         {
             // Arrange
             var headers = new NameValueCollection();
@@ -234,7 +234,7 @@
             headers.Add("headerdata2", "data");
 
             // Act
-            var actualLogData = logData.AddHeaderInfo(headers);
+            var actualLogEntry = logEntry.AddHeaderInfo(headers);
 
             // Assert
             Assert.Equal("Message"
@@ -242,34 +242,34 @@
                         + "HTTP HEADERS:"
                         + "\r\n\theaderdata1: 1"
                         + "\r\n\theaderdata2: data",
-                        actualLogData.ToString());
+                        actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddBrowserInfo_LogDataIsNull_ReturnNull()
+        public void AddBrowserInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            logData = null;
+            logEntry = null;
 
             // Act
-            logData = logData.AddBrowserInfo(Substitute.For<HttpCapabilitiesBase>(), new NameValueCollection());
+            logEntry = logEntry.AddBrowserInfo(Substitute.For<HttpCapabilitiesBase>(), new NameValueCollection());
 
             // Assert
-            Assert.Null(logData);
+            Assert.Null(logEntry);
         }
 
         [Fact]
-        public void AddBrowserInfo_BrowserIsNull_ReturnLogData()
+        public void AddBrowserInfo_BrowserIsNull_ReturnLogEntry()
         {
             // Act
-            var actualLogData = logData.AddBrowserInfo(null, new NameValueCollection());
+            var actualLogEntry = logEntry.AddBrowserInfo(null, new NameValueCollection());
 
             // Assert
-            Assert.Equal(logData.ToString(), actualLogData.ToString());
+            Assert.Equal(logEntry.ToString(), actualLogEntry.ToString());
         }
 
         [Fact]
-        public void AddBrowserInfo_Always_ReturnLogDataWithBrowserData()
+        public void AddBrowserInfo_Always_ReturnLogEntryWithBrowserData()
         {
             // Arrange
             var userAgent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.10) Gecko/20100914 Firefox/3.6.10";
@@ -285,7 +285,7 @@
             serverVariables.Add("HTTP_USER_AGENT", "Browser UserAgent");
 
             // Act
-            var actualLogData = logData.AddBrowserInfo(browser, serverVariables);
+            var actualLogEntry = logEntry.AddBrowserInfo(browser, serverVariables);
 
             // Assert
             Assert.Equal("Message"
@@ -297,7 +297,7 @@
                         + "\r\n\tECMAScript: 3.0"
                         + "\r\n\tMobile: False (Unknown Unknown)"
                         + "\r\n\tUser Agent: Browser UserAgent",
-                        actualLogData.ToString());
+                        actualLogEntry.ToString());
         }
 
         private static Stream GenerateStreamFromString(string s)

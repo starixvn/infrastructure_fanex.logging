@@ -1,8 +1,10 @@
 ﻿namespace Fanex.Logging.Extensions.Database.UnitTests
 {
     using System;
+    using System.Data;
     using System.Data.Common;
     using System.Data.SqlClient;
+    using System.Reflection;
     using Data;
     using Data.CrossCutting.WrappingException;
     using NSubstitute;
@@ -11,38 +13,39 @@
     [Trait("Category", "Extensions/DatabaseLoggingExtensions.cs")]
     public class DatabaseLoggingExtensionsTests
     {
-        private readonly ILogData logData;
+        private readonly ILogEntry logEntry;
 
         public DatabaseLoggingExtensionsTests()
         {
-            logData = new LogData("Message");
+            logEntry = new LogEntry("Message");
+
         }
 
         [Fact]
-        public void AddSqlInfo_LogDataIsNull_ReturnNull()
+        public void AddSqlInfo_LogEntryIsNull_ReturnNull()
         {
             // Arrange
-            ILogData nullLogData = null;
+            ILogEntry nullLogEntry = null;
 
             // Act
-            nullLogData = nullLogData.AddSqlInfo(new Exception());
+            nullLogEntry = nullLogEntry.AddSqlInfo(new Exception());
 
             // Assert
-            Assert.Null(nullLogData);
+            Assert.Null(nullLogEntry);
         }
 
         [Fact]
-        public void AddSqlInfo_ExceptionIsNull_ReturnLogData()
+        public void AddSqlInfo_ExceptionIsNull_ReturnLogEntry()
         {
             // Act
-            var actualLogData = logData.AddSqlInfo(new Exception());
+            var actualLogEntry = logEntry.AddSqlInfo(new Exception());
 
             // Assert
-            Assert.Same(logData, actualLogData);
+            Assert.Same(logEntry, actualLogEntry);
         }
 
         [Fact]
-        public void AddSqlInfo_ExceptionIsObjectDbException_ReturnLogDataWithDbInfo()
+        public void AddSqlInfo_ExceptionIsObjectDbException_ReturnLogEntryWithDbInfo()
         {
             // Arrnage
             var dbSetting = Substitute.For<IDbSetting>();
@@ -63,7 +66,7 @@
                 600);
 
             // Act
-            logData.AddSqlInfo(objectDBException);
+            logEntry.AddSqlInfo(objectDBException);
 
             // Assert
             Assert.Equal("Message"
@@ -75,63 +78,70 @@
                         + "\r\n\tStored Procedure: SPNAME"
                         + "\r\n\tLine Number: 0"
                         + "\r\n\tSP Params: ",
-                        logData.ToString());
+                        logEntry.ToString());
         }
 
         [Fact]
-        public void AddSqlInfo_ExceptionIsSqlException_ReturnLogDataWithDbInfo()
+        public void AddSqlInfo_ExceptionIsSqlException_ReturnLogEntryWithDbInfo()
         {
             // Arrange
-            var sqlException = CreateSqlException();
+            var sqlException = CreateSqlException(10);
 
             // Act
-            logData.AddSqlInfo(sqlException);
+            logEntry.AddSqlInfo(sqlException);
 
             // Assert
             Assert.Equal("Message"
                         + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                         + "DATABASE INFO:"
-                        + "\r\n\tSQL Server: ."
-                        + "\r\n\tStored Procedure: "
-                        + "\r\n\tLine Number: 65536",
-                        logData.ToString());
+                        + "\r\n\tSQL Server: server"
+                        + "\r\n\tStored Procedure: proccedure"
+                        + "\r\n\tLine Number: 100",
+                        logEntry.ToString());
         }
 
         [Fact]
-        public void AddSqlInfo_InnerExceptionIsSqlException_ReturnLogDataWithDbInfo()
+        public void AddSqlInfo_InnerExceptionIsSqlException_ReturnLogEntryWithDbInfo()
         {
             // Arrange
-            var sqlException = CreateSqlException();
+            var sqlException = CreateSqlException(10);
             var exception = new Exception("message", sqlException);
 
             // Act
-            logData.AddSqlInfo(sqlException);
+            logEntry.AddSqlInfo(sqlException);
 
             // Assert
             Assert.Equal("Message"
                         + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                         + "DATABASE INFO:"
-                        + "\r\n\tSQL Server: ."
-                        + "\r\n\tStored Procedure: "
-                        + "\r\n\tLine Number: 65536",
-                        logData.ToString());
+                        + "\r\n\tSQL Server: server"
+                        + "\r\n\tStored Procedure: proccedure"
+                        + "\r\n\tLine Number: 100",
+                        logEntry.ToString());
         }
 
-        public SqlException CreateSqlException()
+        private SqlException CreateSqlException(int number)
         {
-            SqlException exception = null;
-
-            try
-            {
-                SqlConnection conn = new SqlConnection(@"Data Source=.;Database=GUARANTEED_TO_FAIL;Connection Timeout=1");
-                conn.Open();
-            }
-            catch (SqlException ex)
-            {
-                exception = ex;
-            }
-
-            return exception;
+            var collectionConstructor = typeof(SqlErrorCollection)
+              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
+              null, //binder
+              new Type[0],
+              null);
+            var addMethod = typeof(SqlErrorCollection).GetMethod("Add", BindingFlags.NonPublic | BindingFlags.Instance);
+            var errorCollection = (SqlErrorCollection)collectionConstructor.Invoke(null);
+            var errorConstructor = typeof(SqlError).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+              new[]
+              { typeof (int), typeof (byte), typeof (byte), typeof (string), typeof(string), typeof (string), typeof (int), typeof (uint)
+              }, null);
+            var error =
+              errorConstructor.Invoke(new object[] { number, (byte)0, (byte)0, "server", "errMsg", "proccedure", 100, (uint)0 });
+            addMethod.Invoke(errorCollection, new[] { error });
+            var constructor = typeof(SqlException)
+              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
+                null, //binder
+                new[] { typeof(string), typeof(SqlErrorCollection), typeof(Exception), typeof(Guid) },
+                null); //param modifiers
+            return (SqlException)constructor.Invoke(new object[] { "Error message", errorCollection, new DataException(), Guid.NewGuid() });
         }
     }
 }

@@ -8,18 +8,18 @@
 
     public static class DatabaseLoggingExtensions
     {
-        public static ILogData AddSqlInfo(this ILogData logData, Exception ex)
+        public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception ex)
         {
-            if (logData == null || ex == null)
+            if (logEntry == null || ex == null)
             {
-                return logData;
+                return logEntry;
             }
 
             var sqlInfo = GetSqlExceptionInfo(ex);
 
             return string.IsNullOrWhiteSpace(sqlInfo)
-                        ? logData
-                        : logData.AddInfo(sqlInfo);
+                        ? logEntry
+                        : logEntry.AddInfo(sqlInfo);
         }
 
         public static string GetSqlExceptionInfo(Exception exception)

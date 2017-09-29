@@ -407,10 +407,10 @@
         #region General Write Log
 
         [Fact]
-        public void Write_LogDataIsNull_ExecuteWriteLogEntryWithDefaultMessage()
+        public void Write_LogEntryIsNull_ExecuteWriteLogEntryWithDefaultMessage()
         {
             // Arrange
-            ILogData logEntry = null;
+            ILogEntry logEntry = null;
 
             // Act
             logger.Write(logEntry, TraceEventType.Error);
@@ -434,12 +434,12 @@
         [InlineData(TraceEventType.Suspend, TraceEventType.Information)]
         [InlineData(TraceEventType.Resume, TraceEventType.Information)]
         [InlineData(TraceEventType.Transfer, TraceEventType.Information)]
-        public void Write_LogDataWithTraceEventType_ExecuteWriteLogEntry(
+        public void Write_LogEntryWithTraceEventType_ExecuteWriteLogEntry(
             TraceEventType traceEventType,
             TraceEventType expectedTraceEventType)
         {
             // Arrange
-            ILogData logEntry = null;
+            ILogEntry logEntry = null;
 
             // Act
             logger.Write(logEntry, traceEventType);
@@ -453,12 +453,12 @@
         }
 
         [Fact]
-        public void Write_LogDataWithSpecificCategory_ExecuteWriteLogEntry()
+        public void Write_LogEntryWithSpecificCategory_ExecuteWriteLogEntry()
         {
             // Arrange
             var message = "Message";
             var category = "SpecificCategory";
-            var logEntry = new LogData(message);
+            var logEntry = new LogEntry(message);
 
             // Act
             logger.Write(logEntry, TraceEventType.Error, category);
@@ -480,7 +480,7 @@
         {
             // Arrange
             var message = "Message";
-            var logEntry = new LogData(message);
+            var logEntry = new LogEntry(message);
 
             // Act
             logger.Write(logEntry, TraceEventType.Error, category);

@@ -20,7 +20,7 @@
             }
             catch (Exception exception)
             {
-                var logData = new LogData(exception.Message)
+                var logEntry = new LogEntry(exception.Message)
                                .AddSqlInfo(exception)
                                .AddWebServerInfo()
                                .AddExceptionInfo(exception)
@@ -30,17 +30,17 @@
                                         "Info 1",
                                         "Info 2"));
 
-                LogService.Write(logData, TraceEventType.Error);
-                LogService.Write(logData, TraceEventType.Warning);
-                LogService.Write(logData, TraceEventType.Verbose);
-                LogService.Write(logData, TraceEventType.Critical);
-                LogService.Write(logData, TraceEventType.Information);
-                LogService.Write(logData, TraceEventType.Start);
-                LogService.Write(logData, TraceEventType.Stop);
+                LogService.Write(logEntry, TraceEventType.Error);
+                LogService.Write(logEntry, TraceEventType.Warning);
+                LogService.Write(logEntry, TraceEventType.Verbose);
+                LogService.Write(logEntry, TraceEventType.Critical);
+                LogService.Write(logEntry, TraceEventType.Information);
+                LogService.Write(logEntry, TraceEventType.Start);
+                LogService.Write(logEntry, TraceEventType.Stop);
 
-                LogService.Write(logData, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
+                LogService.Write(logEntry, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
 
-                Console.WriteLine(logData);
+                Console.WriteLine(logEntry);
             }
 
             Console.ReadLine();

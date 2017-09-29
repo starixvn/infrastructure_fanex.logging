@@ -6,18 +6,18 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
-    public class LogData : ILogData
+    public class LogEntry : ILogEntry
     {
         private const string paramValue = "paramValue";
         internal const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
-        internal static readonly ILogData NoInformationLogData = new LogData("This log has no information.");
+        internal static readonly ILogEntry NoInformationLogEntry = new LogEntry("This log has no information.");
         private readonly StringBuilder stringBuilder;
 
-        public LogData() : this(string.Empty)
+        public LogEntry() : this(string.Empty)
         {
         }
 
-        public LogData(string message)
+        public LogEntry(string message)
         {
             stringBuilder = new StringBuilder();
 
@@ -27,7 +27,7 @@
             }
         }
 
-        public ILogData AddInfo(string information)
+        public ILogEntry AddInfo(string information)
         {
             if (!string.IsNullOrWhiteSpace(information))
             {
@@ -42,7 +42,7 @@
             return this;
         }
 
-        public ILogData AddContent(Func<string> contentExtractor)
+        public ILogEntry AddContent(Func<string> contentExtractor)
         {
             if (contentExtractor == null)
             {
@@ -54,7 +54,7 @@
             return this;
         }
 
-        public ILogData HideSensitiveInfo(
+        public ILogEntry HideSensitiveInfo(
             IEnumerable<string> sensitiveParams,
             params string[] regexSensitiveParams)
         {

@@ -45,8 +45,8 @@
 
         void Critical(string format, string category, params object[] args);
 
-        void Write(ILogData logData, TraceEventType traceEventType);
+        void Write(ILogEntry logEntry, TraceEventType traceEventType);
 
-        void Write(ILogData logData, TraceEventType traceEventType, string category);
+        void Write(ILogEntry logEntry, TraceEventType traceEventType, string category);
     }
 }

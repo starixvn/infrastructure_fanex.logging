@@ -92,8 +92,8 @@
     <Compile Include="Adapters\LogEntryAdapter.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ILogData.cs" />
-    <Compile Include="LogData.cs" />
+    <Compile Include="ILogEntry.cs" />
+    <Compile Include="LogEntry.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Configuration\LoggerConfiguration.cs" />
     <Compile Include="ILogger.cs" />

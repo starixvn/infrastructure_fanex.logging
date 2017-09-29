@@ -242,15 +242,4 @@ ModelManifest.xml
 .fake/
 
 OpenCover
-/Fanex.Logging.v3.ncrunchsolution
-/src/Fanex.Logging/Fanex.Logging.v3.ncrunchproject
-/samples/Fanex.Logging.Samples.Web/Fanex.Logging.Samples.Web.v3.ncrunchproject
-/tests/unittests/Fanex.Logging.UnitTests/Fanex.Logging.UnitTests.v3.ncrunchproject
-/tests/unittests/Fanex.Logging.Extensions.Web.UnitTests/Fanex.Logging.Extensions.Web.UnitTests.v3.ncrunchproject
-/samples/ConsoleLogging/Fanex.LoggingTest.v3.ncrunchproject
-/samples/Fanex.Logging.Samples.DatabaseV59/Fanex.Logging.Samples.DatabaseV59.v3.ncrunchproject
-/samples/Fanex.Logging.Samples.DatabaseV62/Fanex.Logging.Samples.DatabaseV62.v3.ncrunchproject
-/src/Fanex.Logging.Extensions.Database.V59/Fanex.Logging.Extensions.Database.V59.v3.ncrunchproject
-/src/Fanex.Logging.Extensions.Database.V62/Fanex.Logging.Extensions.Database.V62.v3.ncrunchproject
-/src/Fanex.Logging.Extensions.Database/Fanex.Logging.Extensions.Database.v3.ncrunchproject
-/src/Fanex.Logging.Extensions.Web/Fanex.Logging.Extensions.Web.v3.ncrunchproject
+*ncrunch*

@@ -6,14 +6,14 @@
     using Logging;
     using Xunit;
 
-    [Trait("Category", "LogData.cs")]
-    public class LogDataTests
+    [Trait("Category", "LogEntry.cs")]
+    public class LogEntryTests
     {
         [Fact]
         public void Constructor_DefaultConstructor_ReturnEmptyMessage()
         {
             // Act
-            var actualMessage = new LogData().ToString();
+            var actualMessage = new LogEntry().ToString();
 
             // Assert
             Assert.Empty(actualMessage);
@@ -26,7 +26,7 @@
             var message = "Message";
 
             // Act
-            var actualMessage = new LogData(message).ToString();
+            var actualMessage = new LogEntry(message).ToString();
 
             // Assert
             Assert.Equal(message, actualMessage);
@@ -39,88 +39,88 @@
         public void AddInfo_InfomationIsNullOrWhiteSpace_ReturnEmptyMessage(string information)
         {
             // Arrange
-            var logData = new LogData();
+            var logEntry = new LogEntry();
 
             // Act
-            logData.AddInfo(information);
+            logEntry.AddInfo(information);
 
             // Assert
-            Assert.Empty(logData.ToString());
+            Assert.Empty(logEntry.ToString());
         }
 
         [Fact]
         public void AddInfo_InformationIsNotEmpty_ReturnFormattedMessage()
         {
             // Arrange
-            var logData = new LogData();
+            var logEntry = new LogEntry();
             var information = "Information";
 
             // Act
-            logData.AddInfo(information);
+            logEntry.AddInfo(information);
 
             // Assert
-            Assert.Equal("Information", logData.ToString());
+            Assert.Equal("Information", logEntry.ToString());
         }
 
         [Fact]
         public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
         {
-            var logData = new LogData();
+            var logEntry = new LogEntry();
 
-            Assert.Throws<ArgumentNullException>(() => logData.AddContent(null));
+            Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(null));
         }
 
         [Theory]
         [InlineData("initial message 1", "message to be append 1" )]
         [InlineData("initial message 2", "message to be append 2" )]        
-        public void AddContent_ExtractorIsNotNull_AppendMessageToLogData(string initialMessage, string appendMessage)
+        public void AddContent_ExtractorIsNotNull_AppendMessageToLogEntry(string initialMessage, string appendMessage)
         {
-            var logData = new LogData(initialMessage);
+            var logEntry = new LogEntry(initialMessage);
             
-            logData.AddContent(() => appendMessage);
+            logEntry.AddContent(() => appendMessage);
 
-            Assert.Equal(logData.ToString(), initialMessage + appendMessage + Environment.NewLine);
+            Assert.Equal(logEntry.ToString(), initialMessage + appendMessage + Environment.NewLine);
         }
 
         [Fact]
-        public void AddInfo_LogDataHadInformation_InformationIsNotEmpty_ReturnFormattedMessage()
+        public void AddInfo_LogEntryHadInformation_InformationIsNotEmpty_ReturnFormattedMessage()
         {
             // Arrange
-            var logData = new LogData("Information");
+            var logEntry = new LogEntry("Information");
             var information = "New Information";
 
             // Act
-            logData.AddInfo(information);
+            logEntry.AddInfo(information);
 
             // Assert
             Assert.Equal(
                 "Information"
                 + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                 + "New Information",
-                logData.ToString());
+                logEntry.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_NoSensitiveParam_ReturnMessage()
         {
             // Arrange
-            var logData = new LogData("Information");
+            var logEntry = new LogEntry("Information");
 
             // Act
-            logData.HideSensitiveInfo(Enumerable.Empty<string>(), "regexParam1");
+            logEntry.HideSensitiveInfo(Enumerable.Empty<string>(), "regexParam1");
 
             // Assert
-            Assert.Equal("Information", logData.ToString());
+            Assert.Equal("Information", logEntry.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_NoSensitiveRegex_ReturnMessage()
         {
             // Arrange
-            var logData = new LogData("Information");
+            var logEntry = new LogEntry("Information");
 
             // Act
-            logData.HideSensitiveInfo(
+            logEntry.HideSensitiveInfo(
                 new List<string>
                 {
                     "password",
@@ -128,20 +128,20 @@
                 });
 
             // Assert
-            Assert.Equal("Information", logData.ToString());
+            Assert.Equal("Information", logEntry.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_MessageContainsSensitiveInfo_RemoveSensitiveInfo()
         {
             // Arrange
-            var logData =
-                new LogData("Information?securitycode=122323&password=434334&passerfdf=3434")
+            var logEntry =
+                new LogEntry("Information?securitycode=122323&password=434334&passerfdf=3434")
                 .AddInfo("SECURITYCODE=43434")
                 .AddInfo("PASSword=43333klkldkflkdf");
 
             // Act
-            logData.HideSensitiveInfo(
+            logEntry.HideSensitiveInfo(
                 new List<string>
                 {
                     "password",
@@ -157,7 +157,7 @@
                 + "SECURITYCODE="
                 + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
                 + "PASSword=",
-                logData.ToString());
+                logEntry.ToString());
         }
     }
 }
