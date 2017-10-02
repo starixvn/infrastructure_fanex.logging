@@ -12,14 +12,14 @@
             Constants.BodyDataJsonParamRegexPattern
         };
 
-        internal Func<Exception, string> GetDbExceptionInfo;
+        internal Func<Exception, List<string>> GetDbExceptionInfo;
         internal IEnumerable<string> SensitiveParams;
         internal string[] RegexSensitiveParamPatterns;
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
         internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(HttpException), typeof(ThreadAbortException) };
 
-        public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, string> getDbExceptionInfo)
+        public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, List<string>> getDbExceptionInfo)
         {
             if (getDbExceptionInfo == null)
             {

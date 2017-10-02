@@ -4,7 +4,8 @@
     using System.Diagnostics;
     using System.Web;
     using static WebLogContentExtractors;
-    using static Fanex.Logging.DefaultLogContentExtractors;
+    using static Fanex.Logging.LogContentExtractors;
+    using System.Collections.Generic;
 
     public static class ExceptionHandler
     {
@@ -22,7 +23,7 @@
             return config;
         }
 
-        public static LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, string> getDbExceptionInfo)
+        public static LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, List<string>> getDbExceptionInfo)
         {
             if (getDbExceptionInfo == null)
             {
@@ -59,23 +60,30 @@
 
             var logEntry = new LogEntry()
                 .AddContent(() => exception.Message)
-                .Section("REQUEST INFO").AddContent(GetRequsetInfo(request))
-                .Section("BROWSER INFO").AddContent(GetBrowserInfo(request.Browser, request.ServerVariables))                
-                .HideSensitiveInfo(config.SensitiveParams, config.RegexSensitiveParamPatterns)
-                .Section("DATABASE").AddContent(() => config.GetDbExceptionInfo(exception))
-                .Section("WEB SERVER").AddContent(GetServerInfo())      
-                .AddContent(() => GetExceptionInfo(exception));
+                .Section("REQUEST INFO")
+                    .AddContent(GetRequestInfo(request))
+                .Section("BROWSER INFO")
+                    .AddContent(GetBrowserInfo(request.Browser, request.ServerVariables))                
+                .Section("DATABASE")
+                    .AddContent(config.GetDbExceptionInfo(exception))
+                .Section("WEB SERVER")
+                    .AddContent(GetServerInfo())
+                .Section("EXCEPTION")
+                    .AddContent(GetExceptionInfo(exception))
+                .HideSensitiveInfo(config.SensitiveParams, config.RegexSensitiveParamPatterns);
 
             if (config.EnabledLogHttpHeader)
             {
                 logEntry
-                    .Section("REQUEST HEADERS").AddContent(GetRequestHeader(request.Headers));             
+                    .Section("REQUEST HEADERS")
+                        .AddContent(GetRequestHeader(request.Headers));             
             }
 
             if (config.EnabledLogHttpSession)
             {
                 logEntry
-                     .Section("REQUEST SESSION").AddContent(GetSessionInfo(HttpContext.Current.Session));
+                     .Section("SESSION STATE")
+                        .AddContent(GetSessionInfo(HttpContext.Current.Session));
             }
 
             LogService.Write(logEntry, traceEventType, category);

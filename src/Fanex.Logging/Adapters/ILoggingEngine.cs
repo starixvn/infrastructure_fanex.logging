@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Fanex.Logging.Adapters
+﻿namespace Fanex.Logging.Adapters
 {
+    using System.Diagnostics;
+
     internal interface ILoggingEngine
     {
-        void Write(LogEntryAdapter logEntryAdapter);
+        void Write(string message, TraceEventType severity, string category);
     }
 }

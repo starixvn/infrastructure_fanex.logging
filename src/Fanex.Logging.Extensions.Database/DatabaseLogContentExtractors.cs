@@ -1,28 +1,15 @@
 ﻿namespace Fanex.Logging.Extensions.Database
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Common;
     using System.Data.SqlClient;
     using System.Linq;
     using Data.CrossCutting.WrappingException;
 
-    public static class DatabaseLoggingExtensions
+    public static class DatabaseLogContentExtractors
     {
-        public static ILogEntry AddSqlInfo(this ILogEntry logEntry, Exception ex)
-        {
-            if (logEntry == null || ex == null)
-            {
-                return logEntry;
-            }
-
-            var sqlInfo = GetSqlExceptionInfo(ex);
-
-            return string.IsNullOrWhiteSpace(sqlInfo)
-                        ? logEntry
-                        : logEntry.AddInfo(sqlInfo);
-        }
-
-        public static string GetSqlExceptionInfo(Exception exception)
+        public static List<string> GetDbExceptionInfo(Exception exception)
         {
             if (exception is ObjectDbException)
             {
@@ -39,17 +26,18 @@
                 return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
             }
 
-            return string.Empty;
+            return Constants.NoInformationContent;
         }
 
-        private static string GetSqlExceptionInfo(SqlException ex) =>
-            LogUtility.CombineInfo(
-                "DATABASE INFO",
+        private static List<string> GetSqlExceptionInfo(SqlException ex) 
+            => new List<string>
+            {
                 $"SQL Server: {ex.Server}",
                 $"Stored Procedure: {ex.Procedure}",
-                $"Line Number: {ex.LineNumber}");
+                $"Line Number: {ex.LineNumber}"
+            };
 
-        private static string GetObjectDbExceptionInfo(ObjectDbException ex)
+        private static List<string> GetObjectDbExceptionInfo(ObjectDbException ex)
         {
             var sqlConnectionString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
             var lineNumber = ex.InnerException is SqlException
@@ -63,14 +51,15 @@
                         .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}")
                 : string.Empty;
 
-            return LogUtility.CombineInfo(
-                "DATABASE INFO",
+            return new List<string>
+            {
                 $"SQL Server: {sqlConnectionString.DataSource}",
                 $"Database: {ex.DbSetting.DbName}",
                 $"Account: {sqlConnectionString.UserID}",
                 $"Stored Procedure: {ex.DbSetting.SpName}",
                 $"Line Number: {lineNumber}",
-                $"SP Params: {passedParameters}");
+                $"SP Params: {passedParameters}"
+            };
         }
     }
 }

@@ -68,7 +68,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="LoggingConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebLoggingExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

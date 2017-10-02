@@ -5,8 +5,6 @@
 
     public interface ILogEntry
     {
-        ILogEntry AddInfo(string information);
-
         ILogEntry AddContent(Func<string> contentExtractor);
 
         ILogEntry AddContent(List<string> contents);

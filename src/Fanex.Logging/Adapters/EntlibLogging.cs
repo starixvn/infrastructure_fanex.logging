@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging.Adapters
 {
     using System;
+    using System.Diagnostics;
     using Microsoft.Practices.EnterpriseLibrary.Logging;
 
     internal class EntlibLogging : ILoggingEngine
@@ -21,16 +22,16 @@
             }
         }
 
-        public void Write(LogEntryAdapter logEntryAdapter)
+        public void Write(string message, TraceEventType severity, string category)
         {
             var logEntry = new LogEntry
             {
-                Message = logEntryAdapter.Message,
-                Title = logEntryAdapter.Category,
-                Severity = logEntryAdapter.Severity
+                Message = message,
+                Title = category,
+                Severity = severity
             };
 
-            logEntry.Categories.Add(logEntryAdapter.Category);
+            logEntry.Categories.Add(category);
 
             WriteLog(logEntry);
         }

@@ -89,9 +89,7 @@
   <ItemGroup>
     <Compile Include="Adapters\ILoggingEngine.cs" />
     <Compile Include="Adapters\EntlibLogging.cs" />
-    <Compile Include="Adapters\LogEntryAdapter.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="LogEntryExtensions.cs" />
     <Compile Include="LogContentExtractors.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ILogEntry.cs" />

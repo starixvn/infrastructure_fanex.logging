@@ -1,82 +1,70 @@
 ﻿namespace Fanex.Logging.Extensions.Database.V59.UnitTests
 {
     using System;
-    using System.Data;
+    using System.Collections.Generic;
     using System.Data.SqlClient;
     using System.Reflection;
     using Xunit;
 
-    [Trait("Category", "Extensions/DB_V59/DatabaseLoggingExtensions.cs")]
-    public class DatabaseLoggingExtensionsTests
+    [Trait("Category", "Extensions/DB_V59/DatabaseLogContentExtractors.cs")]
+    public class DatabaseLogContentExtractorsTests
     {
         private readonly ILogEntry logEntry;
 
-        public DatabaseLoggingExtensionsTests()
+        public DatabaseLogContentExtractorsTests()
         {
             logEntry = new LogEntry("Message");
-
         }
 
         [Fact]
-        public void AddSqlInfo_LogEntryIsNull_ReturnNull()
-        {
-            // Arrange
-            ILogEntry nullLogEntry = null;
-
-            // Act
-            nullLogEntry = nullLogEntry.AddSqlInfo(new Exception());
-
-            // Assert
-            Assert.Null(nullLogEntry);
-        }
-
-        [Fact]
-        public void AddSqlInfo_ExceptionIsNull_ReturnLogEntry()
+        public void GetDbExceptionInfo_ExceptionIsNull_ReturnNoInfoContent()
         {
             // Act
-            var actualLogEntry = logEntry.AddSqlInfo(new Exception());
+            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(new Exception());
 
             // Assert
-            Assert.Same(logEntry, actualLogEntry);
+            Assert.Same(Constants.NoInformationContent, dbExceptionInfo);
         }
 
         [Fact]
-        public void AddSqlInfo_ExceptionIsSqlException_ReturnLogEntryWithDbInfo()
+        public void GetDbExceptionInfo_ExceptionIsSqlException_ReturnDbExceptionInfo()
         {
             // Arrange
             var sqlException = CreateSqlException("server 1", "proccedure 1");
 
             // Act
-            logEntry.AddSqlInfo(sqlException);
+            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(sqlException);
 
             // Assert
-            Assert.Equal("Message"
-                        + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
-                        + "DATABASE INFO:"
-                        + "\r\n\tSQL Server: server 1"
-                        + "\r\n\tStored Procedure: proccedure 1"
-                        + "\r\n\tLine Number: 100",
-                        logEntry.ToString());
+            Assert.Equal(
+                new List<string>
+                {
+                    "SQL Server: server 1",
+                    "Stored Procedure: proccedure 1",
+                    "Line Number: 100",
+                },
+                dbExceptionInfo);
         }
 
         [Fact]
-        public void AddSqlInfo_InnerExceptionIsSqlException_ReturnLogEntryWithDbInfo()
+        public void GetDbExceptionInfo_InnerExceptionIsSqlException_ReturnDbExceptionInfo()
         {
             // Arrange
             var sqlException = CreateSqlException("server 1", "proccedure 1");
             var exception = new Exception("message", sqlException);
 
             // Act
-            logEntry.AddSqlInfo(exception);
+            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(exception);
 
             // Assert
-            Assert.Equal("Message"
-                        + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
-                        + "DATABASE INFO:"
-                        + "\r\n\tSQL Server: server 1"
-                        + "\r\n\tStored Procedure: proccedure 1"
-                        + "\r\n\tLine Number: 100",
-                        logEntry.ToString());
+            Assert.Equal(
+                new List<string>
+                {
+                    "SQL Server: server 1",
+                    "Stored Procedure: proccedure 1",
+                    "Line Number: 100",
+                },
+                dbExceptionInfo);
         }
 
         public static SqlException CreateSqlException(string server, string procedure)

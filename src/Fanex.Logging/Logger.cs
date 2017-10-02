@@ -131,14 +131,10 @@
 
         private void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            var logEntry = new LogEntryAdapter
-            {
-                Severity = GetSevirity(traceEventType),
-                Message = message,
-                Category = string.IsNullOrEmpty(category) ? defaultLogCategory : category
-            };
-
-            loggingEngine.Write(logEntry);
+            loggingEngine.Write(
+                message,
+                GetSevirity(traceEventType),
+                string.IsNullOrEmpty(category) ? defaultLogCategory : category);
         }
 
         private static TraceEventType GetSevirity(TraceEventType traceEventType)

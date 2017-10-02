@@ -24,7 +24,7 @@
                 }
             }
 
-            return "N/A";
+            return Constants.NotAvailableAbbr;
         }
         public static string GetClientIP(this NameValueCollection serverVariables)
         {

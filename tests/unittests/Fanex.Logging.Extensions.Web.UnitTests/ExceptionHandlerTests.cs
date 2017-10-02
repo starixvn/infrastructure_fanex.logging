@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging.Extensions.Web.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using Xunit;
 
     [Trait("Category", "Extensions/ExceptionHandler.cs")]
@@ -37,7 +38,7 @@
         public void UseGetDbExceptionInfo_Always_SetUseGetDbExceptionInfo()
         {
             // Arrange
-            Func<Exception, string> getDbExceptionInfo = (ex) => "result";
+            Func<Exception, List<string>> getDbExceptionInfo = (ex) => new List<string> { "result" };
 
             // Act
             ExceptionHandler.UseGetDbExceptionInfo(getDbExceptionInfo);

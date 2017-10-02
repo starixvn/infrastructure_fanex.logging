@@ -2,27 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Sockets;
 
-    public static class DefaultLogContentExtractors
+    public static class LogContentExtractors
     {
-        public static string GetExceptionInfo(Exception exception)
-         => LogUtility.CombineInfo("EXCEPTION",
-                     $"Source: {exception.Source}",
+        public static List<string> GetExceptionInfo(Exception exception)
+         => exception == null 
+            ? Constants.NoInformationContent
+            : new List<string> {
+                $"Source: {exception.Source}",
                      $"Type: {exception.GetType()}",
                      $"Target Site: {exception.TargetSite}",
                      $"Stack Trace: {exception.StackTrace}",
-                     $"Details: {exception}");
-
-        public static string GetWebServerInfo()
-          => LogUtility.CombineInfo(
-                      "WEB SERVER INFO",
-                      $"Server IP: {GetMachineIP(Dns.GetHostEntry(Dns.GetHostName()))}",
-                      $"Machine: {Environment.MachineName}",
-                      $"OS: {Environment.OSVersion}",
-                      $"System Time: {DateTime.Now}",
-                      $"User Domain: {Environment.UserDomainName}/{Environment.UserName}");
+                     $"Details: {exception}" };
 
         public static List<string> GetServerInfo()
           => new List<string> {                      
@@ -45,7 +39,7 @@
                 }
             }
 
-            return string.Empty;
+            return Constants.NotAvailableAbbr;
         }
     }
 }

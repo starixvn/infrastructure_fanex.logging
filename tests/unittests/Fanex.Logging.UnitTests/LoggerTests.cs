@@ -32,11 +32,7 @@
             logger.Debug(message);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Verbose
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write(message, TraceEventType.Verbose, defaultCategory);
         }
 
         [Fact]
@@ -50,11 +46,7 @@
             logger.Debug(message, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Verbose
-                                && logEntry.Category == category));
+            logEngine.Received().Write(message, TraceEventType.Verbose, category);
         }
 
         [Fact]
@@ -68,11 +60,7 @@
             logger.Debug(message, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Verbose
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Verbose, defaultCategory);
         }
 
         [Fact]
@@ -87,11 +75,7 @@
             logger.Debug(message, category, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Verbose
-                                && logEntry.Category == category));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Verbose, category);
         }
 
         #endregion Write Debug Log
@@ -108,11 +92,7 @@
             logger.Info(message);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Information
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write(message, TraceEventType.Information, defaultCategory);
         }
 
         [Fact]
@@ -126,11 +106,7 @@
             logger.Info(message, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Information
-                                && logEntry.Category == category));
+            logEngine.Received().Write(message, TraceEventType.Information, category);
         }
 
         [Fact]
@@ -144,11 +120,7 @@
             logger.Info(message, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Information
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Information, defaultCategory);
         }
 
         [Fact]
@@ -163,11 +135,7 @@
             logger.Info(message, category, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Information
-                                && logEntry.Category == category));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Information, category);
         }
 
         #endregion Write Information Log
@@ -186,11 +154,7 @@
             logger.Warn(message);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Warning
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write(message, TraceEventType.Warning, defaultCategory);
         }
 
         [Fact]
@@ -204,11 +168,7 @@
             logger.Warn(message, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Warning
-                                && logEntry.Category == category));
+            logEngine.Received().Write(message, TraceEventType.Warning, category);
         }
 
         [Fact]
@@ -222,11 +182,7 @@
             logger.Warn(message, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Warning
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Warning, defaultCategory);
         }
 
         [Fact]
@@ -241,11 +197,7 @@
             logger.Warn(message, category, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Warning
-                                && logEntry.Category == category));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Warning, category);
         }
 
         #endregion Write Warning Log
@@ -264,11 +216,7 @@
             logger.Critical(message);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Critical
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write(message, TraceEventType.Critical, defaultCategory);
         }
 
         [Fact]
@@ -282,11 +230,7 @@
             logger.Critical(message, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Critical
-                                && logEntry.Category == category));
+            logEngine.Received().Write(message, TraceEventType.Critical, category);
         }
 
         [Fact]
@@ -300,11 +244,7 @@
             logger.Critical(message, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Critical
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Critical, defaultCategory);
         }
 
         [Fact]
@@ -319,11 +259,7 @@
             logger.Critical(message, category, args);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message Custom Data 1 Custom Data 2"
-                                && logEntry.Severity == TraceEventType.Critical
-                                && logEntry.Category == category));
+            logEngine.Received().Write("Message Custom Data 1 Custom Data 2", TraceEventType.Critical, category);
         }
 
         #endregion Write Critical Log
@@ -340,11 +276,7 @@
             logger.Error(message);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Error
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write(message, TraceEventType.Error, defaultCategory);
         }
 
         [Fact]
@@ -358,11 +290,7 @@
             logger.Error(message, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == message
-                                && logEntry.Severity == TraceEventType.Error
-                                && logEntry.Category == category));
+            logEngine.Received().Write(message, TraceEventType.Error, category);
         }
 
         [Fact]
@@ -376,11 +304,7 @@
             logger.Error(message, exception);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message\nSystem.NotSupportedException: Specified method is not supported."
-                                && logEntry.Severity == TraceEventType.Error
-                                && logEntry.Category == defaultCategory));
+            logEngine.Received().Write("Message\nSystem.NotSupportedException: Specified method is not supported.", TraceEventType.Error, defaultCategory);
         }
 
         [Fact]
@@ -395,11 +319,7 @@
             logger.Error(message, category, exception);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    logEntry => logEntry.Message == "Message\nSystem.NotSupportedException: Specified method is not supported."
-                                && logEntry.Severity == TraceEventType.Error
-                                && logEntry.Category == category));
+            logEngine.Received().Write("Message\nSystem.NotSupportedException: Specified method is not supported.", TraceEventType.Error, category);
         }
 
         #endregion Write Error Log
@@ -416,11 +336,7 @@
             logger.Write(logEntry, TraceEventType.Error);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    le => le.Message == "This log has no information."
-                                && le.Severity == TraceEventType.Error
-                                && le.Category == defaultCategory));
+            logEngine.Received().Write("This log has no information.\r\n", TraceEventType.Error, defaultCategory);
         }
 
         [Theory]
@@ -445,11 +361,7 @@
             logger.Write(logEntry, traceEventType);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    le => le.Message == "This log has no information."
-                                && le.Severity == expectedTraceEventType
-                                && le.Category == defaultCategory));
+            logEngine.Received().Write("This log has no information.\r\n", expectedTraceEventType, defaultCategory);
         }
 
         [Fact]
@@ -464,11 +376,7 @@
             logger.Write(logEntry, TraceEventType.Error, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    le => le.Message == message
-                                && le.Severity == TraceEventType.Error
-                                && le.Category == category));
+            logEngine.Received().Write(logEntry.ToString(), TraceEventType.Error, category);
         }
 
         #endregion General Write Log
@@ -486,11 +394,7 @@
             logger.Write(logEntry, TraceEventType.Error, category);
 
             // Assert
-            logEngine.Received().Write(
-                Arg.Is<LogEntryAdapter>(
-                    le => le.Message == message
-                                && le.Severity == TraceEventType.Error
-                                && le.Category == defaultCategory));
+            logEngine.Received().Write(logEntry.ToString(), TraceEventType.Error, defaultCategory);
         }
     }
 }

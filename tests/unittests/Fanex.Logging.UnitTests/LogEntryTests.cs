@@ -29,46 +29,47 @@
             var actualMessage = new LogEntry(message).ToString();
 
             // Assert
-            Assert.Equal(message, actualMessage);
+            Assert.Equal("Message\r\n", actualMessage);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(" ")]
         [InlineData(null)]
-        public void AddInfo_InfomationIsNullOrWhiteSpace_ReturnEmptyMessage(string information)
+        public void AddContent_InfomationIsNullOrWhiteSpace_ReturnEmptyMessage(string information)
         {
             // Arrange
             var logEntry = new LogEntry();
 
             // Act
-            logEntry.AddInfo(information);
+            logEntry.AddContent(() => information);
 
             // Assert
             Assert.Empty(logEntry.ToString());
         }
 
         [Fact]
-        public void AddInfo_InformationIsNotEmpty_ReturnFormattedMessage()
+        public void AddContent_InformationIsNotEmpty_ReturnLogEntryWithInformation()
         {
             // Arrange
             var logEntry = new LogEntry();
             var information = "Information";
 
             // Act
-            logEntry.AddInfo(information);
+            logEntry.AddContent(() => information);
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information\r\n", logEntry.ToString());
         }
 
-        //[Fact]
-        //public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
-        //{
-        //    var logEntry = new LogEntry();
+        [Fact]
+        public void AddContent_ExtractorIsNull_ThrowArgumentNullException()
+        {
+            var logEntry = new LogEntry();
+            Func<string> getContentFunc = null;
 
-        //    Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(null));
-        //}
+            Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(getContentFunc));
+        }
 
         [Theory]
         [InlineData("initial message 1", "message to be append 1" )]
@@ -79,25 +80,9 @@
             
             logEntry.AddContent(() => appendMessage);
 
-            Assert.Equal(logEntry.ToString(), initialMessage + appendMessage + Environment.NewLine + Environment.NewLine);
-        }
-
-        [Fact]
-        public void AddInfo_LogEntryHadInformation_InformationIsNotEmpty_ReturnFormattedMessage()
-        {
-            // Arrange
-            var logEntry = new LogEntry("Information");
-            var information = "New Information";
-
-            // Act
-            logEntry.AddInfo(information);
-
-            // Assert
             Assert.Equal(
-                "Information"
-                + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
-                + "New Information",
-                logEntry.ToString());
+                logEntry.ToString(), 
+                initialMessage + Environment.NewLine + appendMessage + Environment.NewLine);
         }
 
         [Fact]
@@ -110,7 +95,7 @@
             logEntry.HideSensitiveInfo(Enumerable.Empty<string>(), "regexParam1");
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information\r\n", logEntry.ToString());
         }
 
         [Fact]
@@ -128,17 +113,16 @@
                 });
 
             // Assert
-            Assert.Equal("Information", logEntry.ToString());
+            Assert.Equal("Information\r\n", logEntry.ToString());
         }
 
         [Fact]
         public void HideSensitiveInfo_MessageContainsSensitiveInfo_RemoveSensitiveInfo()
         {
             // Arrange
-            var logEntry =
-                new LogEntry("Information?securitycode=122323&password=434334&passerfdf=3434")
-                .AddInfo("SECURITYCODE=43434")
-                .AddInfo("PASSword=43333klkldkflkdf");
+            var logEntry = new LogEntry("Information?securitycode=122323&password=434334&passerfdf=3434");
+            logEntry.AddContent(() => "SECURITYCODE=43434")
+                .AddContent(() => "PASSword=43333klkldkflkdf");
 
             // Act
             logEntry.HideSensitiveInfo(
@@ -153,10 +137,11 @@
             // Assert
             Assert.Equal(
                 "Information?securitycode=&password=&passerfdf=3434"
-                + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
+                + "\r\n"
                 + "SECURITYCODE="
-                + "\r\n---------------------------------------------------------------------------------------------------------------\r\n"
-                + "PASSword=",
+                + "\r\n"
+                + "PASSword="
+                + "\r\n",
                 logEntry.ToString());
         }
     }

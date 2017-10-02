@@ -38,4 +38,11 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Fanex.Logging.UnitTests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 [assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Web")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database.V62")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database.V59")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Web.Unittests")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database.V62.Unittests")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database.V59.Unittests")]
+[assembly: InternalsVisibleTo("Fanex.Logging.Extensions.Database.Unittests")]
 

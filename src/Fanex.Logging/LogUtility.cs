@@ -21,7 +21,5 @@
                 NewLine,
                 $"{infoGroup}:",
                 $"{Tab}{string.Join(Segment, infoItems)}");
-
-       
     }
 }

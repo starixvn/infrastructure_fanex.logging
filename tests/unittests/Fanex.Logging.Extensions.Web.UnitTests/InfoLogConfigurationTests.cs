@@ -26,7 +26,7 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
         public void UseGetDbExceptionInfo_Always_SetFunc()
         {
             // Arrange
-            Func<Exception, string> getDBInfoFunc = (ex) => "result";
+            Func<Exception, List<string>> getDBInfoFunc = (ex) => new List<string> { "result" };
 
             // Act
             loggingConfiguration.UseGetDbExceptionInfo(getDBInfoFunc);

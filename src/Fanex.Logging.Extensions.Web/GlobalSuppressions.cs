@@ -4,7 +4,6 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Vulnerability", "S1313:IP addresses should not be hardcoded", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.Extensions.Web.WebLoggingExtensions.GetClientIP(System.Web.HttpRequest)~System.String")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Vulnerability", "S1313:IP addresses should not be hardcoded", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.Extensions.Web.WebLoggingExtensions.GetClientIP(System.Collections.Specialized.NameValueCollection)~System.String")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S2223:Non-constant static fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:Fanex.Logging.Extensions.Web.ExceptionHandler.config")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Vulnerability", "S1313:IP addresses should not be hardcoded", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.Extensions.Web.Extensions.GetClientIP(System.Collections.Specialized.NameValueCollection)~System.String")]
 

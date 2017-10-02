@@ -26,23 +26,20 @@
         public void Write_Always_ExecuteWriteLog()
         {
             // Arrange
-            var logEntryAdapter = new LogEntryAdapter
-            {
-                Category = "Category",
-                Message = "Message",
-                Severity = TraceEventType.Error
-            };
+            var category = "Category";
+            var message = "Message";
+            var severity = TraceEventType.Error;
 
             // Act
-            logEngineAdapter.Write(logEntryAdapter);
+            logEngineAdapter.Write(message, severity, category);
 
             // Assert
             writeLog.Received().Invoke(
                 Arg.Is<MPEL.LogEntry>(
-                    logEntry => logEntry.Message == logEntryAdapter.Message
-                                && logEntry.Title == logEntryAdapter.Category
-                                && logEntry.Severity == logEntryAdapter.Severity
-                                && logEntry.Categories.ElementAt(0) == logEntryAdapter.Category));
+                    logEntry => logEntry.Message == message
+                                && logEntry.Title == category
+                                && logEntry.Severity == severity
+                                && logEntry.Categories.ElementAt(0) == category));
         }
     }
 }

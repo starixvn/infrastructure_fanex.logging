@@ -47,8 +47,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Database.UnitTests\Fanex.Logging.Extensions.Database.UnitTests.csproj", "{B6EB39A7-0405-4863-B8B1-C81C84D3D140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions", "src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj", "{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V59.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.V59.UnitTests\Fanex.Logging.Extensions.Database.V59.UnitTests.csproj", "{C90BF9F0-6D69-4916-B441-76FE72490014}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V62.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.V62.UnitTests\Fanex.Logging.Extensions.Database.V62.UnitTests.csproj", "{238CF053-E6E1-4C0D-B5A1-AF16749A2102}"
@@ -164,14 +162,6 @@ Global
 		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|x86.ActiveCfg = Release|Any CPU
 		{B6EB39A7-0405-4863-B8B1-C81C84D3D140}.Release|x86.Build.0 = Release|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Debug|x86.Build.0 = Debug|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Release|x86.ActiveCfg = Release|Any CPU
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02}.Release|x86.Build.0 = Release|Any CPU
 		{C90BF9F0-6D69-4916-B441-76FE72490014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C90BF9F0-6D69-4916-B441-76FE72490014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C90BF9F0-6D69-4916-B441-76FE72490014}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -209,7 +199,6 @@ Global
 		{DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB} = {4B588921-BA80-4965-914A-93C70DBE8D99}
 		{FB308993-84A7-48CD-8CC8-3E1D734DAB65} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 		{B6EB39A7-0405-4863-B8B1-C81C84D3D140} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
-		{85ACD637-A7BB-4D5E-9E3A-65BD9BDB1B02} = {F38BE2C2-4382-4857-AF4E-F42F257C4176}
 		{C90BF9F0-6D69-4916-B441-76FE72490014} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 	EndGlobalSection

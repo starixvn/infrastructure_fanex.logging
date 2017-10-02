@@ -9,7 +9,6 @@
     public class LogEntry : ILogEntry
     {
         private const string paramValue = "paramValue";
-        internal const string NewSection = "\r\n---------------------------------------------------------------------------------------------------------------\r\n";
         internal static readonly ILogEntry NoInformationLogEntry = new LogEntry("This log has no information.");
         private readonly StringBuilder stringBuilder;
 
@@ -23,23 +22,8 @@
 
             if (!string.IsNullOrWhiteSpace(message))
             {
-                stringBuilder.Append(message);
+                stringBuilder.AppendLine(message);
             }
-        }
-
-        public ILogEntry AddInfo(string information)
-        {
-            if (!string.IsNullOrWhiteSpace(information))
-            {
-                if (stringBuilder.Length > 0)
-                {
-                    stringBuilder.Append(NewSection);
-                }
-
-                stringBuilder.Append(information);
-            }
-
-            return this;
         }
 
         public ILogEntry AddContent(Func<string> contentExtractor)
@@ -53,9 +37,7 @@
 
             if (!string.IsNullOrWhiteSpace(content))
             {
-                stringBuilder
-                    .AppendLine(contentExtractor())
-                    .AppendLine();
+                stringBuilder.AppendLine(content);
             }
 
             return this;
@@ -65,7 +47,9 @@
         {
             if (!string.IsNullOrWhiteSpace(sectionName))
             {
-                stringBuilder.AppendLine(sectionName);
+                stringBuilder
+                    .AppendLine()
+                    .AppendLine(sectionName);
             }
 
             return this;
@@ -78,8 +62,9 @@
                 throw new ArgumentNullException(nameof(contents));
             }
 
-            contents.ForEach(content => {
-                stringBuilder.AppendLine($"\t{content}");
+            contents.ForEach(content =>
+            {
+                stringBuilder.AppendLine($"{Constants.Tab}{content}");
             });
 
             return this;

@@ -7,7 +7,7 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging.Extensions.Web;
-    using static Fanex.Logging.Extensions.Database.DatabaseLoggingExtensions;
+    using static Fanex.Logging.Extensions.Database.DatabaseLogContentExtractors;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -28,7 +28,7 @@
             ExceptionHandler
                 // To ignore exceptions
                 //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
-                .UseGetDbExceptionInfo(GetSqlExceptionInfo);
+                .UseGetDbExceptionInfo(GetDbExceptionInfo);
         }
 
         protected void Application_Error(object sender, EventArgs e)
