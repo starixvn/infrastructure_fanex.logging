@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging.Samples.Web
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Data;
@@ -28,6 +29,8 @@
             ExceptionHandler
                 // To ignore exceptions
                 //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
+                // To ignore exceptions
+                .UseConfig(new LoggingConfiguration().HideSensitiveInfo(new List<string> { "password", "securitycode" }))
                 .UseGetDbExceptionInfo(GetDbExceptionInfo);
         }
 

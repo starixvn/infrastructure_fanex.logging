@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Web;
+    using System.Linq;
 
     public class LoggingConfiguration
     {
@@ -38,7 +39,10 @@
             if (sensitiveParams != null)
             {
                 SensitiveParams = sensitiveParams;
-                RegexSensitiveParamPatterns = regexSensitiveParamPatterns ?? defaultRegexSensitiveParamPatterns;
+                RegexSensitiveParamPatterns = 
+                    (regexSensitiveParamPatterns == null || !regexSensitiveParamPatterns.Any())
+                    ? defaultRegexSensitiveParamPatterns
+                    : regexSensitiveParamPatterns;
             }
 
             return this;

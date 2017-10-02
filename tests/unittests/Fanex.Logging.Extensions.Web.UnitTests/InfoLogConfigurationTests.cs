@@ -62,6 +62,50 @@ namespace Fanex.Logging.Extensions.Web.UnitTests
         }
 
         [Fact]
+        public void HideSensitiveInfo_Always_SetDefaultRegexPattern()
+        {
+            // Arrange
+            var sensitiveParams = new List<string>
+            {
+                "paramname1"
+            };
+
+            // Act
+            loggingConfiguration.HideSensitiveInfo(sensitiveParams);
+
+            // Assert
+            Assert.Equal(
+                new string[] 
+                {
+                    Constants.QueryStringParamRegexPattern,
+                    Constants.BodyDataJsonParamRegexPattern
+                }, 
+                loggingConfiguration.RegexSensitiveParamPatterns);
+        }
+
+        [Fact]
+        public void HideSensitiveInfo_SetCustomRegexPattern_SetRegexPattern()
+        {
+            // Arrange
+            var sensitiveParams = new List<string>
+            {
+                "paramname1"
+            };
+
+            // Act
+            loggingConfiguration.HideSensitiveInfo(sensitiveParams, new string[] { "1", "2" });
+
+            // Assert
+            Assert.Equal(
+                new string[] 
+                {
+                    "1",
+                    "2"
+                },
+                loggingConfiguration.RegexSensitiveParamPatterns);
+        }
+
+        [Fact]
         public void GetHttpHeaderInfo_Always_SetTrueForEnabledLogHttpHeader()
         {
             // Act

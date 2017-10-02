@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging.Samples.DatabaseV62
 {
     using System;
+    using System.Diagnostics;
     using Data;
     using Data.Configuration;
     using Extensions.Database.V62;
@@ -37,19 +38,16 @@
 
         public static void Handle(Exception exception)
         {
-            //var errorInfo = new LogEntry(exception.Message)
-            //                   .AddSqlInfo(exception)
-            //                   .AddServerInfo()
-            //                   .AddExceptionInfo(exception)
-            //                   .AddInfo(
-            //                       LogUtility.CombineInfo(
-            //                           "INFO GROUP",
-            //                            "Info 1",
-            //                            "Info 2"))
-            //                           .ToString();
+            var errorInfo = new LogEntry(exception.Message)
+                                .Section("DATABASE")
+                                    .AddContent(DatabaseLogContentExtractors.GetDbExceptionInfo(exception))
+                                .Section("WEB SERVER")
+                                    .AddContent(LogContentExtractors.GetServerInfo())
+                                .Section("EXCEPTION")
+                                    .AddContent(LogContentExtractors.GetExceptionInfo(exception));
 
-            //LogService.Error(errorInfo);
-            //Console.WriteLine(errorInfo);
+            LogService.Write(errorInfo, TraceEventType.Error);
+            Console.WriteLine(errorInfo);
         }
     }
 }

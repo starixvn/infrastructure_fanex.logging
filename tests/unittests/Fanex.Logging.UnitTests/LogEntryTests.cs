@@ -144,5 +144,66 @@
                 + "\r\n",
                 logEntry.ToString());
         }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void Section_SectionNameIsNullOrWhiteSpace_NotAddSection(string sectionName)
+        {
+            // Arrange
+            var logEntry = new LogEntry("Information");
+
+            // Act
+            logEntry.Section(sectionName);
+
+            // Assert
+            Assert.Equal("Information\r\n", logEntry.ToString());
+        }
+
+        [Fact]
+        public void Section_Always_AddSection()
+        {
+            // Arrange
+            var logEntry = new LogEntry("Information");
+            var sectionName = "SectionName";
+
+            // Act
+            logEntry.Section(sectionName);
+
+            // Assert
+            Assert.Equal("Information\r\n\r\nSectionName\r\n", logEntry.ToString());
+        }
+
+
+        [Fact]
+        public void AddContent_ContentsIsNull_ThrowArgumentNullException()
+        {
+            // Arrange
+            var logEntry = new LogEntry("Information");
+            List<string> nullContents = null;
+
+            // Act & Arrange
+            Assert.Throws<ArgumentNullException>(() => logEntry.AddContent(nullContents));
+        }
+
+        [Fact]
+        public void AddContent_Always_AddContents()
+        {
+            // Arrange
+            var logEntry = new LogEntry("Information");
+            var contents = new List<string>
+            {
+                "Content1",
+                "Content2",
+                "Content3",
+            };
+
+            // Act
+            logEntry.AddContent(contents);
+
+            // Assert
+            Assert.Equal("Information\r\n\tContent1\r\n\tContent2\r\n\tContent3\r\n", logEntry.ToString());
+        }
     }
 }
