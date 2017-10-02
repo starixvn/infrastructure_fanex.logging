@@ -37,12 +37,20 @@
       <HintPath>..\..\..\..\packages\Fanex.Data.0.5.404.62\lib\net40\Fanex.Data.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Fanex.Logging.1.0.2-beta3\lib\net40\Fanex.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Data.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\EnterpriseLibrary.Logging.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,10 +107,6 @@
     <ProjectReference Include="..\..\..\..\src\Fanex.Logging.Extensions.Database.V62\Fanex.Logging.Extensions.Database.V62.csproj">
       <Project>{6fb05847-7a95-4e3a-98a2-c9b6ec2d5662}</Project>
       <Name>Fanex.Logging.Extensions.Database.V62</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
-      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
-      <Name>Fanex.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Logging.Extensions.Database.V59.UnitTests\Fanex.Logging.Extensions.Database.V59.UnitTests.csproj">
       <Project>{c90bf9f0-6d69-4916-b441-76fe72490014}</Project>

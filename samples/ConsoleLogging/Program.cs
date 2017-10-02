@@ -15,7 +15,7 @@
         {
             try
             {
-                //TestLogging();
+                TestLogging();
                 SimulateSqlException();
             }
             catch (Exception exception)
