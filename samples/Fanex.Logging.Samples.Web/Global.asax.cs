@@ -30,7 +30,7 @@
                 // To ignore exceptions
                 //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
                 // To ignore exceptions
-                .UseConfig(new LoggingConfiguration().HideSensitiveInfo(new List<string> { "password", "securitycode" }))
+                //.UseConfig(new LoggingConfiguration().HideSensitiveInfo(new List<string> { "password", "securitycode" }))
                 .UseGetDbExceptionInfo(GetDbExceptionInfo);
         }
 
