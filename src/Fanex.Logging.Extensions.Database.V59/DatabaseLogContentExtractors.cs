@@ -6,6 +6,8 @@
 
     public static class DatabaseLogContentExtractors
     {
+        private static readonly List<string> noInformationContent = new List<string> { "No Information is available." };
+
         public static List<string> GetDbExceptionInfo(Exception exception)
         {
             if (exception is ObjectDbException)
@@ -23,7 +25,7 @@
                 return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
             }
 
-            return Constants.NoInformationContent;
+            return noInformationContent;
         }
 
         private static List<string> GetSqlExceptionInfo(SqlException ex)

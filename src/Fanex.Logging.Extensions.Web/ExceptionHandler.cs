@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Web;
+    using System.Linq;
     using static WebLogContentExtractors;
     using static Fanex.Logging.LogContentExtractors;
     using System.Collections.Generic;
@@ -42,12 +43,12 @@
             => Handle(exception, TraceEventType.Error, customInfo);
 
         public static void Handle(Exception exception, TraceEventType traceEventType, string category)
-            => Handle(exception, traceEventType, string.Empty, category);
+            => Handle(exception, traceEventType, null, category);
 
         public static void Handle(
             Exception exception,
             TraceEventType traceEventType,
-            string customInfo,
+            List<string> customInfo,
             string category)
         {
             if (HttpContext.Current == null
@@ -71,6 +72,12 @@
                 .Section("EXCEPTION")
                     .AddContent(GetExceptionInfo(exception))
                 .HideSensitiveInfo(config.SensitiveParams, config.RegexSensitiveParamPatterns);
+
+            if(customInfo != null && customInfo.Any())
+            {
+                logEntry.Section("CUSTOM INFO")
+                    .AddContent(customInfo);
+            }
 
             if (config.EnabledLogHttpHeader)
             {

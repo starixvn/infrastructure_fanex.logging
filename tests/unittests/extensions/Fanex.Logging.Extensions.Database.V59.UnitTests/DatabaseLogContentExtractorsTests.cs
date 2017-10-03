@@ -11,13 +11,6 @@
     [Trait("Category", "Extensions/DB_V59/DatabaseLogContentExtractors.cs")]
     public class DatabaseLogContentExtractorsTests
     {
-        private readonly ILogEntry logEntry;
-
-        public DatabaseLogContentExtractorsTests()
-        {
-            logEntry = new LogEntry("Message");
-        }
-
         [Fact]
         public void GetDbExceptionInfo_ExceptionIsNull_ReturnNoInfoContent()
         {
@@ -25,7 +18,7 @@
             var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(new Exception());
 
             // Assert
-            Assert.Same(Constants.NoInformationContent, dbExceptionInfo);
+            Assert.Equal(new List<string> { "No Information is available." }, dbExceptionInfo);
         }
 
         [Fact]
