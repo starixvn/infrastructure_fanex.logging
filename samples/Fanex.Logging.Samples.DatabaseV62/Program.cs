@@ -4,6 +4,7 @@
     using System.Diagnostics;
     using Data;
     using Data.Configuration;
+    using Extensions;
     using Extensions.Database.V62;
 
     public static class Program
@@ -38,16 +39,14 @@
 
         public static void Handle(Exception exception)
         {
-            var errorInfo = new LogEntry(exception.Message)
-                                .Section("DATABASE")
-                                    .AddContent(DatabaseLogContentExtractors.GetDbExceptionInfo(exception))
-                                .Section("WEB SERVER")
-                                    .AddContent(LogContentExtractors.GetServerInfo())
-                                .Section("EXCEPTION")
-                                    .AddContent(LogContentExtractors.GetExceptionInfo(exception));
+            var logMessage = new LogMessage(exception.Message)
+                                .AddSection("DATABASE", DatabaseInfoGetters.GetDbExceptionInfo(exception))
+                                .AddSection("WEB SERVER", CommonInfoGetters.GetServerInfo())
+                                .AddSection("EXCEPTION", CommonInfoGetters.GetExceptionInfo(exception))
+                                .ToString();
 
-            LogService.Write(errorInfo, TraceEventType.Error);
-            Console.WriteLine(errorInfo);
+            LogService.Error(logMessage);
+            Console.WriteLine(logMessage);
         }
     }
 }

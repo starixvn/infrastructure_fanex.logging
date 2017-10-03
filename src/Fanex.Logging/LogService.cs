@@ -100,11 +100,5 @@
             => LoggerInstance.Critical(format, category, args);
 
         #endregion Critical
-
-        public static void Write(ILogEntry logEntry, TraceEventType traceEventType)
-            => LoggerInstance.Write(logEntry, traceEventType);
-
-        public static void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
-            => LoggerInstance.Write(logEntry, traceEventType, category);
     }
 }

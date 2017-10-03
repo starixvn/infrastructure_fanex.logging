@@ -86,10 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\LogEngineAdapterTests.cs" />
-    <Compile Include="LogEntryTests.cs" />
     <Compile Include="LoggerTests.cs" />
     <Compile Include="LogServiceTests.cs" />
-    <Compile Include="LogContentExtractorsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

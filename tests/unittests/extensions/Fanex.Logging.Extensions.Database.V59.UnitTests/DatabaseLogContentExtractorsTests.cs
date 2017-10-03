@@ -15,51 +15,10 @@
         public void GetDbExceptionInfo_ExceptionIsNull_ReturnNoInfoContent()
         {
             // Act
-            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(new Exception());
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(new Exception());
 
             // Assert
-            Assert.Equal(new List<string> { "No Information is available." }, dbExceptionInfo);
-        }
-
-        [Fact]
-        public void GetDbExceptionInfo_ExceptionIsSqlException_ReturnDbExceptionInfo()
-        {
-            // Arrange
-            var sqlException = CreateSqlException("server 1", "proccedure 1");
-
-            // Act
-            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(sqlException);
-
-            // Assert
-            Assert.Equal(
-                new List<string>
-                {
-                    "SQL Server: server 1",
-                    "Stored Procedure: proccedure 1",
-                    "Line Number: 100",
-                },
-                dbExceptionInfo);
-        }
-
-        [Fact]
-        public void GetDbExceptionInfo_InnerExceptionIsSqlException_ReturnDbExceptionInfo()
-        {
-            // Arrange
-            var sqlException = CreateSqlException("server 1", "proccedure 1");
-            var exception = new Exception("message", sqlException);
-
-            // Act
-            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(exception);
-
-            // Assert
-            Assert.Equal(
-                new List<string>
-                {
-                    "SQL Server: server 1",
-                    "Stored Procedure: proccedure 1",
-                    "Line Number: 100",
-                },
-                dbExceptionInfo);
+            Assert.Equal(new Dictionary<string, object>(), dbExceptionInfo);
         }
 
         [Fact]
@@ -72,22 +31,67 @@
             dbSetting.DbName.Returns("DbName");
 
             var objectDBException = new ObjectDbException(
-                "ErrorMessage",
+                "Message",
                 new Exception("Inner exception"),
                 dbSetting);
 
             // Act
-            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(objectDBException);
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(objectDBException);
 
             // Assert
             Assert.Equal(
-                new List<string>
+                new Dictionary<string, object>
                 {
-                    "SQL Server: 10.18.200.232",
-                    "Database: DbName",
-                    "Account: bodbAdminNet",
-                    "Stored Procedure: SPNAME",
-                    "Line Number: 0"
+                    ["Server"] = "10.18.200.232",
+                    ["DbName"] = "DbName",
+                    ["UserID"] = "bodbAdminNet",
+                    ["SpName"] = "SPNAME",
+                    ["Line"] = 0,
+                },
+                dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_ExceptionIsSqlException_ReturnDbExceptionInfo()
+        {
+            // Arrange
+            var sqlException = CreateSqlException("server 1", "proccedure 1");
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(sqlException);
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "server 1",
+                    ["Procedure"] = "proccedure 1",
+                    ["LineNumber"] = 100,
+                    ["ErrorCode"] = -2146232060,
+                    ["Number"] = 10
+                },
+                dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_InnerExceptionIsSqlException_ReturnDbExceptionInfo()
+        {
+            // Arrange
+            var sqlException = CreateSqlException("server 1", "proccedure 1");
+            var exception = new Exception("message", sqlException);
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(exception);
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "server 1",
+                    ["Procedure"] = "proccedure 1",
+                    ["LineNumber"] = 100,
+                    ["ErrorCode"] = -2146232060,
+                    ["Number"] = 10
                 },
                 dbExceptionInfo);
         }

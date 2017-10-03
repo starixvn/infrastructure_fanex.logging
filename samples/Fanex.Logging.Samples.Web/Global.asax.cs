@@ -8,7 +8,7 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging.Extensions.Web;
-    using static Fanex.Logging.Extensions.Database.DatabaseLogContentExtractors;
+    using static Fanex.Logging.Extensions.Database.DatabaseInfoGetters;
 
     public class MvcApplication : System.Web.HttpApplication
     {

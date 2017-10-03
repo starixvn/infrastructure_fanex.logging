@@ -89,17 +89,12 @@
   <ItemGroup>
     <Compile Include="Adapters\ILoggingEngine.cs" />
     <Compile Include="Adapters\EntlibLogging.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="LogContentExtractors.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="ILogEntry.cs" />
-    <Compile Include="LogEntry.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Configuration\LoggerConfiguration.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Configuration\LoggingSettings.cs" />
     <Compile Include="LogService.cs" />
-    <Compile Include="LogUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

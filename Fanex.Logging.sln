@@ -15,15 +15,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.LoggingTest", "sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.Web", "samples\Fanex.Logging.Samples.Web\Fanex.Logging.Samples.Web.csproj", "{2C752BD2-ED29-4006-B60F-3C98BFF052C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web", "src\Fanex.Logging.Extensions.Web\Fanex.Logging.Extensions.Web.csproj", "{5FDDCDF7-2ED0-4FAB-9571-1E6D190A3160}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web", "src\Extensions\Fanex.Logging.Extensions.Web\Fanex.Logging.Extensions.Web.csproj", "{5FDDCDF7-2ED0-4FAB-9571-1E6D190A3160}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{F38BE2C2-4382-4857-AF4E-F42F257C4176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V59", "src\Fanex.Logging.Extensions.Database.V59\Fanex.Logging.Extensions.Database.V59.csproj", "{A5B7223E-375C-4924-A80C-F4CF1663AB08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V59", "src\Extensions\Fanex.Logging.Extensions.Database.V59\Fanex.Logging.Extensions.Database.V59.csproj", "{A5B7223E-375C-4924-A80C-F4CF1663AB08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V62", "src\Fanex.Logging.Extensions.Database.V62\Fanex.Logging.Extensions.Database.V62.csproj", "{6FB05847-7A95-4E3A-98A2-C9B6EC2D5662}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V62", "src\Extensions\Fanex.Logging.Extensions.Database.V62\Fanex.Logging.Extensions.Database.V62.csproj", "{6FB05847-7A95-4E3A-98A2-C9B6EC2D5662}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database", "src\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj", "{C0A8FBB9-0184-4BC0-808A-17FDCBCC0A98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database", "src\Extensions\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj", "{C0A8FBB9-0184-4BC0-808A-17FDCBCC0A98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.DatabaseV59", "samples\Fanex.Logging.Samples.DatabaseV59\Fanex.Logging.Samples.DatabaseV59.csproj", "{9CD9F55A-EF27-4C11-91CB-70AB6F4D346A}"
 EndProject
@@ -43,13 +43,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.UnitTests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", "{DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Web.UnitTests\Fanex.Logging.Extensions.Web.UnitTests.csproj", "{FB308993-84A7-48CD-8CC8-3E1D734DAB65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Web.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Web.UnitTests\Fanex.Logging.Extensions.Web.UnitTests.csproj", "{FB308993-84A7-48CD-8CC8-3E1D734DAB65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.UnitTests", "tests\unittests\Fanex.Logging.Extensions.Database.UnitTests\Fanex.Logging.Extensions.Database.UnitTests.csproj", "{B6EB39A7-0405-4863-B8B1-C81C84D3D140}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.UnitTests\Fanex.Logging.Extensions.Database.UnitTests.csproj", "{B6EB39A7-0405-4863-B8B1-C81C84D3D140}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V59.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.V59.UnitTests\Fanex.Logging.Extensions.Database.V59.UnitTests.csproj", "{C90BF9F0-6D69-4916-B441-76FE72490014}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V62.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.V62.UnitTests\Fanex.Logging.Extensions.Database.V62.UnitTests.csproj", "{238CF053-E6E1-4C0D-B5A1-AF16749A2102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions", "src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj", "{0E19CD38-243B-4974-9FCF-4252579A92DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.UnitTests\Fanex.Logging.Extensions.UnitTests.csproj", "{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -178,6 +182,22 @@ Global
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|Any CPU.Build.0 = Release|Any CPU
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|x86.ActiveCfg = Release|Any CPU
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|x86.Build.0 = Release|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Release|x86.Build.0 = Release|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Debug|x86.Build.0 = Debug|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,5 +221,7 @@ Global
 		{B6EB39A7-0405-4863-B8B1-C81C84D3D140} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 		{C90BF9F0-6D69-4916-B441-76FE72490014} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
+		{0E19CD38-243B-4974-9FCF-4252579A92DE} = {F38BE2C2-4382-4857-AF4E-F42F257C4176}
+		{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
 	EndGlobalSection
 EndGlobal

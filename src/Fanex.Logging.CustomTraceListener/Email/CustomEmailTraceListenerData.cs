@@ -169,23 +169,23 @@
         /// <param name="useSSL">Connect to the server using SSL?</param>
         public CustomEmailTraceListenerData(
             string name,
-            string toAddress, 
+            string toAddress,
             string fromAddress,
-            string subjectLineStarter, 
+            string subjectLineStarter,
             string subjectLineEnder,
-            string smtpServer, 
+            string smtpServer,
             int smtpPort,
-            string formatterName, 
-            TraceOptions traceOutputOptions, 
+            string formatterName,
+            TraceOptions traceOutputOptions,
             SourceLevels filter,
-            EmailAuthenticationMode authenticationMode, 
-            string userName, 
-            string password, 
+            EmailAuthenticationMode authenticationMode,
+            string userName,
+            string password,
             bool useSSL)
             : base(
-            name, 
-            typeof(CustomEmailTraceListener), 
-            traceOutputOptions, 
+            name,
+            typeof(CustomEmailTraceListener),
+            traceOutputOptions,
             filter)
         {
             this.ToAddress = toAddress;

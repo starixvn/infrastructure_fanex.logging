@@ -1,9 +1,6 @@
 ﻿namespace Fanex.Logging.CustomTraceListener.Services
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// TODO: Update summary.
@@ -57,24 +54,24 @@
         /// <summary>
         /// <para>Let’s say, the cache item is created at 8:05:00.</para>
         /// <para>and the lifetime is given to 5 seconds. </para>
-        /// <para>Then the lifetime of the cache item expires at 8:05:05.</para>     
+        /// <para>Then the lifetime of the cache item expires at 8:05:05.</para>
         /// </summary>
         /// <typeparam name="T">Type of cache item.</typeparam>
         /// <param name="key">The string key.</param>
         /// <param name="value">The value.</param>
-        /// <param name="absoluteExpiration">DateTime AbsoluteExpiration.</param>        
+        /// <param name="absoluteExpiration">DateTime AbsoluteExpiration.</param>
         void Set<T>(string key, T value, DateTime absoluteExpiration);
 
         /// <summary>
         /// <para>Let’s say, the cache item is created at 8:05:00.</para>
         /// <para>and the lifetime is given to 5 seconds.</para>
         /// <para>If an access to the cache item happen at 8:05:04.</para>
-        /// <para>the expiring time of the cache item will be updated to 8:05:09.</para>        
+        /// <para>the expiring time of the cache item will be updated to 8:05:09.</para>
         /// </summary>
         /// <typeparam name="T">Type of cache item.</typeparam>
         /// <param name="key">The string key.</param>
         /// <param name="value">The value.</param>
-        /// <param name="slidingExpiration">Sliding Expiration.</param>               
+        /// <param name="slidingExpiration">Sliding Expiration.</param>
         void Set<T>(string key, T value, TimeSpan slidingExpiration);
 
         /// <summary>

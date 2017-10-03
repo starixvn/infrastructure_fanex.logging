@@ -99,9 +99,13 @@
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Fanex.Logging.Extensions.Database.V59\Fanex.Logging.Extensions.Database.V59.csproj">
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions.Database.V59\Fanex.Logging.Extensions.Database.V59.csproj">
       <Project>{a5b7223e-375c-4924-a80c-f4cf1663ab08}</Project>
       <Name>Fanex.Logging.Extensions.Database.V59</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
+      <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
+      <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

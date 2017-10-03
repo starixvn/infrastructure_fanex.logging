@@ -96,7 +96,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Fanex.Logging.Extensions.Database.V62\Fanex.Logging.Extensions.Database.V62.csproj">
+    <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions.Database.V62\Fanex.Logging.Extensions.Database.V62.csproj">
       <Project>{6fb05847-7a95-4e3a-98a2-c9b6ec2d5662}</Project>
       <Name>Fanex.Logging.Extensions.Database.V62</Name>
     </ProjectReference>

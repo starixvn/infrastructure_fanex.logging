@@ -65,18 +65,6 @@
       <HintPath>..\..\packages\Fanex.Data.OldConnectionStringProvider.1.0.1\lib\net461\Fanex.Data.OldConnectionStringProvider.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.1.0.2-beta3\lib\net40\Fanex.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Logging.Extensions.Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.Extensions.Database.1.0.0-beta1\lib\net40\Fanex.Logging.Extensions.Database.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.Extensions.Web.1.0.0-beta3\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -182,6 +170,24 @@
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj">
+      <Project>{c0a8fbb9-0184-4bc0-808a-17fdcbcc0a98}</Project>
+      <Name>Fanex.Logging.Extensions.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions.Web\Fanex.Logging.Extensions.Web.csproj">
+      <Project>{5fddcdf7-2ed0-4fab-9571-1e6d190a3160}</Project>
+      <Name>Fanex.Logging.Extensions.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
+      <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
+      <Name>Fanex.Logging.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Fanex.Logging\Fanex.Logging.csproj">
+      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
+      <Name>Fanex.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

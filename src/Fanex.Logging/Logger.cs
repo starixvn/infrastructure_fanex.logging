@@ -129,7 +129,7 @@
 
         #region WriteLog functions
 
-        private void WriteLog(string message, string category, TraceEventType traceEventType)
+        internal void WriteLog(string message, string category, TraceEventType traceEventType)
         {
             loggingEngine.Write(
                 message,
@@ -151,18 +151,6 @@
                     return TraceEventType.Information;
             }
         }
-
-        public void Write(ILogEntry logEntry, TraceEventType traceEventType)
-            => WriteLog(
-                (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
-                defaultLogCategory,
-                traceEventType);
-
-        public void Write(ILogEntry logEntry, TraceEventType traceEventType, string category)
-             => WriteLog(
-                    (logEntry ?? LogEntry.NoInformationLogEntry).ToString(),
-                    category,
-                    traceEventType);
 
         #endregion WriteLog functions
     }

@@ -322,7 +322,7 @@
                 logCategory = logEntry.Categories.First();
             }
 
-            var message = string.Join(string.Empty, new [] { logEntry.Message, logEntry.MachineName, logEntry.Severity.ToString(), logCategory });
+            var message = string.Join(string.Empty, new[] { logEntry.Message, logEntry.MachineName, logEntry.Severity.ToString(), logCategory });
 
             return message;
         }
@@ -355,7 +355,7 @@
         /// </summary>
         protected override string[] GetSupportedAttributes()
         {
-            return new [] { "formatter", "toAddress", "fromAddress", "subjectLineStarter", "subjectLineEnder", "smtpServer", "smtpPort", "umAddress", "isCheckingDowntimeEnabled", "cacheDuplicatedEmailTimeOut" };
+            return new[] { "formatter", "toAddress", "fromAddress", "subjectLineStarter", "subjectLineEnder", "smtpServer", "smtpPort", "umAddress", "isCheckingDowntimeEnabled", "cacheDuplicatedEmailTimeOut" };
         }
     }
 }

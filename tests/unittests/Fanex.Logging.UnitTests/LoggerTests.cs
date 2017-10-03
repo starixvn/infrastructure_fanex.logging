@@ -140,8 +140,6 @@
 
         #endregion Write Information Log
 
-
-
         #region Write Warning Log
 
         [Fact]
@@ -201,8 +199,6 @@
         }
 
         #endregion Write Warning Log
-
-
 
         #region Write Critical Log
 
@@ -326,19 +322,6 @@
 
         #region General Write Log
 
-        [Fact]
-        public void Write_LogEntryIsNull_ExecuteWriteLogEntryWithDefaultMessage()
-        {
-            // Arrange
-            ILogEntry logEntry = null;
-
-            // Act
-            logger.Write(logEntry, TraceEventType.Error);
-
-            // Assert
-            logEngine.Received().Write("This log has no information.\r\n", TraceEventType.Error, defaultCategory);
-        }
-
         [Theory]
         [InlineData(TraceEventType.Error, TraceEventType.Error)]
         [InlineData(TraceEventType.Warning, TraceEventType.Warning)]
@@ -350,33 +333,32 @@
         [InlineData(TraceEventType.Suspend, TraceEventType.Information)]
         [InlineData(TraceEventType.Resume, TraceEventType.Information)]
         [InlineData(TraceEventType.Transfer, TraceEventType.Information)]
-        public void Write_LogEntryWithTraceEventType_ExecuteWriteLogEntry(
+        public void WriteLog_MessageWithTraceEventType_ExecuteWriteLog(
             TraceEventType traceEventType,
             TraceEventType expectedTraceEventType)
         {
             // Arrange
-            ILogEntry logEntry = null;
+            var message = "Message";
 
             // Act
-            logger.Write(logEntry, traceEventType);
+            logger.WriteLog(message, null, traceEventType);
 
             // Assert
-            logEngine.Received().Write("This log has no information.\r\n", expectedTraceEventType, defaultCategory);
+            logEngine.Received().Write(message, expectedTraceEventType, defaultCategory);
         }
 
         [Fact]
-        public void Write_LogEntryWithSpecificCategory_ExecuteWriteLogEntry()
+        public void WriteLog_MessageWithSpecificCategory_ExecuteWriteLog()
         {
             // Arrange
             var message = "Message";
             var category = "SpecificCategory";
-            var logEntry = new LogEntry(message);
 
             // Act
-            logger.Write(logEntry, TraceEventType.Error, category);
+            logger.WriteLog(message, category, TraceEventType.Error);
 
             // Assert
-            logEngine.Received().Write(logEntry.ToString(), TraceEventType.Error, category);
+            logEngine.Received().Write(message, TraceEventType.Error, category);
         }
 
         #endregion General Write Log
@@ -384,17 +366,16 @@
         [Theory]
         [InlineData("")]
         [InlineData(null)]
-        public void Write_CategoryIsNullOrEmpty_ExcuteWriteWithDefaultCategory(string category)
+        public void WriteLog_CategoryIsNullOrEmpty_ExcuteWriteWithDefaultCategory(string category)
         {
             // Arrange
             var message = "Message";
-            var logEntry = new LogEntry(message);
 
             // Act
-            logger.Write(logEntry, TraceEventType.Error, category);
+            logger.WriteLog(message, category, TraceEventType.Error);
 
             // Assert
-            logEngine.Received().Write(logEntry.ToString(), TraceEventType.Error, defaultCategory);
+            logEngine.Received().Write(message, TraceEventType.Error, defaultCategory);
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace ConsoleLogging
 {
     using System;
-    using System.Diagnostics;
     using System.Threading;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
 
     public class Program
@@ -15,30 +15,26 @@
         {
             try
             {
-                TestLogging();
+                //TestLogging();
                 SimulateSqlException();
             }
             catch (Exception exception)
             {
-                var logEntry = new LogEntry(exception.Message)
-                                .Section("DATABASE")
-                                    .AddContent(DatabaseLogContentExtractors.GetDbExceptionInfo(exception))
-                                .Section("WEB SERVER")
-                                    .AddContent(LogContentExtractors.GetServerInfo())
-                                .Section("EXCEPTION")
-                                    .AddContent(LogContentExtractors.GetExceptionInfo(exception));
+                var logMessage = new LogMessage(exception.Message)
+                                .AddSection("DATABASE", DatabaseInfoGetters.GetDbExceptionInfo(exception))
+                                .AddSection("WEB SERVER", CommonInfoGetters.GetServerInfo())
+                                .AddSection("EXCEPTION", CommonInfoGetters.GetExceptionInfo(exception))
+                                .ToString();
 
-                LogService.Write(logEntry, TraceEventType.Error);
-                LogService.Write(logEntry, TraceEventType.Warning);
-                LogService.Write(logEntry, TraceEventType.Verbose);
-                LogService.Write(logEntry, TraceEventType.Critical);
-                LogService.Write(logEntry, TraceEventType.Information);
-                LogService.Write(logEntry, TraceEventType.Start);
-                LogService.Write(logEntry, TraceEventType.Stop);
+                LogService.Error(logMessage);
+                LogService.Warn(logMessage);
+                LogService.Debug(logMessage);
+                LogService.Critical(logMessage);
+                LogService.Info(logMessage);
 
-                LogService.Write(logEntry, TraceEventType.Stop, "Alpha-MBC-AF-LOCAL");
+                LogService.Info(logMessage, "Alpha-MBC-AF-LOCAL");
 
-                Console.WriteLine(logEntry);
+                Console.WriteLine(logMessage);
             }
 
             Console.ReadLine();

@@ -8,6 +8,7 @@
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 
 #pragma warning disable S3881 // "IDisposable" should be implemented correctly
+
     internal class CacheService : ICacheService
 #pragma warning restore S3881 // "IDisposable" should be implemented correctly
     {
@@ -184,6 +185,7 @@
         #region IDisposable Members
 
 #pragma warning disable S1186 // Methods should not be empty
+
         public void Dispose()
 #pragma warning restore S1186 // Methods should not be empty
         {
