@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using System.Reflection;
+    using Data;
+    using NSubstitute;
     using Xunit;
 
     [Trait("Category", "Extensions/DB_V59/DatabaseLogContentExtractors.cs")]
@@ -63,6 +65,36 @@
                     "SQL Server: server 1",
                     "Stored Procedure: proccedure 1",
                     "Line Number: 100",
+                },
+                dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_ExceptionIsObjectDbException_ReturnDbExceptionInfo()
+        {
+            // Arrnage
+            var dbSetting = Substitute.For<IDbSetting>();
+            dbSetting.ConnectionString.Returns("packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;");
+            dbSetting.SpName.Returns("SPNAME");
+            dbSetting.DbName.Returns("DbName");
+
+            var objectDBException = new ObjectDbException(
+                "ErrorMessage",
+                new Exception("Inner exception"),
+                dbSetting);
+
+            // Act
+            var dbExceptionInfo = DatabaseLogContentExtractors.GetDbExceptionInfo(objectDBException);
+
+            // Assert
+            Assert.Equal(
+                new List<string>
+                {
+                    "SQL Server: 10.18.200.232",
+                    "Database: DbName",
+                    "Account: bodbAdminNet",
+                    "Stored Procedure: SPNAME",
+                    "Line Number: 0"
                 },
                 dbExceptionInfo);
         }

@@ -43,11 +43,18 @@
 
             using (var db = new ObjectDb("Logging_UpdateMachine"))
             {
-                db.ExecuteNonQuery(new
+                try
                 {
-                    MachineIP = "45454 1 1",
-                    Timezone = "GMT8 2323 "
-                });
+                    db.ExecuteNonQuery(new
+                    {
+                        MachineIP = "45454 1 1",
+                        Timezone = "GMT8 2323 "
+                    });
+                }
+                catch (Exception ex)
+                {
+                    throw new ObjectDbException(ex.Message, ex, db.DbSetting);
+                }
             }
         }
     }

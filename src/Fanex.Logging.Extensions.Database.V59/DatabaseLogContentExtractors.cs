@@ -6,16 +6,21 @@
 
     public static class DatabaseLogContentExtractors
     {
-        public static List<string> GetDbExceptionInfo(Exception ex)
+        public static List<string> GetDbExceptionInfo(Exception exception)
         {
-            if (ex is SqlException)
+            if (exception is ObjectDbException)
             {
-                return GetSqlExceptionInfo(ex as SqlException);
+                return GetObjectDbExceptionInfo(exception as ObjectDbException);
             }
 
-            if (ex.GetBaseException() is SqlException)
+            if (exception is SqlException)
             {
-                return GetSqlExceptionInfo(ex.GetBaseException() as SqlException);
+                return GetSqlExceptionInfo(exception as SqlException);
+            }
+
+            if (exception.GetBaseException() is SqlException)
+            {
+                return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
             }
 
             return Constants.NoInformationContent;
@@ -28,5 +33,24 @@
                 $"Stored Procedure: {ex.Procedure}",
                 $"Line Number: {ex.LineNumber}"
              };
+
+        private static List<string> GetObjectDbExceptionInfo(ObjectDbException exception)
+        {
+            var sqlConnectionString = new SqlConnectionStringBuilder(exception.DbSetting.ConnectionString);
+            var storedProcedureName = exception.DbSetting.SpName;
+            var databaseName = exception.DbSetting.DbName;
+            var lineNumber = exception.InnerException is SqlException
+                ? (exception.InnerException as SqlException).LineNumber
+                : 0;
+
+            return new List<string>
+            {
+                $"SQL Server: {sqlConnectionString.DataSource}",
+                $"Database: {databaseName}",
+                $"Account: {sqlConnectionString.UserID}",
+                $"Stored Procedure: {storedProcedureName}",
+                $"Line Number: {lineNumber}"
+            };
+        }
     }
 }
