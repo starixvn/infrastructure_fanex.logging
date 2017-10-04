@@ -7,7 +7,7 @@
 
     public class LogMessage
     {
-        private StringBuilder contentBuilder = new StringBuilder();
+        private readonly StringBuilder contentBuilder = new StringBuilder();
 
         public LogMessage() : this(string.Empty)
         {
@@ -18,13 +18,11 @@
             AddMessage(message);
         }
 
-        private LogMessage AddSection(string section)
+        private void AddSection(string section)
         {
             contentBuilder
                 .AppendLine()
                 .AppendLine(section.ToUpperInvariant());
-
-            return this;
         }
 
         public LogMessage AddSection(string section,

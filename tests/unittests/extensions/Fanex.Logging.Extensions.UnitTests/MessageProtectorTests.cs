@@ -56,5 +56,6 @@
                 "Information?securitycode=*****&password=*****&passerfdf=3434&pasSWORD=*****\r\n",
                 actualLogMessage.ToString());
         }
+
     }
 }

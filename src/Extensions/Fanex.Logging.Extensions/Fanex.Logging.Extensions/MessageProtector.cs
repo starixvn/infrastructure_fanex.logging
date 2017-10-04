@@ -26,22 +26,23 @@
 
         public static string HideSensitiveInfo(this string message, string pattern)
         {
-            if (string.IsNullOrWhiteSpace(pattern))
-            {
-                throw new ArgumentNullException(nameof(pattern));
-            }
+            string cleanMessage = message;
 
-            var matchCollection = Regex.Matches(message, pattern, RegexOptions.IgnoreCase);
-
-            foreach (Match match in matchCollection)
+            if (!string.IsNullOrWhiteSpace(pattern))
             {
-                if (match.Success)
+                
+                var matchCollection = Regex.Matches(message, pattern, RegexOptions.IgnoreCase);
+
+                foreach (Match match in matchCollection)
                 {
-                    message = message.Replace(match.Groups[1].ToString(), Constants.SensitiveInfo);
+                    if (match.Success)
+                    {
+                        cleanMessage = cleanMessage.Replace(match.Groups[1].ToString(), Constants.SensitiveInfo);
+                    }
                 }
             }
 
-            return message;
+            return cleanMessage;
         }
     }
 }

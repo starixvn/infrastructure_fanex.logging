@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Common;
+    using System.Data.SqlClient;
     using Data;
     using Data.CrossCutting.WrappingException;
     using NSubstitute;
@@ -103,6 +104,22 @@
                     ["Number"] = 10
                 },
                 dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetParameters_Always_ReturnCombinedParameterString()
+        {
+            // Arrange
+            var parameters = new[] {
+                new SqlParameter(){ ParameterName="name1", Value="value1" },
+                new SqlParameter(){ ParameterName="name2", Value="value2" }
+            };
+
+            // Act
+            string actualParamsString = DatabaseInfoGetters.GetParameters(parameters);
+
+            // Assert
+            Assert.Equal("name1=value1;name2=value2", actualParamsString);
         }
     }
 }
