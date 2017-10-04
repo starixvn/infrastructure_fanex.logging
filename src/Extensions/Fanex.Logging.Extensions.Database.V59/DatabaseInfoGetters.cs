@@ -8,27 +8,15 @@
     {
         public static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
         {
-            IDictionary<string, object> data = new Dictionary<string, object>();
-
-            if (exception is ObjectDbException)
+            if (exception is DatabaseException)
             {
-                data = GetObjectDbExceptionInfo(exception as ObjectDbException);
+                return GetDatabasexceptionInfo(exception as DatabaseException);
             }
 
-            if (exception is SqlException)
-            {
-                data = GetSqlExceptionInfo(exception as SqlException);
-            }
-
-            if (exception.GetBaseException() is SqlException)
-            {
-                data = GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
-            }
-
-            return data;
+            return Fanex.Logging.Extensions.CommonInfoGetters.GetDefaulDbExceptionInfo(exception);
         }
 
-        public static IDictionary<string, object> GetObjectDbExceptionInfo(ObjectDbException ex)
+        private static IDictionary<string, object> GetDatabasexceptionInfo(DatabaseException ex)
         {
             var connString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
 
@@ -42,17 +30,7 @@
             };
         }
 
-        public static IDictionary<string, object> GetSqlExceptionInfo(SqlException ex)
-             => new Dictionary<string, object>
-             {
-                 [nameof(ex.Server)] = ex.Server,
-                 [nameof(ex.Procedure)] = ex.Procedure,
-                 [nameof(ex.LineNumber)] = ex.LineNumber,
-                 [nameof(ex.ErrorCode)] = ex.ErrorCode,
-                 [nameof(ex.Number)] = ex.Number
-             };
-
-        private static int GetLineNumber(ObjectDbException ex)
+        private static int GetLineNumber(DatabaseException ex)
         {
             return ex.InnerException is SqlException
                             ? (ex.InnerException as SqlException).LineNumber

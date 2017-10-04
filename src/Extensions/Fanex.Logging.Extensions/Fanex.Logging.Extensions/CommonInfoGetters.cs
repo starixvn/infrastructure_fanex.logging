@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlClient;
     using System.Net;
     using System.Net.Sockets;
 
@@ -43,6 +44,38 @@
             }
 
             return Constants.NotAvailableAbbr;
+        }
+
+        internal static IDictionary<string, object> GetDefaulDbExceptionInfo(Exception exception)
+        {
+            if (exception is SqlException)
+            {
+                return GetSqlExceptionInfo(exception as SqlException);
+            }
+
+            if (exception.GetBaseException() is SqlException)
+            {
+                return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
+            }
+
+            return new Dictionary<string, object>();
+        }
+
+        private static IDictionary<string, object> GetSqlExceptionInfo(SqlException ex)
+             => new Dictionary<string, object>
+             {
+                 [nameof(ex.Server)] = ex.Server,
+                 [nameof(ex.Procedure)] = ex.Procedure,
+                 [nameof(ex.LineNumber)] = ex.LineNumber,
+                 [nameof(ex.ErrorCode)] = ex.ErrorCode,
+                 [nameof(ex.Number)] = ex.Number
+             };
+
+        internal static int GetLineNumber(Exception ex)
+        {
+            return ex.InnerException is SqlException
+                            ? (ex.InnerException as SqlException).LineNumber
+                            : 0;
         }
     }
 }

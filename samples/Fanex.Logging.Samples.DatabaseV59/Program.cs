@@ -52,7 +52,7 @@
                 }
                 catch (Exception ex)
                 {
-                    throw new ObjectDbException(ex.Message, ex, db.DbSetting);
+                    throw new DatabaseException(ex.Message, ex, db.DbSetting);
                 }
             }
         }

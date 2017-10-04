@@ -30,7 +30,7 @@
             dbSetting.SpName.Returns("SPNAME");
             dbSetting.DbName.Returns("DbName");
 
-            var objectDBException = new ObjectDbException(
+            var objectDBException = new DatabaseException(
                 "Message",
                 new Exception("Inner exception"),
                 dbSetting);

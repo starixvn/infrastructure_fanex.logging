@@ -3,11 +3,11 @@
     using System;
     using Fanex.Data;
 
-    public class ObjectDbException : Exception
+    public class DatabaseException : Exception
     {
         private readonly IDbSetting _dbSetting;
 
-        public ObjectDbException(string message, Exception innerException, IDbSetting dbSetting)
+        public DatabaseException(string message, Exception innerException, IDbSetting dbSetting)
             : base(message, innerException)
         {
             this._dbSetting = dbSetting;
