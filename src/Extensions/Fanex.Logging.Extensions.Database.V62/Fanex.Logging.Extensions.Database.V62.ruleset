@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="SonarQube - R&amp;D / Fanex.Logging Sonar way" ToolsVersion="14.0">
-  <Include Path="..\..\sonarqube\fanex.loggingcsharp.ruleset" Action="Default" />
+  <Include Path="..\..\..\sonarqube\fanex.loggingcsharp.ruleset" Action="Default" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Warning" />
   </Rules>
