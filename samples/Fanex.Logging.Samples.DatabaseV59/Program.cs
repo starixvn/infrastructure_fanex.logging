@@ -40,15 +40,11 @@
         {
             DbSettingProviderManager.Current.Start();
 
-            using (var db = new ObjectDb("Logging_UpdateMachine"))
+            using (var db = new ObjectDb("SP_Key"))
             {
                 try
                 {
-                    db.ExecuteNonQuery(new
-                    {
-                        MachineIP = "45454 1 1",
-                        Timezone = "GMT8 2323 "
-                    });
+                    // call sp
                 }
                 catch (Exception ex)
                 {

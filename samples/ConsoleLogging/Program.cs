@@ -21,9 +21,9 @@
             catch (Exception exception)
             {
                 var logMessage = new LogMessage(exception.Message)
-                                .AddSection("DATABASE", DatabaseInfoGetters.GetDbExceptionInfo(exception))
-                                .AddSection("WEB SERVER", CommonInfoGetters.GetServerInfo())
-                                .AddSection("EXCEPTION", CommonInfoGetters.GetExceptionInfo(exception))
+                                .AddSection("Database Info", DatabaseInfoGetters.GetDbExceptionInfo(exception))
+                                .AddSection("Web Server Info", CommonInfoGetters.GetServerInfo())
+                                .AddSection("Exception", CommonInfoGetters.GetExceptionInfo(exception))
                                 .ToString();
 
                 LogService.Error(logMessage);

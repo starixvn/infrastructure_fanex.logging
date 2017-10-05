@@ -15,7 +15,7 @@
     using Web;
     using Xunit;
 
-    [Trait("Category", "Extensions/WebLogContentExtractors.cs")]
+    [Trait("Category", "Extensions/WebInfoGetters.cs")]
     public class WebInfoGettersTests
     {
         private readonly HttpRequest request;
@@ -117,20 +117,6 @@
 
             // Assert
             Assert.Equal("N/A", bodyData);
-        }
-
-        [Fact]
-        public void ConvertStreamToString_RequestStreamDoesNotContainJsonData_ReturnNAString()
-        {
-            // Arrange
-            using (Stream stream = GenerateStreamFromString("Not Json"))
-            {
-                // Act
-                var bodyData = WebInfoGetters.ConvertStreamToString(stream);
-
-                // Assert
-                Assert.Equal("N/A", bodyData);
-            }
         }
 
         [Theory]

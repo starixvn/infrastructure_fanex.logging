@@ -59,11 +59,19 @@
                     .AddSection("request info", () => GetRequestInfo(request))
                     .AddSection("browser info", () => GetBrowserInfo(request.Browser))
                     .AddSection("server info", () => GetServerInfo())
-                    .AddSection("session info", () => GetSessionInfo(HttpContext.Current.Session))
-                    .AddSection("request headers", () => GetRequestHeader(request.Headers))
                     .AddSection("database info", () => config.GetDbExceptionInfo(exception))
                     .AddSection("custom info", () => customData)
                     .AddSection("exception info", () => GetExceptionInfo(exception));
+
+                if(config.EnabledLogHttpHeader)
+                {
+                    logMessage.AddSection("request headers", () => GetRequestHeader(request.Headers));
+                }
+
+                if(config.EnabledLogHttpSession)
+                {
+                    logMessage.AddSection("session info", () => GetSessionInfo(HttpContext.Current.Session));
+                }
             }
 
             var message = logMessage.ToCleanMessage(config.Patterns);

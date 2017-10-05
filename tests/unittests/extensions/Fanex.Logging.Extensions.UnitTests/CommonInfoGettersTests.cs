@@ -21,7 +21,7 @@
         }
 
         [Fact]
-        public void AddExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
+        public void GetExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
         {
             // Arrange
             var customException = new DllNotFoundException();
@@ -33,11 +33,10 @@
             Assert.Equal(
                 new Dictionary<string, object>
                 {
-                    ["Message"] = "Dll was not found.",
                     ["Source"] = null,
-                    ["Type"] = customException.GetType(),
+                    ["Type"] = typeof(DllNotFoundException),
                     ["TargetSite"] = null,
-                    ["Details"] = customException.ToString()
+                    ["Details"] = "System.DllNotFoundException: Dll was not found."
                 },
                 exceptionInfo);
         }

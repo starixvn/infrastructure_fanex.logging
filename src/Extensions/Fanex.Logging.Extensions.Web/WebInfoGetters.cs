@@ -50,8 +50,7 @@
                 requestStream.Seek(0, SeekOrigin.Begin);
                 var bodyData = new StreamReader(requestStream).ReadToEnd();
                 requestStream.Seek(0, SeekOrigin.Begin);
-                if (!string.IsNullOrWhiteSpace(bodyData)
-                    && bodyData.Contains("{"))
+                if (!string.IsNullOrWhiteSpace(bodyData))
                 {
                     return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
                 }

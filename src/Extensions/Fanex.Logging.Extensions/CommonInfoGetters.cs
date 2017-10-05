@@ -13,7 +13,6 @@
             ? Constants.DefaultDictionary
             : new Dictionary<string, object>
             {
-                [nameof(ex.Message)] = ex.Message,
                 [nameof(ex.Source)] = ex.Source,
                 ["Type"] = ex.GetType(),
                 [nameof(ex.TargetSite)] = ex.TargetSite,

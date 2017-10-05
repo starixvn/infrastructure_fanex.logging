@@ -27,10 +27,21 @@
                 .Run();
 
             ExceptionHandler
+                // To use custom config
+                .UseConfig(new LoggingConfiguration()
                 // To ignore exceptions
-                //.UseConfig(new LoggingConfiguration().IgnoreException<DivideByZeroException>())
-                // To ignore exceptions
-                //.UseConfig(new LoggingConfiguration().HideSensitiveInfo(new List<string> { "password", "securitycode" }))
+                //.IgnoreException<DivideByZeroException>()
+                // To hide sensitive information
+                //.HideSensitiveInfo(
+                //    new List<string>
+                //    {
+                //        "(?:password=)(?<paramValue>[^&|^\\s]+)",
+                //        "(\"password\":)(?<paramValue>[^,|^\r]+)"
+                //    })
+                // To Enable Log Http Header
+                .GetHttpHeaderInfo())
+                // To Enable Log Http Session
+                //.GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(GetDbExceptionInfo);
         }
 

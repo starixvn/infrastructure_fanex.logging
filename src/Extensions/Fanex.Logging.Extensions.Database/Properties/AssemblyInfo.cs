@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Fanex.Logging.Extensions.Database")]
-[assembly: AssemblyDescription("Fanex.Logging.Extensions.Database")]
+[assembly: AssemblyDescription("Extension for Fanex Logging to log more database information")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Starixsoft")]
 [assembly: AssemblyProduct("Fanex.Logging.Extensions.Database")]
