@@ -166,7 +166,7 @@
       <Project>{c0a8fbb9-0184-4bc0-808a-17fdcbcc0a98}</Project>
       <Name>Fanex.Logging.Extensions.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
+    <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
       <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
       <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>

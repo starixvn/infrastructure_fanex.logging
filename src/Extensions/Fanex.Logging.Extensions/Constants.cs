@@ -4,9 +4,6 @@
 
     internal static class Constants
     {
-        public const string NewLine = "\r\n";
-        public const string Tab = "\t";
-        public const string Segment = "\r\n\t";
         public const string NotAvailableAbbr = "N/A";
         public const string SensitiveInfo = "*****";
         public const string NoInfomration = "No Information is available.";

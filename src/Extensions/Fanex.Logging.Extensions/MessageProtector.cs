@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
-    using System;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
@@ -30,7 +29,6 @@
 
             if (!string.IsNullOrWhiteSpace(pattern))
             {
-                
                 var matchCollection = Regex.Matches(message, pattern, RegexOptions.IgnoreCase);
 
                 foreach (Match match in matchCollection)

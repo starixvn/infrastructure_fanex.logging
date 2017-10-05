@@ -72,7 +72,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
+    <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
       <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
       <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>

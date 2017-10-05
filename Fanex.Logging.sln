@@ -31,12 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Samples.Datab
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9CFB29AE-BCCF-414C-B15C-3081B72DB853}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{F8EFB047-9E1F-48AC-9229-31C8256C9179}"
-	ProjectSection(SolutionItems) = preProject
-		SonarQube\Fanex.LoggingCSharp.ruleset = SonarQube\Fanex.LoggingCSharp.ruleset
-		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unittests", "unittests", "{4B588921-BA80-4965-914A-93C70DBE8D99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.UnitTests", "tests\unittests\Fanex.Logging.UnitTests\Fanex.Logging.UnitTests.csproj", "{FA3DA2A7-F154-4992-BD63-F546E7307CE1}"
@@ -51,9 +45,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.Database.V62.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.Database.V62.UnitTests\Fanex.Logging.Extensions.Database.V62.UnitTests.csproj", "{238CF053-E6E1-4C0D-B5A1-AF16749A2102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions", "src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj", "{0E19CD38-243B-4974-9FCF-4252579A92DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions", "src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj", "{0E19CD38-243B-4974-9FCF-4252579A92DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.UnitTests\Fanex.Logging.Extensions.UnitTests.csproj", "{E41F93E9-CD69-4CD7-A63C-DAF9B6FF0AAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{F8EFB047-9E1F-48AC-9229-31C8256C9179}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\Fanex.LoggingCSharp.ruleset = SonarQube\Fanex.LoggingCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -182,8 +182,8 @@ Global
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|Any CPU.Build.0 = Release|Any CPU
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|x86.ActiveCfg = Release|Any CPU
 		{238CF053-E6E1-4C0D-B5A1-AF16749A2102}.Release|x86.Build.0 = Release|Any CPU
-		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Debug|x86.Build.0 = Debug|Any CPU
 		{0E19CD38-243B-4974-9FCF-4252579A92DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
