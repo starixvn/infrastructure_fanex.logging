@@ -2,18 +2,30 @@
 {
     using System;
     using System.Diagnostics;
+    using Adapters;
     using Configuration;
-    using MPEL = Microsoft.Practices.EnterpriseLibrary.Logging;
 
     public sealed class Logger : ILogger
     {
-        private static readonly string DefaultLogCategory = LoggerConfiguration.Setting.DefaultCategory;
-        private static volatile ILogger logger;
+        private static volatile Logger logger;
         private static object syncRoot = new object();
 
-        public Logger()
+        private readonly string defaultLogCategory;
+        internal readonly ILoggingEngine loggingEngine;
+
+        private Logger()
+            : this(null, null, LoggerConfiguration.Run)
         {
-            LoggerConfiguration.Run();
+        }
+
+        internal Logger(
+            ILoggingEngine loggingEngine,
+            string defaultLogCategory,
+            Action initLogConfig)
+        {
+            this.loggingEngine = loggingEngine ?? new EntlibLogging();
+            this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
+            initLogConfig();
         }
 
         public static ILogger Log
@@ -35,127 +47,111 @@
             }
         }
 
+        #region Debug functions
+
+        public void Debug(string message, string category)
+            => WriteLog(message, category, TraceEventType.Verbose);
+
+        public void Debug(string message)
+            => Debug(message, defaultLogCategory);
+
+        public void Debug(string format, params object[] args)
+            => Debug(string.Format(format, args));
+
+        public void Debug(string format, string category, params object[] args)
+            => Debug(string.Format(format, args), category);
+
+        #endregion Debug functions
+
+        #region Info functions
+
+        public void Info(string message, string category)
+            => WriteLog(message, category, TraceEventType.Information);
+
+        public void Info(string message)
+            => Info(message, defaultLogCategory);
+
+        public void Info(string format, params object[] args)
+            => Info(string.Format(format, args));
+
+        public void Info(string format, string category, params object[] args)
+            => Info(string.Format(format, args), category);
+
+        #endregion Info functions
+
+        #region Warning functions
+
+        public void Warn(string message, string category)
+            => WriteLog(message, category, TraceEventType.Warning);
+
+        public void Warn(string message)
+            => Warn(message, defaultLogCategory);
+
+        public void Warn(string format, params object[] args)
+            => Warn(string.Format(format, args));
+
+        public void Warn(string format, string category, params object[] args)
+            => Warn(string.Format(format, args), category);
+
+        #endregion Warning functions
+
+        #region Error functions
+
+        public void Error(string message, string category)
+            => WriteLog(message, category, TraceEventType.Error);
+
+        public void Error(string message)
+            => Error(message, defaultLogCategory);
+
+        public void Error(string message, Exception exception)
+            => Error(message, defaultLogCategory, exception);
+
+        public void Error(string message, string category, Exception exception)
+            => Error(string.Format("{0}\n{1}", message, exception), category);
+
+        #endregion Error functions
+
         #region Critical
 
+        public void Critical(string message, string category)
+            => WriteLog(message, category, TraceEventType.Critical);
+
         public void Critical(string message)
-            => WriteLog(message, DefaultLogCategory, LogLevel.Critical);
+            => Critical(message, defaultLogCategory);
 
         public void Critical(string format, params object[] args)
-            => WriteLog(string.Format(format, args), DefaultLogCategory, LogLevel.Critical);
-
-        public void Critical(string message, string category)
-            => WriteLog(message, category, LogLevel.Critical);
+            => Critical(string.Format(format, args));
 
         public void Critical(string format, string category, params object[] args)
-            => WriteLog(string.Format(format, args), category, LogLevel.Critical);
+            => Critical(string.Format(format, args), category);
 
         #endregion Critical
 
-        #region Debug
+        #region WriteLog functions
 
-        public void Debug(string message)
-            => WriteLog(message, DefaultLogCategory, LogLevel.Debug);
-
-        public void Debug(string format, params object[] args)
-            => WriteLog(string.Format(format, args), DefaultLogCategory, LogLevel.Debug);
-
-        public void Debug(string message, string category)
-            => WriteLog(message, category, LogLevel.Debug);
-
-        public void Debug(string format, string category, params object[] args)
-            => WriteLog(string.Format(format, args), category, LogLevel.Debug);
-
-        #endregion Debug
-
-        #region Error
-
-        public void Error(string message)
-            => WriteLog(message, DefaultLogCategory, LogLevel.Error);
-
-        public void Error(string message, Exception exception)
-        => WriteLog($"{0}{exception}", DefaultLogCategory, LogLevel.Error);
-
-        public void Error(string message, string category)
-            => WriteLog(message, category, LogLevel.Error);
-
-        public void Error(string message, string category, Exception exception)
-            => WriteLog($"{0}{exception}", category, LogLevel.Error);
-
-        #endregion Error
-
-        #region Info
-
-        public void Info(string message)
-            => WriteLog(message, DefaultLogCategory, LogLevel.Info);
-
-        public void Info(string format, params object[] args)
-            => WriteLog(string.Format(format, args), DefaultLogCategory, LogLevel.Info);
-
-        public void Info(string message, string category)
-            => WriteLog(message, category, LogLevel.Info);
-
-        public void Info(string format, string category, params object[] args)
-            => WriteLog(string.Format(format, args), category, LogLevel.Info);
-
-        #endregion Info
-
-        #region Warning
-
-        public void Warn(string message)
-            => WriteLog(message, DefaultLogCategory, LogLevel.Warn);
-
-        public void Warn(string format, params object[] args)
-            => WriteLog(string.Format(format, args), DefaultLogCategory, LogLevel.Warn);
-
-        public void Warn(string message, string category)
-            => WriteLog(message, category, LogLevel.Warn);
-
-        public void Warn(string format, string category, params object[] args)
-            => WriteLog(string.Format(format, args), category, LogLevel.Warn);
-
-        #endregion Warning
-
-        #region Writing Logs
-
-        private static void WriteLog(string message, string category, LogLevel level)
+        internal void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            var severity = TraceEventType.Information;
-
-            switch (level)
-            {
-                case LogLevel.Debug:
-                    severity = TraceEventType.Verbose;
-                    break;
-
-                case LogLevel.Warn:
-                    severity = TraceEventType.Warning;
-                    break;
-
-                case LogLevel.Critical:
-                    severity = TraceEventType.Critical;
-                    break;
-
-                case LogLevel.Error:
-                    severity = TraceEventType.Error;
-                    break;
-            }
-
-            if (string.IsNullOrEmpty(category))
-            {
-                category = DefaultLogCategory;
-            }
-
-            var logEntry = new MPEL.LogEntry
-            {
-                Severity = severity,
-                Message = message,
-                Title = category
-            };
-
-            logEntry.Categories.Add(category);
-            MPEL.Logger.Write(logEntry);
+            loggingEngine.Write(
+                message,
+                GetSevirity(traceEventType),
+                string.IsNullOrEmpty(category) ? defaultLogCategory : category);
         }
 
-        #endregion Writing Logs
+        private static TraceEventType GetSevirity(TraceEventType traceEventType)
+        {
+            switch (traceEventType)
+            {
+                case TraceEventType.Verbose:
+                case TraceEventType.Warning:
+                case TraceEventType.Critical:
+                case TraceEventType.Error:
+                    return traceEventType;
+
+                default:
+                    return TraceEventType.Information;
+            }
+        }
+
+        #endregion WriteLog functions
     }
 }

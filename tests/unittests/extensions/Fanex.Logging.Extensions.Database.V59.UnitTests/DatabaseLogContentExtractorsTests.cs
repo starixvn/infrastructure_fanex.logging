@@ -1,0 +1,124 @@
+﻿namespace Fanex.Logging.Extensions.Database.V59.UnitTests
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data.SqlClient;
+    using System.Reflection;
+    using Data;
+    using NSubstitute;
+    using Xunit;
+
+    [Trait("Category", "Extensions/DB_V59/DatabaseInfoGetters.cs")]
+    public class DatabaseLogContentExtractorsTests
+    {
+        [Fact]
+        public void GetDbExceptionInfo_ExceptionIsNull_ReturnNoInfoContent()
+        {
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(new Exception());
+
+            // Assert
+            Assert.Equal(new Dictionary<string, object>(), dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_ExceptionIsObjectDbException_ReturnDbExceptionInfo()
+        {
+            // Arrnage
+            var dbSetting = Substitute.For<IDbSetting>();
+            dbSetting.ConnectionString.Returns("packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;");
+            dbSetting.SpName.Returns("SPNAME");
+            dbSetting.DbName.Returns("DbName");
+
+            var objectDBException = new DatabaseException(
+                "Message",
+                new Exception("Inner exception"),
+                dbSetting);
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(objectDBException);
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "10.18.200.232",
+                    ["DbName"] = "DbName",
+                    ["UserID"] = "bodbAdminNet",
+                    ["SpName"] = "SPNAME",
+                    ["Line"] = 0,
+                },
+                dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_ExceptionIsSqlException_ReturnDbExceptionInfo()
+        {
+            // Arrange
+            var sqlException = CreateSqlException("server 1", "proccedure 1");
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(sqlException);
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "server 1",
+                    ["Procedure"] = "proccedure 1",
+                    ["LineNumber"] = 100,
+                    ["ErrorCode"] = -2146232060,
+                    ["Number"] = 10
+                },
+                dbExceptionInfo);
+        }
+
+        [Fact]
+        public void GetDbExceptionInfo_InnerExceptionIsSqlException_ReturnDbExceptionInfo()
+        {
+            // Arrange
+            var sqlException = CreateSqlException("server 1", "proccedure 1");
+            var exception = new Exception("message", sqlException);
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(exception);
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "server 1",
+                    ["Procedure"] = "proccedure 1",
+                    ["LineNumber"] = 100,
+                    ["ErrorCode"] = -2146232060,
+                    ["Number"] = 10
+                },
+                dbExceptionInfo);
+        }
+
+        public static SqlException CreateSqlException(string server, string procedure)
+        {
+            var collectionConstructor = typeof(SqlErrorCollection)
+              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
+              null, //binder
+              new Type[0],
+              null);
+            var addMethod = typeof(SqlErrorCollection).GetMethod("Add", BindingFlags.NonPublic | BindingFlags.Instance);
+            var errorCollection = (SqlErrorCollection)collectionConstructor.Invoke(null);
+            var errorConstructor = typeof(SqlError).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+              new[]
+              { typeof (int), typeof (byte), typeof (byte), typeof (string), typeof(string), typeof (string), typeof (int), typeof (uint)
+              }, null);
+            var error =
+              errorConstructor.Invoke(new object[] { 10, (byte)0, (byte)0, server, "errMsg 1", procedure, 100, (uint)0 });
+            addMethod.Invoke(errorCollection, new[] { error });
+            var constructor = typeof(SqlException)
+              .GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, //visibility
+                null, //binder
+                new[] { typeof(string), typeof(SqlErrorCollection), typeof(Exception), typeof(Guid) },
+                null); //param modifiers
+
+            return (SqlException)constructor.Invoke(new object[] { "Error message", errorCollection, null, Guid.NewGuid() });
+        }
+    }
+}

@@ -5,30 +5,21 @@
     using System.IO;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
     using Microsoft.Practices.EnterpriseLibrary.Common.Configuration.Fluent;
-
-#if !NET40
-
-    using Microsoft.Practices.EnterpriseLibrary.Logging;
-
-#endif
-
     using Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners;
 
     internal static class LoggerConfiguration
     {
-        private static volatile bool hasRunConfig = false;
+        private static volatile LoggingSettings loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
+        private static volatile bool hasRunConfig;
         private static object syncRoot = new object();
 
-        private static volatile LoggingSettings loggingSetting
-            = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
-
         private static TraceOptions traceOptions =
-            TraceOptions.Callstack
-            | TraceOptions.DateTime
-            | TraceOptions.LogicalOperationStack
-            | TraceOptions.ProcessId
-            | TraceOptions.ThreadId
-            | TraceOptions.Timestamp;
+                                TraceOptions.Callstack
+                                | TraceOptions.DateTime
+                                | TraceOptions.LogicalOperationStack
+                                | TraceOptions.ProcessId
+                                | TraceOptions.ThreadId
+                                | TraceOptions.Timestamp;
 
         public static LoggingSettings Setting => loggingSetting;
 
@@ -54,13 +45,10 @@
 
                     ConfigureMsmq(categoryConfiguration);
                     ConfigureRollingFile(categoryConfiguration);
+
                     builder.UpdateConfigurationWithReplace(configSource);
 
-#if NET40
                     EnterpriseLibraryContainer.Current = EnterpriseLibraryContainer.CreateDefaultContainer(configSource);
-#else
-                    Logger.SetLogWriter(new LogWriterFactory(configSource).Create());
-#endif
                     hasRunConfig = true;
                 }
             }
@@ -109,7 +97,7 @@
 
                 finalFilePath = Path.Combine(
                     finalFilePath,
-                    $"Logs.{startWritingDate.ToString("yyyyMMdd")}.txt");
+                    $"Logs.{startWritingDate.ToString("yyyyMMdd")}.log");
             }
 
             return finalFilePath;
