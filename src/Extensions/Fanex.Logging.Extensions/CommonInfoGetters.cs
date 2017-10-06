@@ -10,7 +10,7 @@
     {
         public static IDictionary<string, object> GetExceptionInfo(Exception ex)
            => ex == null
-            ? Constants.DefaultDictionary
+            ? Constants.EmptyDictionary
             : new Dictionary<string, object>
             {
                 [nameof(ex.Source)] = ex.Source,

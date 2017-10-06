@@ -15,14 +15,14 @@
         {
             try
             {
-                //TestLogging();
+                TestLogging();
                 SimulateSqlException();
             }
             catch (Exception exception)
             {
                 var logMessage = new LogMessage(exception.Message)
                                 .AddSection("Database Info", DatabaseInfoGetters.GetDbExceptionInfo(exception))
-                                .AddSection("Web Server Info", CommonInfoGetters.GetServerInfo())
+                                .AddSection("Server Info", CommonInfoGetters.GetServerInfo())
                                 .AddSection("Exception", CommonInfoGetters.GetExceptionInfo(exception))
                                 .ToString();
 
@@ -53,7 +53,7 @@
             LogService.Warn("Test warning1");
             LogService.Info("Test info1");
 
-            Thread.Sleep(130 * 1000);
+            //Thread.Sleep(130 * 1000);
 
             Console.WriteLine("Second time");
 

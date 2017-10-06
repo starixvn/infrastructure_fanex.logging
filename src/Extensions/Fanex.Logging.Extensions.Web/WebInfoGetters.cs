@@ -18,7 +18,7 @@
             HttpRequest request,
             NameValueCollection serverVariables)
             => request == null
-                ? Constants.DefaultDictionary
+                ? Constants.EmptyDictionary
                 : new Dictionary<string, object>
                 {
                     [nameof(request.Url)] = request.Url,
@@ -33,7 +33,7 @@
 
         public static IDictionary<string, object> GetBrowserInfo(HttpCapabilitiesBase browser)
           => browser == null
-                ? Constants.DefaultDictionary
+                ? Constants.EmptyDictionary
                 : new Dictionary<string, object>
                 {
                     [nameof(browser.Browser)] = $"{browser.Browser} {browser.Version} (Beta: {browser.Beta})",
@@ -61,7 +61,7 @@
 
         public static IDictionary<string, object> GetSessionInfo(HttpSessionState session)
                 => session == null
-                    ? Constants.DefaultDictionary
+                    ? Constants.EmptyDictionary
                     : session
                     .Keys
                     .Cast<object>()
@@ -69,7 +69,7 @@
 
         public static IDictionary<string, object> GetRequestHeader(NameValueCollection headers)
                 => headers == null
-                    ? Constants.DefaultDictionary
+                    ? Constants.EmptyDictionary
                     : headers
                     .AllKeys
                     .ToDictionary(key => key, key => headers[key] as object);

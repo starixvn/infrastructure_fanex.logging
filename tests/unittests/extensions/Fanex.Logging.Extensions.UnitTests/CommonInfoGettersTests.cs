@@ -17,7 +17,7 @@
             var exceptionInfo = GetExceptionInfo(null);
 
             // Assert
-            Assert.Same(Constants.DefaultDictionary, exceptionInfo);
+            Assert.Same(Constants.EmptyDictionary, exceptionInfo);
         }
 
         [Fact]

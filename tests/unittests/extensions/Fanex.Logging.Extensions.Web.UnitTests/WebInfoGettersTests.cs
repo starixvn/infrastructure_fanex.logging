@@ -5,15 +5,14 @@
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
-    using System.Reflection;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
-    using System.Web.Hosting;
     using System.Web.SessionState;
     using Extensions;
     using Web;
     using Xunit;
+    using static WebHelper;
 
     [Trait("Category", "Extensions/WebInfoGetters.cs")]
     public class WebInfoGettersTests
@@ -28,7 +27,7 @@
         {
             sessionStateItemCollection = new SessionStateItemCollection();
             logMessage = new LogMessage(message);
-            request = CreateFakeHttpRequest(requestUrl);
+            request = CreateFakeHttpContext(requestUrl, sessionStateItemCollection).Request;
         }
 
         [Fact]
@@ -38,7 +37,7 @@
             var actualLogEntry = WebInfoGetters.GetRequestInfo(null);
 
             // Assert
-            Assert.Same(Constants.DefaultDictionary, actualLogEntry);
+            Assert.Same(Constants.EmptyDictionary, actualLogEntry);
         }
 
         [Fact]
@@ -144,7 +143,7 @@
             var sessionInfo = WebInfoGetters.GetSessionInfo(null);
 
             // Assert
-            Assert.Equal(Constants.DefaultDictionary, sessionInfo);
+            Assert.Equal(Constants.EmptyDictionary, sessionInfo);
         }
 
         [Fact]
@@ -176,7 +175,7 @@
             var requestHeader = WebInfoGetters.GetRequestHeader(null);
 
             // Assert
-            Assert.Equal(Constants.DefaultDictionary, requestHeader);
+            Assert.Equal(Constants.EmptyDictionary, requestHeader);
         }
 
         [Fact]
@@ -207,7 +206,7 @@
             var browserInfo = WebInfoGetters.GetBrowserInfo(null);
 
             // Assert
-            Assert.Equal(Constants.DefaultDictionary, browserInfo);
+            Assert.Equal(Constants.EmptyDictionary, browserInfo);
         }
 
         [Fact]
@@ -235,43 +234,6 @@
                     ["MobileDeviceModel"] = "Unknown"
                 },
                 browserInfo);
-        }
-
-        private static Stream GenerateStreamFromString(string s)
-        {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
-        private HttpRequest CreateFakeHttpRequest(string queryString)
-        {
-            SimpleWorkerRequest request = new SimpleWorkerRequest(string.Empty, string.Empty, string.Empty, queryString, new StringWriter());
-
-            HttpContext.Current = new HttpContext(request);
-
-            var sessionContainer = new HttpSessionStateContainer(
-                                                "id",
-                                               sessionStateItemCollection,
-                                               new HttpStaticObjectsCollection(),
-                                               10,
-                                               true,
-                                               HttpCookieMode.AutoDetect,
-                                               SessionStateMode.InProc,
-                                               false);
-
-            HttpContext.Current.Items["AspSession"] = typeof(HttpSessionState).GetConstructor(
-                                    BindingFlags.NonPublic | BindingFlags.Instance,
-                                    null,
-                                    CallingConventions.Standard,
-                                    new[] { typeof(HttpSessionStateContainer) },
-                                    null)
-                .Invoke(new object[] { sessionContainer });
-
-            return HttpContext.Current.Request;
         }
     }
 }

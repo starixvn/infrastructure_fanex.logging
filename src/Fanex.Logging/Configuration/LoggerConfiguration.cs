@@ -9,7 +9,7 @@
 
     internal static class LoggerConfiguration
     {
-        private static volatile LoggingSettings loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
+        private static volatile LoggingSettings loggingSetting;
         private static volatile bool hasRunConfig;
         private static object syncRoot = new object();
 
@@ -21,7 +21,23 @@
                                 | TraceOptions.ThreadId
                                 | TraceOptions.Timestamp;
 
-        public static LoggingSettings Setting => loggingSetting;
+        public static LoggingSettings Setting
+        {
+            get
+            {
+                if(loggingSetting == null)
+                {
+                    loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
+                }
+
+                return loggingSetting;
+            }
+
+            internal set
+            {
+                loggingSetting = value;
+            }
+        }
 
         public static void Run()
         {
@@ -54,7 +70,7 @@
             }
         }
 
-        private static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration)
         {
             if (!string.IsNullOrWhiteSpace(Setting.MsmqPath))
             {
@@ -65,7 +81,7 @@
             }
         }
 
-        private static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration)
         {
             if (!string.IsNullOrWhiteSpace(Setting.FilePath))
             {
@@ -79,7 +95,7 @@
             }
         }
 
-        private static string ResolveFilePath(string filePath)
+        internal static string ResolveFilePath(string filePath)
         {
             string finalFilePath = filePath;
 

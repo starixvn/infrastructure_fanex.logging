@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
     using System.Web;
-    using static CommonInfoGetters;
-    using static WebInfoGetters;
+    using System.Web.SessionState;
 
     public static class ExceptionHandler
     {
@@ -38,21 +38,24 @@
 
         [DebuggerStepThrough]
         public static void Handle(Exception exception)
-            => Handle(exception, null);
+            => Handle(exception, null, HttpContext.Current);
 
-        public static void Handle(
+        public static void Handle(Exception exception, IDictionary<string, object> customData)
+            => Handle(exception, null, HttpContext.Current);
+
+        internal static void Handle(
             Exception exception,
-            IDictionary<string, object> customData)
+            IDictionary<string, object> customData,
+            HttpContext context)
         {
             if (config.IgnoredExceptionTypes.Contains(exception.GetType()))
             {
                 return;
             }
 
-            var logMessage = new LogMessage();
-
-            if (HttpContext.Current != null)
+            if (context != null)
             {
+                var logMessage = new LogMessage();
                 var request = HttpContext.Current.Request;
                 logMessage
                     .AddMessage(exception.Message)
@@ -63,20 +66,31 @@
                     .AddSection("custom info", () => customData)
                     .AddSection("exception info", () => GetExceptionInfo(exception));
 
-                if(config.EnabledLogHttpHeader)
+                if (config.EnabledLogHttpHeader)
                 {
                     logMessage.AddSection("request headers", () => GetRequestHeader(request.Headers));
                 }
 
-                if(config.EnabledLogHttpSession)
+                if (config.EnabledLogHttpSession)
                 {
                     logMessage.AddSection("session info", () => GetSessionInfo(HttpContext.Current.Session));
                 }
+
+                WriteError(logMessage.ToCleanMessage(config.Patterns));
             }
-
-            var message = logMessage.ToCleanMessage(config.Patterns);
-
-            LogService.Error(message);
+            else
+            {
+                WriteException(exception.Message, exception);
+            }
         }
+
+        internal static Func<HttpRequest, IDictionary<string, object>> GetRequestInfo { get; set; } = WebInfoGetters.GetRequestInfo;
+        internal static Func<HttpBrowserCapabilities, IDictionary<string, object>> GetBrowserInfo { get; set; } = WebInfoGetters.GetBrowserInfo;
+        internal static Func<IDictionary<string, object>> GetServerInfo { get; set; } = CommonInfoGetters.GetServerInfo;
+        internal static Func<Exception, IDictionary<string, object>> GetExceptionInfo { get; set; } = CommonInfoGetters.GetExceptionInfo;
+        internal static Func<NameValueCollection, IDictionary<string, object>> GetRequestHeader { get; set; } = WebInfoGetters.GetRequestHeader;
+        internal static Func<HttpSessionState, IDictionary<string, object>> GetSessionInfo { get; set; } = WebInfoGetters.GetSessionInfo;
+        internal static Action<string> WriteError { get; set; } = LogService.Error;
+        internal static Action<string, Exception> WriteException { get; set; } = LogService.Error;
     }
 }
