@@ -1,0 +1,20 @@
+variables:
+  GIT_SSL_NO_VERIFY: "1"
+stages:
+    - build
+    - test
+    - deploy
+before_script:
+  - 'build\tools\Nuget\NuGet restore Fanex.Logging.sln -configfile build\tools\Nuget\NuGet.Config'
+job_build:
+    stage: build
+    script: 
+     - '"C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe" Fanex.Logging.sln'
+job_test:
+    stage: test
+    script:
+     - '"C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe" build\xunit.targets /fl /flp:logfile=build\xunit.log;verbosity=normal'
+job_deploy:
+    stage: deploy
+    script:
+     - 'build\packages\RunMeToUploadNuGetPackage.cmd'
