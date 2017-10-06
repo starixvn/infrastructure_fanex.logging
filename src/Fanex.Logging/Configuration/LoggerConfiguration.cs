@@ -9,7 +9,7 @@
 
     internal static class LoggerConfiguration
     {
-        private static volatile LoggingSettings loggingSetting;
+        private static volatile LoggingSettings loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
         private static volatile bool hasRunConfig;
         private static object syncRoot = new object();
 
@@ -21,23 +21,7 @@
                                 | TraceOptions.ThreadId
                                 | TraceOptions.Timestamp;
 
-        public static LoggingSettings Setting
-        {
-            get
-            {
-                if(loggingSetting == null)
-                {
-                    loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
-                }
-
-                return loggingSetting;
-            }
-
-            internal set
-            {
-                loggingSetting = value;
-            }
-        }
+        public static LoggingSettings Setting => loggingSetting;
 
         public static void Run()
         {
@@ -89,7 +73,7 @@
 
                 categoryConfiguration
                     .SendTo.RollingFile("RollingFlatFileListener").ToFile(filePath)
-                    .RollEvery(RollInterval.Day).UseTimeStampPattern("yyyyMMdd").WhenRollFileExists(RollFileExistsBehavior.Increment)
+                    .RollEvery(RollInterval.Day).UseTimeStampPattern("yyyyMMdd").WhenRollFileExists(RollFileExistsBehavior.Increment).CleanUpArchivedFilesWhenMoreThan(90)
                     .WithTraceOptions(traceOptions)
                     .FormatWith(new FormatterBuilder().TextFormatterNamed("TextFormatter"));
             }
@@ -97,26 +81,28 @@
 
         internal static string ResolveFilePath(string filePath)
         {
-            string finalFilePath = filePath;
+            string directoryPath = filePath;
 
             if (!Path.IsPathRooted(filePath))
             {
                 string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
-                finalFilePath = finalFilePath.TrimStart('~').TrimStart('\\').TrimStart('/');
-                finalFilePath = Path.Combine(rootPath, finalFilePath);
+                directoryPath = directoryPath.TrimStart('~').TrimStart('\\').TrimStart('/');
+                directoryPath = Path.Combine(rootPath, directoryPath);
             }
 
-            if (Directory.Exists(finalFilePath))
+            if (!Directory.Exists(directoryPath))
             {
-                var startWritingDate = DateTime.Now;
-
-                finalFilePath = Path.Combine(
-                    finalFilePath,
-                    $"Logs.{startWritingDate.ToString("yyyyMMdd")}.log");
+                Directory.CreateDirectory(directoryPath);
             }
 
-            return finalFilePath;
+            var startWritingDate = DateTime.Now;
+
+            directoryPath = Path.Combine(
+                directoryPath,
+                $"Logs.{startWritingDate.ToString("yyyyMMdd")}.log");
+
+            return directoryPath;
         }
     }
 }

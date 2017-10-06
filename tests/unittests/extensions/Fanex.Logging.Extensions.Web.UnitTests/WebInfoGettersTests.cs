@@ -14,7 +14,7 @@
     using Xunit;
     using static WebHelper;
 
-    [Trait("Category", "Extensions/WebInfoGetters.cs")]
+    [Trait("Unit Tests", "Extensions/WebInfoGetters.cs")]
     public class WebInfoGettersTests
     {
         private readonly HttpRequest request;

@@ -6,7 +6,7 @@
     using NSubstitute;
     using Xunit;
 
-    [Trait("Category", "Logger.cs")]
+    [Trait("Unit Tests", "Logger.cs")]
     public class LoggerTests
     {
         private readonly Logger logger;

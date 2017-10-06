@@ -9,7 +9,7 @@
     using NSubstitute;
     using Xunit;
 
-    [Trait("Category", "Extensions/DatabaseInfoGetters.cs")]
+    [Trait("Unit Tests", "Extensions/DatabaseInfoGetters.cs")]
     public class DatabaseLogContentExtractorsTests
     {
         [Fact]

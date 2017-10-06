@@ -4,7 +4,7 @@
     using Web;
     using Xunit;
 
-    [Trait("Category", "Extensions/MessageProtector.cs")]
+    [Trait("Unit Tests", "Extensions/MessageProtector.cs")]
     public class MessageProtectorTests
     {
         [Fact]

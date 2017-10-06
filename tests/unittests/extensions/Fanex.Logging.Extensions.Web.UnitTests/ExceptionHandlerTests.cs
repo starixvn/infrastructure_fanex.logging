@@ -2,13 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
-    using System.Web;
     using System.Web.SessionState;
     using NSubstitute;
     using Xunit;
 
-    [Trait("Category", "Extensions/ExceptionHandler.cs")]
+    [Trait("Unit Tests", "Extensions/ExceptionHandler.cs")]
     public class ExceptionHandlerTests
     {
         private readonly Action<string> writeError;
@@ -17,7 +15,6 @@
 
         public ExceptionHandlerTests()
         {
-
             writeError = Substitute.For<Action<string>>();
             writeException = Substitute.For<Action<string, Exception>>();
             config = new LoggingConfiguration();
@@ -66,7 +63,7 @@
         [Fact]
         public void Handle_ExceptionIsInIgnoredTypes_DontExecuteWriteError()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
             var loggingConfig = new LoggingConfiguration();
             loggingConfig.IgnoreException<DllNotFoundException>();
@@ -74,6 +71,7 @@
 
             // Act
             ExceptionHandler.Handle(exception);
+            ExceptionHandler.Handle(exception, null);
 
             // Assert
             writeError.DidNotReceiveWithAnyArgs().Invoke("string");
@@ -83,7 +81,7 @@
         [Fact]
         public void Handle_HttpCurrentIsNull_ExecuteWriteException()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
 
             // Act
@@ -96,7 +94,7 @@
         [Fact]
         public void Handle_HttpCurrentIsNotNull_ExecuteWriteError()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
             var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
 
@@ -110,11 +108,11 @@
 
             // Act
             ExceptionHandler.Handle(
-                exception, 
+                exception,
                 new Dictionary<string, object> { ["custom"] = "custom data" },
                 context);
 
-            // Assert 
+            // Assert
             writeError.Received().Invoke(
                 "Dll was not found.\r\n\r\n"
                 + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
@@ -128,7 +126,7 @@
         [Fact]
         public void Handle_EnabledLogHttpHeader_ExecuteWriteErrorWithHeaderInfo()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
             var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
 
@@ -147,7 +145,7 @@
                 new Dictionary<string, object> { ["custom"] = "custom data" },
                 context);
 
-            // Assert 
+            // Assert
             writeError.Received().Invoke(
                 "Dll was not found.\r\n\r\n"
                 + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
@@ -162,7 +160,7 @@
         [Fact]
         public void Handle_EnabledLogHttpSession_ExecuteWriteErrorWithSessionInfo()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
             var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
 
@@ -181,7 +179,7 @@
                 new Dictionary<string, object> { ["custom"] = "custom data" },
                 context);
 
-            // Assert 
+            // Assert
             writeError.Received().Invoke(
                 "Dll was not found.\r\n\r\n"
                 + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
@@ -196,7 +194,7 @@
         [Fact]
         public void Handle_SetHiddenSensitiveInfo_ExecuteWriteErrorWithoutSensitiveInfo()
         {
-            // Arrange 
+            // Arrange
             var exception = new DllNotFoundException();
             var sensitiveInfo = "password=asdadad";
             var context = WebHelper.CreateFakeHttpContext($"url", new SessionStateItemCollection());
@@ -217,7 +215,7 @@
                 new Dictionary<string, object> { ["custom"] = "custom data" },
                 context);
 
-            // Assert 
+            // Assert
             writeError.Received().Invoke(
                 "Dll was not found.\r\n\r\n"
                 + "REQUEST INFO\r\n\trequest: request data password=*****\r\n\r\n"

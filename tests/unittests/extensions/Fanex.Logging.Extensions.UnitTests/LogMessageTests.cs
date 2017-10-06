@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Xunit;
 
-    [Trait("Category", "Extensions/LogMessage.cs")]
+    [Trait("Unit Tests", "Extensions/LogMessage.cs")]
     public class logMessageTests
     {
         [Fact]

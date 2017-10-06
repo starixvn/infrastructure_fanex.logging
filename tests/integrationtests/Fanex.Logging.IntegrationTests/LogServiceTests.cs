@@ -1,0 +1,265 @@
+﻿namespace Fanex.Logging.IntegrationTests
+{
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using Xunit;
+
+    [Trait("Integration Tests", "LogService")]
+    [CollectionDefinition("Log Service Integration Tests")]
+    public class LogServiceTests
+    {
+        private static bool hasSetUpForRunningTests;
+        private static object syncRoot = new object();
+        private static string currentDirectoryPath;
+
+        public LogServiceTests()
+        {
+            SetUp();
+        }
+
+        [Fact]
+        public void Error_Always_WriteError()
+        {
+            // Act
+            LogService.Error("Error Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: Error Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Error_Always_WriteErrorWithExceptionInfo()
+        {
+            // Act
+            LogService.Error("Error Message 2", new DllNotFoundException());
+
+            // Assert
+            AssertLogContent(
+                "Message: Error Message 2\n"
+                + "System.DllNotFoundException: Dll was not found.\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Error_Always_WriteErrorWithCustomCategory()
+        {
+            // Act
+            LogService.Error("Error Message 3", "Custom-Category", new DllNotFoundException());
+
+            // Assert
+            AssertLogContent(
+                "Message: Error Message 3\n"
+                + "System.DllNotFoundException: Dll was not found.\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Custom-Category\r\n\n");
+        }
+
+        [Fact]
+        public void Warn_Always_WriteWarning()
+        {
+            // Act
+            LogService.Warn("Warn Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: Warn Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Warning\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Warn_Always_WriteWarningWithCustomCategory()
+        {
+            // Act
+            LogService.Warn("Warn Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: Warn Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Warning\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void Info_Always_WriteInformation()
+        {
+            // Act
+            LogService.Info("Info Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: Info Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Information\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Info_Always_WriteInfoWithCustomCategory()
+        {
+            // Act
+            LogService.Info("Info Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: Info Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Information\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void Critical_Always_WriteCriticalInfo()
+        {
+            // Act
+            LogService.Critical("Critical Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: Critical Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Critical\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Critical_Always_WriteCriticalInfoWithCustomCategory()
+        {
+            // Act
+            LogService.Critical("Critical Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: Critical Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Critical\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void Debug_Always_WriteDebugInfo()
+        {
+            // Act
+            LogService.Debug("Debug Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: Debug Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Verbose\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void Debug_Always_WriteDebugInfoWithCustomCategory()
+        {
+            // Act
+            LogService.Debug("Debug Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: Debug Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Verbose\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        public void AssertLogContent(string shouldBeExistedContent)
+        {
+            var logContent = GetLogContent();
+            Assert.True(logContent.Contains(shouldBeExistedContent));
+        }
+
+        private static string LogsDirectory
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(currentDirectoryPath))
+                {
+                    string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                    UriBuilder uri = new UriBuilder(codeBase);
+                    string path = Uri.UnescapeDataString(uri.Path);
+                    currentDirectoryPath = $"{Path.GetDirectoryName(path)}\\Logs\\";
+                }
+
+                return currentDirectoryPath;
+            }
+        }
+
+        private static void SetUp()
+        {
+            if (!hasSetUpForRunningTests)
+            {
+                lock (syncRoot)
+                {
+                    if (!hasSetUpForRunningTests)
+                    {
+                        hasSetUpForRunningTests = true;
+
+                        DeleteAllFiles();
+                    }
+                }
+            }
+        }
+
+        private static void DeleteAllFiles()
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(LogsDirectory);
+
+            try
+            {
+                foreach (FileInfo file in directoryInfo.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
+            catch
+            { }
+        }
+
+        private static string GetLogContent()
+        {
+            var fileName = $"Logs.{DateTime.Now.ToString("yyyyMMdd")}.log";
+            var fileCopiedName = $"Logs.{DateTime.Now.ToString("yyyyMMdd")}.ForTesting.log";
+
+            var filePath = Path.Combine(LogsDirectory, fileName);
+            var fileCopiedPath = Path.Combine(LogsDirectory, fileCopiedName);
+
+            File.Copy(filePath, fileCopiedPath, true);
+
+            return File.ReadAllText(fileCopiedPath);
+        }
+    }
+}

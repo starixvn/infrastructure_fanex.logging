@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Extensions.Database.V59
+﻿namespace Fanex.Logging.Extensions.Database
 {
     using System;
     using Fanex.Data;
@@ -13,12 +13,6 @@
             this._dbSetting = dbSetting;
         }
 
-        public IDbSetting DbSetting
-        {
-            get
-            {
-                return _dbSetting;
-            }
-        }
+        public IDbSetting DbSetting => _dbSetting;
     }
 }

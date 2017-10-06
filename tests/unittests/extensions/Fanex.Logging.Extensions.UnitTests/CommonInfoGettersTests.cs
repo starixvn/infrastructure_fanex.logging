@@ -7,7 +7,7 @@
     using Xunit;
     using static CommonInfoGetters;
 
-    [Trait("Category", "Extensions/CommonInfoGetters.cs")]
+    [Trait("Unit Tests", "Extensions/CommonInfoGetters.cs")]
     public class CommonInfoGettersTests
     {
         [Fact]

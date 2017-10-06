@@ -48,10 +48,8 @@
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler.Handle(
-                                Server.GetLastError()
-                                // To Write Custom Data
-                                // new Dictionary<string, object> { ["user id"] = 1111111 }
-                                );
+                                Server.GetLastError(),
+                                new Dictionary<string, object> { ["user id"] = 1111111 });
         }
     }
 }

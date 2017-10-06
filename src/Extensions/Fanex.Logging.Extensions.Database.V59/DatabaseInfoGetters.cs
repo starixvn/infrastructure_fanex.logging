@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Extensions.Database.V59
+﻿namespace Fanex.Logging.Extensions.Database
 {
     using System;
     using System.Collections.Generic;
@@ -7,14 +7,9 @@
     public static class DatabaseInfoGetters
     {
         public static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
-        {
-            if (exception is DatabaseException)
-            {
-                return GetDatabasexceptionInfo(exception as DatabaseException);
-            }
-
-            return Fanex.Logging.Extensions.CommonInfoGetters.GetDefaulDbExceptionInfo(exception);
-        }
+            => exception is DatabaseException
+                ? GetDatabasexceptionInfo(exception as DatabaseException)
+                : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
 
         private static IDictionary<string, object> GetDatabasexceptionInfo(DatabaseException ex)
         {
@@ -31,10 +26,8 @@
         }
 
         private static int GetLineNumber(DatabaseException ex)
-        {
-            return ex.InnerException is SqlException
-                            ? (ex.InnerException as SqlException).LineNumber
-                            : 0;
-        }
+            => ex.InnerException is SqlException
+                ? (ex.InnerException as SqlException).LineNumber
+                : 0;
     }
 }

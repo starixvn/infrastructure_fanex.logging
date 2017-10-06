@@ -90,9 +90,6 @@
             return this;
         }
 
-        public override string ToString()
-        {
-            return contentBuilder.ToString();
-        }
+        public override string ToString() => contentBuilder.ToString();
     }
 }
