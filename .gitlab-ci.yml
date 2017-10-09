@@ -17,4 +17,5 @@ job_test:
 job_deploy:
     stage: deploy
     script:
-     - 'build\packages\RunMeToUploadNuGetPackage.cmd'
+     - 'cd build\packages'
+     - 'RunMeToUploadNuGetPackage.cmd'
