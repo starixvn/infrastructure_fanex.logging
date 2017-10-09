@@ -5,7 +5,7 @@ namespace Fanex.Logging.UnitTests
     using System;
     using NSubstitute;
 
-    [Trait("Category", "LogService.cs")]
+    [Trait("Unit Tests", "LogService.cs")]
     public class LogServiceTests
     {
         private readonly ILogger logger;

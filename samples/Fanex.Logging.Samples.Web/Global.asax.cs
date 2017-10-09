@@ -47,8 +47,9 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            ExceptionHandler
-                .Handle(Server.GetLastError());
+            ExceptionHandler.Handle(
+                                Server.GetLastError(),
+                                new Dictionary<string, object> { ["user id"] = 1111111 });
         }
     }
 }

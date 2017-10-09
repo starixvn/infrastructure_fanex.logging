@@ -7,7 +7,7 @@
     using Xunit;
     using static CommonInfoGetters;
 
-    [Trait("Category", "Extensions/CommonInfoGetters.cs")]
+    [Trait("Unit Tests", "Extensions/CommonInfoGetters.cs")]
     public class CommonInfoGettersTests
     {
         [Fact]
@@ -17,7 +17,7 @@
             var exceptionInfo = GetExceptionInfo(null);
 
             // Assert
-            Assert.Same(Constants.DefaultDictionary, exceptionInfo);
+            Assert.Same(Constants.EmptyDictionary, exceptionInfo);
         }
 
         [Fact]

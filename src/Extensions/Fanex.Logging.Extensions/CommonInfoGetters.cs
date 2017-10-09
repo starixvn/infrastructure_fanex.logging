@@ -10,7 +10,7 @@
     {
         public static IDictionary<string, object> GetExceptionInfo(Exception ex)
            => ex == null
-            ? Constants.DefaultDictionary
+            ? Constants.EmptyDictionary
             : new Dictionary<string, object>
             {
                 [nameof(ex.Source)] = ex.Source,
@@ -45,7 +45,7 @@
             return Constants.NotAvailableAbbr;
         }
 
-        internal static IDictionary<string, object> GetDefaulDbExceptionInfo(Exception exception)
+        internal static IDictionary<string, object> GetDefaultDbExceptionInfo(Exception exception)
         {
             if (exception is SqlException)
             {
@@ -57,7 +57,7 @@
                 return GetSqlExceptionInfo(exception.GetBaseException() as SqlException);
             }
 
-            return new Dictionary<string, object>();
+            return Constants.EmptyDictionary;
         }
 
         private static IDictionary<string, object> GetSqlExceptionInfo(SqlException ex)
@@ -71,10 +71,8 @@
              };
 
         internal static int GetLineNumber(Exception ex)
-        {
-            return ex.InnerException is SqlException
+            => ex.InnerException is SqlException
                             ? (ex.InnerException as SqlException).LineNumber
                             : 0;
-        }
     }
 }

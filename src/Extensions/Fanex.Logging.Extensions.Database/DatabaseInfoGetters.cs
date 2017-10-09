@@ -11,14 +11,9 @@
     public static class DatabaseInfoGetters
     {
         public static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
-        {
-            if (exception is ObjectDbException)
-            {
-                return GetObjectDbExceptionInfo(exception as ObjectDbException);
-            }
-
-            return CommonInfoGetters.GetDefaulDbExceptionInfo(exception);
-        }
+            => exception is ObjectDbException
+            ? GetObjectDbExceptionInfo(exception as ObjectDbException)
+            : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
 
         private static IDictionary<string, object> GetObjectDbExceptionInfo(ObjectDbException ex)
         {

@@ -8,7 +8,7 @@
     using Xunit;
     using MPEL = Microsoft.Practices.EnterpriseLibrary.Logging;
 
-    [Trait("Category", "Adapters/LogEngineAdapter.cs")]
+    [Trait("Unit Tests", "Adapters/LogEngineAdapter.cs")]
     public class LogEngineAdapterTests
     {
         private readonly EntlibLogging logEngineAdapter;

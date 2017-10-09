@@ -5,7 +5,7 @@
     using Data;
     using Data.Configuration;
     using Extensions;
-    using Extensions.Database.V62;
+    using Extensions.Database;
 
     public static class Program
     {

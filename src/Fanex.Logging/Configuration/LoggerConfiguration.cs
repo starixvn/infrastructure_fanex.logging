@@ -54,7 +54,7 @@
             }
         }
 
-        private static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration)
         {
             if (!string.IsNullOrWhiteSpace(Setting.MsmqPath))
             {
@@ -65,7 +65,7 @@
             }
         }
 
-        private static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration)
         {
             if (!string.IsNullOrWhiteSpace(Setting.FilePath))
             {
@@ -73,34 +73,36 @@
 
                 categoryConfiguration
                     .SendTo.RollingFile("RollingFlatFileListener").ToFile(filePath)
-                    .RollEvery(RollInterval.Day).UseTimeStampPattern("yyyyMMdd").WhenRollFileExists(RollFileExistsBehavior.Increment)
+                    .RollEvery(RollInterval.Day).UseTimeStampPattern("yyyyMMdd").WhenRollFileExists(RollFileExistsBehavior.Increment).CleanUpArchivedFilesWhenMoreThan(90)
                     .WithTraceOptions(traceOptions)
                     .FormatWith(new FormatterBuilder().TextFormatterNamed("TextFormatter"));
             }
         }
 
-        private static string ResolveFilePath(string filePath)
+        internal static string ResolveFilePath(string filePath)
         {
-            string finalFilePath = filePath;
+            string directoryPath = filePath;
 
             if (!Path.IsPathRooted(filePath))
             {
                 string rootPath = AppDomain.CurrentDomain.BaseDirectory;
 
-                finalFilePath = finalFilePath.TrimStart('~').TrimStart('\\').TrimStart('/');
-                finalFilePath = Path.Combine(rootPath, finalFilePath);
+                directoryPath = directoryPath.TrimStart('~').TrimStart('\\').TrimStart('/');
+                directoryPath = Path.Combine(rootPath, directoryPath);
             }
 
-            if (Directory.Exists(finalFilePath))
+            if (!Directory.Exists(directoryPath))
             {
-                var startWritingDate = DateTime.Now;
-
-                finalFilePath = Path.Combine(
-                    finalFilePath,
-                    $"Logs.{startWritingDate.ToString("yyyyMMdd")}.log");
+                Directory.CreateDirectory(directoryPath);
             }
 
-            return finalFilePath;
+            var startWritingDate = DateTime.Now;
+
+            directoryPath = Path.Combine(
+                directoryPath,
+                $"Logs.{startWritingDate.ToString("yyyyMMdd")}.log");
+
+            return directoryPath;
         }
     }
 }
