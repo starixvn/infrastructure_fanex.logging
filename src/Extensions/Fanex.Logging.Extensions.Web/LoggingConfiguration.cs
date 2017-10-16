@@ -11,7 +11,7 @@
         internal List<string> Patterns;
         internal bool EnabledLogHttpHeader;
         internal bool EnabledLogHttpSession;
-        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(HttpException), typeof(ThreadAbortException) };
+        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(ThreadAbortException) };
 
         public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, IDictionary<string, object>> getDbExceptionInfo)
         {

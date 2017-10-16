@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
       <Private>True</Private>
@@ -109,6 +105,10 @@
     <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
       <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
       <Name>Fanex.Logging.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
+      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
+      <Name>Fanex.Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

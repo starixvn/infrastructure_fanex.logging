@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Extensions.Web
+﻿namespace Fanex.Logging.Extensions
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -35,7 +35,7 @@
                 {
                     if (match.Success)
                     {
-                        cleanMessage = cleanMessage.Replace(match.Groups[1].ToString(), Constants.SensitiveInfo);
+                        cleanMessage = cleanMessage.Replace(match.Groups[Constants.ParamValue].ToString(), Constants.SensitiveInfo);
                     }
                 }
             }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Data;
@@ -32,12 +33,16 @@
                 // To ignore exceptions
                 //.IgnoreException<DivideByZeroException>()
                 // To hide sensitive information
-                //.HideSensitiveInfo(
-                //    new List<string>
-                //    {
-                //        "(?:password=)(?<paramValue>[^&|^\\s]+)",
-                //        "(\"password\":)(?<paramValue>[^,|^\r]+)"
-                //    })
+                .HideSensitiveInfo(
+                    new List<string>
+                    {
+                        "(?:password=)(?<paramValue>[^&|^\\s]+)",
+                        "(\"password\":)(?<paramValue>[^,|^\r]+)",
+                        "(?:seccode=)(?<paramValue>[^&|^\\s]+)",
+                        "(\"seccode\":)(?<paramValue>[^,|^\r]+)",
+                        "(?:securitycode=)(?<paramValue>[^&|^\\s]+)",
+                        "(\"securitycode\":)(?<paramValue>[^,|^\r]+)"
+                    })
                 // To Enable Log Http Header
                 .GetHttpHeaderInfo())
                 // To Enable Log Http Session
@@ -47,9 +52,20 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
+            var exception = Server.GetLastError();
+
             ExceptionHandler.Handle(
-                                Server.GetLastError(),
+                                exception,
                                 new Dictionary<string, object> { ["user id"] = 1111111 });
+
+            ExceptionHandler.Handle(
+                                exception,
+                                TraceEventType.Verbose);
+
+            ExceptionHandler.Handle(
+                                exception,
+                                new Dictionary<string, object> { ["user id"] = 11111221 },
+                                TraceEventType.Warning);
         }
     }
 }

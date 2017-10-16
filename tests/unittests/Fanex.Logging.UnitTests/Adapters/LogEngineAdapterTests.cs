@@ -39,6 +39,7 @@
                     logEntry => logEntry.Message == message
                                 && logEntry.Title == category
                                 && logEntry.Severity == severity
+                                && logEntry.Categories.Count == 1
                                 && logEntry.Categories.ElementAt(0) == category));
         }
     }

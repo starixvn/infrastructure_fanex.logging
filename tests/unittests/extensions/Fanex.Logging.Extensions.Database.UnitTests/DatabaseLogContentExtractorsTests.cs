@@ -121,5 +121,44 @@
             // Assert
             Assert.Equal("name1=value1;name2=value2", actualParamsString);
         }
+
+        [Fact]
+        public void GetDbExceptionInfo_InnerExceptionIsObjectDbException_ReturnDbExceptionInfo()
+        {
+            // Arrnage
+            var dbSetting = Substitute.For<IDbSetting>();
+            dbSetting.ConnectionString.Returns("packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;");
+            dbSetting.SpName.Returns("SPNAME");
+            dbSetting.DbName.Returns("DbName");
+            var dbParameter = Substitute.ForPartsOf<DbParameter>();
+            dbParameter.ParameterName.Returns("Name");
+            dbParameter.Value.Returns("Value");
+            var dbParameterCollection = Substitute.ForPartsOf<DbParameterCollection>();
+            dbParameterCollection["demo"] = dbParameter;
+
+            var objectDBException = new ObjectDbException(
+                new Exception("Inner exception"),
+                "Setting Key",
+                dbSetting,
+                dbParameterCollection,
+                600);
+
+            // Act
+            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(new Exception("Message", objectDBException));
+
+            // Assert
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    ["Server"] = "10.18.200.232",
+                    ["DbName"] = "DbName",
+                    ["UserID"] = "bodbAdminNet",
+                    ["SpName"] = "SPNAME",
+                    ["Parameters"] = "",
+                    ["Line"] = 0,
+                    ["CommandTimeout"] = 600,
+                },
+                dbExceptionInfo);
+        }
     }
 }
