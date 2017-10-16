@@ -7,11 +7,15 @@
     public static class DatabaseInfoGetters
     {
         public static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
-            => exception is DatabaseException
-                ? GetDatabasexceptionInfo(exception as DatabaseException)
-                : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
+        {
+            var databaseException = exception.GetInnerException<DatabaseException>();
 
-        private static IDictionary<string, object> GetDatabasexceptionInfo(DatabaseException ex)
+            return databaseException is DatabaseException
+                ? GetDatabasExceptionInfo(databaseException as DatabaseException)
+                : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
+        }
+
+    private static IDictionary<string, object> GetDatabasExceptionInfo(DatabaseException ex)
         {
             var connString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
 

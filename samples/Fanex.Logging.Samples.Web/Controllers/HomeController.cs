@@ -18,6 +18,11 @@
             return Content("Index View");
         }
 
+        public ActionResult ViewError()
+        {
+            return View();
+        }
+
         public ActionResult SqlException()
         {
             SetSampleSession();

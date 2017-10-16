@@ -29,6 +29,19 @@
                ["User Domain"] = $"{Environment.UserDomainName}/{Environment.UserName}"
            };
 
+        public static Exception GetInnerException<TInnerExceptionType>(this Exception exception)
+        {
+            if (!(exception is TInnerExceptionType) 
+                && exception.InnerException != null)
+            {
+                return exception.InnerException is TInnerExceptionType
+                    ? exception.InnerException
+                    : exception.InnerException.GetInnerException<TInnerExceptionType>();
+            }
+
+            return exception;
+        }
+
         internal static string GetMachineIP(IPHostEntry hostEntry)
         {
             if (hostEntry.AddressList != null)

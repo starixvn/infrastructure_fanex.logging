@@ -8,9 +8,13 @@
     public static class DatabaseInfoGetters
     {
         public static IDictionary<string, object> GetDbExceptionInfo(Exception exception)
-             => exception is ObjectDbException
-                ? GetObjectDbExceptionInfo(exception as ObjectDbException)
+        {
+            var databaseException = exception.GetInnerException<ObjectDbException>();
+
+            return databaseException is ObjectDbException
+                ? GetObjectDbExceptionInfo(databaseException as ObjectDbException)
                 : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
+        }
 
         private static IDictionary<string, object> GetObjectDbExceptionInfo(ObjectDbException ex)
         {

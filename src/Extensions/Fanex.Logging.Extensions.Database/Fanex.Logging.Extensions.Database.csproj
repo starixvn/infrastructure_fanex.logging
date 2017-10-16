@@ -44,8 +44,8 @@
       <HintPath>..\..\..\packages\Fanex.Data.CrossCutting.WrappingException.1.0.0.3\lib\net40\Fanex.Data.CrossCutting.WrappingException.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging.Extensions, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Logging.Extensions.1.0.3\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

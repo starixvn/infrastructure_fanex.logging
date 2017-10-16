@@ -133,11 +133,11 @@
         {
             loggingEngine.Write(
                 message,
-                GetSevirity(traceEventType),
+                GetSeverity(traceEventType),
                 string.IsNullOrEmpty(category) ? defaultLogCategory : category);
         }
 
-        private static TraceEventType GetSevirity(TraceEventType traceEventType)
+        private static TraceEventType GetSeverity(TraceEventType traceEventType)
         {
             switch (traceEventType)
             {

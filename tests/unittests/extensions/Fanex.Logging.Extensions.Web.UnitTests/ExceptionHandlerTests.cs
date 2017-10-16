@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Web.SessionState;
     using NSubstitute;
     using Xunit;
@@ -85,7 +86,7 @@
             var exception = new DllNotFoundException();
 
             // Act
-            ExceptionHandler.Handle(exception, null, null);
+            ExceptionHandler.Handle(exception, null, null, TraceEventType.Error);
 
             // Assert
             writeException.Received().Invoke(exception.Message, exception);
@@ -110,7 +111,8 @@
             ExceptionHandler.Handle(
                 exception,
                 new Dictionary<string, object> { ["custom"] = "custom data" },
-                context);
+                context,
+                TraceEventType.Error);
 
             // Assert
             writeError.Received().Invoke(
@@ -143,7 +145,8 @@
             ExceptionHandler.Handle(
                 exception,
                 new Dictionary<string, object> { ["custom"] = "custom data" },
-                context);
+                context,
+                TraceEventType.Error);
 
             // Assert
             writeError.Received().Invoke(
@@ -177,7 +180,8 @@
             ExceptionHandler.Handle(
                 exception,
                 new Dictionary<string, object> { ["custom"] = "custom data" },
-                context);
+                context,
+                TraceEventType.Error);
 
             // Assert
             writeError.Received().Invoke(
@@ -212,8 +216,9 @@
             // Act
             ExceptionHandler.Handle(
                 exception,
-                new Dictionary<string, object> { ["custom"] = "custom data" },
-                context);
+                new Dictionary<string, object> { ["custom"] = "custom data 1" },
+                context,
+                TraceEventType.Error);
 
             // Assert
             writeError.Received().Invoke(
@@ -222,8 +227,190 @@
                 + "BROWSER INFO\r\n\tbrowser: browser data\r\n\r\n"
                 + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
                 + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
+                + "CUSTOM INFO\r\n\tcustom: custom data 1\r\n\r\n"
+                + "EXCEPTION INFO\r\n\texception: exception data\r\n");
+        }
+
+        [Fact]
+        public void Handle_TraceEventTypeIsVerbose_ExecuteWriteDebug()
+        {
+            // Arrange
+            var exception = new DllNotFoundException();
+            var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
+
+            ExceptionHandler.UseConfig(new LoggingConfiguration());
+
+            ExceptionHandler.GetRequestInfo = (request) => new Dictionary<string, object> { ["request"] = "request data" };
+            ExceptionHandler.GetBrowserInfo = (browser) => new Dictionary<string, object> { ["browser"] = "browser data" };
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
+            var writeDebug = Substitute.For<Action<string>>();
+            ExceptionHandler.WriteDebug = writeDebug;
+
+            // Act
+            ExceptionHandler.Handle(
+                exception,
+                new Dictionary<string, object> { ["custom"] = "custom data" },
+                context,
+                TraceEventType.Verbose);
+
+            // Assert
+            writeDebug.Received().Invoke(
+                "Dll was not found.\r\n\r\n"
+                + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
+                + "BROWSER INFO\r\n\tbrowser: browser data\r\n\r\n"
+                + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
+                + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
                 + "CUSTOM INFO\r\n\tcustom: custom data\r\n\r\n"
                 + "EXCEPTION INFO\r\n\texception: exception data\r\n");
+        }
+
+        [Fact]
+        public void Handle_TraceEventTypeIsInformation_ExecuteWriteInfo()
+        {
+            // Arrange
+            var exception = new DllNotFoundException();
+            var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
+
+            ExceptionHandler.UseConfig(new LoggingConfiguration());
+
+            ExceptionHandler.GetRequestInfo = (request) => new Dictionary<string, object> { ["request"] = "request data" };
+            ExceptionHandler.GetBrowserInfo = (browser) => new Dictionary<string, object> { ["browser"] = "browser data" };
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
+            var writeInfo = Substitute.For<Action<string>>();
+            ExceptionHandler.WriteInfo = writeInfo;
+
+            // Act
+            ExceptionHandler.Handle(
+                exception,
+                new Dictionary<string, object> { ["custom"] = "custom data" },
+                context,
+                TraceEventType.Information);
+
+            // Assert
+            writeInfo.Received().Invoke(
+                "Dll was not found.\r\n\r\n"
+                + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
+                + "BROWSER INFO\r\n\tbrowser: browser data\r\n\r\n"
+                + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
+                + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
+                + "CUSTOM INFO\r\n\tcustom: custom data\r\n\r\n"
+                + "EXCEPTION INFO\r\n\texception: exception data\r\n");
+        }
+
+        [Fact]
+        public void Handle_TraceEventTypeIsWarning_ExecuteWriteWarn()
+        {
+            // Arrange
+            var exception = new DllNotFoundException();
+            var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
+
+            ExceptionHandler.UseConfig(new LoggingConfiguration());
+
+            ExceptionHandler.GetRequestInfo = (request) => new Dictionary<string, object> { ["request"] = "request data" };
+            ExceptionHandler.GetBrowserInfo = (browser) => new Dictionary<string, object> { ["browser"] = "browser data" };
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
+            var writeWarn = Substitute.For<Action<string>>();
+            ExceptionHandler.WriteWarn = writeWarn;
+
+            // Act
+            ExceptionHandler.Handle(
+                exception,
+                new Dictionary<string, object> { ["custom"] = "custom data" },
+                context,
+                TraceEventType.Warning);
+
+            // Assert
+            writeWarn.Received().Invoke(
+                "Dll was not found.\r\n\r\n"
+                + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
+                + "BROWSER INFO\r\n\tbrowser: browser data\r\n\r\n"
+                + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
+                + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
+                + "CUSTOM INFO\r\n\tcustom: custom data\r\n\r\n"
+                + "EXCEPTION INFO\r\n\texception: exception data\r\n");
+        }
+
+        [Fact]
+        public void Handle_TraceEventTypeIsCritical_ExecuteWriteCritical()
+        {
+            // Arrange
+            var exception = new DllNotFoundException();
+            var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
+
+            ExceptionHandler.UseConfig(new LoggingConfiguration());
+
+            ExceptionHandler.GetRequestInfo = (request) => new Dictionary<string, object> { ["request"] = "request data" };
+            ExceptionHandler.GetBrowserInfo = (browser) => new Dictionary<string, object> { ["browser"] = "browser data" };
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
+            var writeCritical = Substitute.For<Action<string>>();
+            ExceptionHandler.WriteCritical = writeCritical;
+
+            // Act
+            ExceptionHandler.Handle(
+                exception,
+                new Dictionary<string, object> { ["custom"] = "custom data" },
+                context,
+                TraceEventType.Critical);
+
+            // Assert
+            writeCritical.Received().Invoke(
+                "Dll was not found.\r\n\r\n"
+                + "REQUEST INFO\r\n\trequest: request data\r\n\r\n"
+                + "BROWSER INFO\r\n\tbrowser: browser data\r\n\r\n"
+                + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
+                + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
+                + "CUSTOM INFO\r\n\tcustom: custom data\r\n\r\n"
+                + "EXCEPTION INFO\r\n\texception: exception data\r\n");
+        }
+
+        [Fact]
+        public void Handle_ExceptionThrow_ExecuteWriteException()
+        {
+            // Arrange
+            var exception = new DllNotFoundException();
+            var context = WebHelper.CreateFakeHttpContext("url", new SessionStateItemCollection());
+
+            ExceptionHandler.UseConfig(new LoggingConfiguration());
+
+            ExceptionHandler.GetRequestInfo = (request) => new Dictionary<string, object> { ["request"] = "request data" };
+            ExceptionHandler.GetBrowserInfo = (browser) => new Dictionary<string, object> { ["browser"] = "browser data" };
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
+            var simulatedException = new Exception("Simulated Exception");
+            ExceptionHandler.WriteError = (message) =>
+            {
+                throw simulatedException;
+            };
+
+            var writeException = Substitute.For<Action<string, Exception>>();
+            ExceptionHandler.WriteException = writeException;
+
+            // Act
+            ExceptionHandler.Handle(
+                exception,
+                new Dictionary<string, object> { ["custom"] = "custom data" },
+                context,
+                TraceEventType.Error);
+
+            // Assert
+            writeException.Received().Invoke(
+                simulatedException.Message,
+                simulatedException
+                );
         }
     }
 }
