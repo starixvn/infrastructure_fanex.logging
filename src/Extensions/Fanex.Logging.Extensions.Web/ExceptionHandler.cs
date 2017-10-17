@@ -51,7 +51,7 @@
         internal static void Handle(
             Exception exception,
             IDictionary<string, object> customData,
-            HttpContext context, 
+            HttpContext context,
             TraceEventType traceEventType)
         {
             if (config.IgnoredExceptionTypes.Contains(exception.GetType())
@@ -71,8 +71,8 @@
         }
 
         private static void WriteLog(
-            Exception exception, 
-            IDictionary<string, object> customData, 
+            Exception exception,
+            IDictionary<string, object> customData,
             HttpContext context,
             TraceEventType traceEventType)
         {
@@ -111,7 +111,7 @@
         }
 
         private static string ComposeMessage(
-            Exception exception, 
+            Exception exception,
             IDictionary<string, object> customData)
         {
             var request = HttpContext.Current.Request;
@@ -120,7 +120,7 @@
                                 .AddSection("request info", () => GetRequestInfo(request))
                                 .AddSection("browser info", () => GetBrowserInfo(request.Browser))
                                 .AddSection("server info", () => GetServerInfo())
-                                .AddSection("database info", () => config.GetDbExceptionInfo != null 
+                                .AddSection("database info", () => config.GetDbExceptionInfo != null
                                                                     ? config.GetDbExceptionInfo(exception)
                                                                     : Constants.EmptyDictionary)
                                 .AddSection("custom info", () => customData)

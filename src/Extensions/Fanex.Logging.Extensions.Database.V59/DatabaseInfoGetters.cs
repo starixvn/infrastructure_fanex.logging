@@ -15,7 +15,7 @@
                 : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
         }
 
-    private static IDictionary<string, object> GetDatabasExceptionInfo(DatabaseException ex)
+        private static IDictionary<string, object> GetDatabasExceptionInfo(DatabaseException ex)
         {
             var connString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
 

@@ -1,7 +1,6 @@
 ﻿namespace ConsoleLogging
 {
     using System;
-    using System.Threading;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;

@@ -166,7 +166,7 @@ namespace Fanex.Logging.Samples.WebApi.Areas.HelpPage
         }
 
         /// <summary>
-        /// Gets the sample object that will be serialized by the formatters. 
+        /// Gets the sample object that will be serialized by the formatters.
         /// First, it will look at the <see cref="SampleObjects"/>. If no sample object is found, it will try to create
         /// one using <see cref="DefaultSampleObjectFactory"/> (which wraps an <see cref="ObjectGenerator"/>) and other
         /// factories in <see cref="SampleObjectFactories"/>.
@@ -265,6 +265,7 @@ namespace Fanex.Logging.Samples.WebApi.Areas.HelpPage
                         type = requestBodyParameter == null ? null : requestBodyParameter.ParameterDescriptor.ParameterType;
                         formatters = api.SupportedRequestBodyFormatters;
                         break;
+
                     case SampleDirection.Response:
                     default:
                         type = api.ResponseDescription.ResponseType ?? api.ResponseDescription.DeclaredType;
@@ -408,6 +409,7 @@ namespace Fanex.Logging.Samples.WebApi.Areas.HelpPage
             {
                 case SampleDirection.Request:
                     return formatter.CanReadType(type);
+
                 case SampleDirection.Response:
                     return formatter.CanWriteType(type);
             }

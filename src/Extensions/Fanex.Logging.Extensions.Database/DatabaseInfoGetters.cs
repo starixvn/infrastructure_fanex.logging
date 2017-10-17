@@ -14,7 +14,7 @@
         {
             var objectDBException = exception.GetInnerException<ObjectDbException>();
 
-            return objectDBException is ObjectDbException 
+            return objectDBException is ObjectDbException
                 ? GetObjectDbExceptionInfo(objectDBException as ObjectDbException)
                 : CommonInfoGetters.GetDefaultDbExceptionInfo(exception);
         }

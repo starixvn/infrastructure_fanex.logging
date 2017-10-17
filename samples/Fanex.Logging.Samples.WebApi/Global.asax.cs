@@ -45,8 +45,6 @@
                 // To Enable Log Http Session
                 .GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
-
-
         }
     }
 }

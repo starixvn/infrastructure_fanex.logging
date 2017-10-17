@@ -31,7 +31,7 @@
 
         public static Exception GetInnerException<TInnerExceptionType>(this Exception exception)
         {
-            if (!(exception is TInnerExceptionType) 
+            if (!(exception is TInnerExceptionType)
                 && exception.InnerException != null)
             {
                 return exception.InnerException is TInnerExceptionType
