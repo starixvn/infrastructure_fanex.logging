@@ -1,14 +1,14 @@
-﻿namespace Fanex.Logging.UnitTests.Adapters
+﻿namespace Fanex.Logging.EntLib.UnitTests
 {
     using System;
     using System.Diagnostics;
     using System.Linq;
-    using Logging.Adapters;
     using NSubstitute;
     using Xunit;
     using MPEL = Microsoft.Practices.EnterpriseLibrary.Logging;
+    using EntLib;
 
-    [Trait("Unit Tests", "Adapters/LogEngineAdapter.cs")]
+    [Trait("Unit Tests", "EntLib/EntlibLogging.cs")]
     public class LogEngineAdapterTests
     {
         private readonly EntlibLogging logEngineAdapter;
@@ -16,7 +16,7 @@
 
         public LogEngineAdapterTests()
         {
-            logEngineAdapter = new EntlibLogging();
+            logEngineAdapter = new EntlibLogging(new Configuration.EntLibConfig(string.Empty, string.Empty));
             writeLog = Substitute.For<Action<MPEL.LogEntry>>();
 
             EntlibLogging.WriteLog = writeLog;

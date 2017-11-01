@@ -2,8 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using Adapters;
-    using Configuration;
 
     public sealed class Logger : ILogger
     {
@@ -11,21 +9,19 @@
         private static object syncRoot = new object();
 
         private readonly string defaultLogCategory;
-        internal readonly ILoggingEngine loggingEngine;
+        internal readonly ILogEngine loggingEngine;
 
         private Logger()
-            : this(null, null, LoggerConfiguration.Run)
+            : this(null, null)
         {
         }
 
         internal Logger(
-            ILoggingEngine loggingEngine,
-            string defaultLogCategory,
-            Action initLogConfig)
+            ILogEngine loggingEngine,
+            string defaultLogCategory)
         {
-            this.loggingEngine = loggingEngine ?? new EntlibLogging();
-            this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
-            initLogConfig();
+            this.loggingEngine = loggingEngine ?? LogManager.Instance.LogEngine;
+            this.defaultLogCategory = defaultLogCategory ?? LogManager.Instance.DefaultLogCategory;
         }
 
         public static ILogger Log

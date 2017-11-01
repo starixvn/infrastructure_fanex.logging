@@ -1,12 +1,14 @@
-﻿namespace ConsoleLogging
+﻿namespace Fanex.LoggingTest
 {
     using System;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
+    using Fanex.Logging.EntLib;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Logging.EntLib.Configuration;
 
     public class Program
     {
@@ -14,6 +16,13 @@
         {
             try
             {
+                LogManager
+                    .CreateInstance()
+                    .SetDefaultLogCategory("NAP-Activity-Tracking")
+                    .Use(new EntlibLogging(new EntLibConfig(
+                        "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
+                        @"~\Logs\")));
+
                 //TestLogging();
                 SimulateSqlException();
             }

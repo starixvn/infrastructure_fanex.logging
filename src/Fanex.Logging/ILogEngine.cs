@@ -1,8 +1,8 @@
-﻿namespace Fanex.Logging.Adapters
+﻿namespace Fanex.Logging
 {
     using System.Diagnostics;
 
-    internal interface ILoggingEngine
+    public interface ILogEngine
     {
         void Write(string message, TraceEventType severity, string category);
     }

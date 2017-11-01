@@ -7,3 +7,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1226:Method parameters and caught exceptions should not be reassigned", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.LogEntry.HideSensitiveInfo(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})~System.String")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1226:Method parameters and caught exceptions should not be reassigned", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Logging.LogEntry.HideSensitiveInfo(System.String,System.String,System.String)~System.String")]
 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S2223:Non-constant static fields should not be visible", Justification = "<Pending>", Scope = "member", Target = "~F:Fanex.Logging.LogManager.Instance")]

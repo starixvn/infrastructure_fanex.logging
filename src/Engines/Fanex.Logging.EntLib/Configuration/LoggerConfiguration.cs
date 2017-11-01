@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Configuration
+﻿namespace Fanex.Logging.EntLib.Configuration
 {
     using System;
     using System.Diagnostics;
@@ -9,7 +9,6 @@
 
     internal static class LoggerConfiguration
     {
-        private static volatile LoggingSettings loggingSetting = LoggingSettings.GetSettings(ConfigurationSourceFactory.Create());
         private static volatile bool hasRunConfig;
         private static object syncRoot = new object();
 
@@ -21,9 +20,7 @@
                                 | TraceOptions.ThreadId
                                 | TraceOptions.Timestamp;
 
-        public static LoggingSettings Setting => loggingSetting;
-
-        public static void Run()
+        public static void Run(EntLibConfig config)
         {
             if (hasRunConfig)
             {
@@ -43,8 +40,8 @@
                         .SpecialSources.AllEventsCategory
                         as ILoggingConfigurationCategoryContd;
 
-                    ConfigureMsmq(categoryConfiguration);
-                    ConfigureRollingFile(categoryConfiguration);
+                    ConfigureMsmq(categoryConfiguration, config);
+                    ConfigureRollingFile(categoryConfiguration, config);
 
                     builder.UpdateConfigurationWithReplace(configSource);
 
@@ -54,22 +51,22 @@
             }
         }
 
-        internal static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureMsmq(ILoggingConfigurationCategoryContd categoryConfiguration, EntLibConfig config)
         {
-            if (!string.IsNullOrWhiteSpace(Setting.MsmqPath))
+            if (!string.IsNullOrWhiteSpace(config.MsmqPath))
             {
                 categoryConfiguration
-                    .SendTo.Msmq("MsmqListener").UseQueue(Setting.MsmqPath)
+                    .SendTo.Msmq("MsmqListener").UseQueue(config.MsmqPath)
                     .WithTraceOptions(traceOptions)
                     .FormatWith(new FormatterBuilder().BinaryFormatterNamed("BinaryFormatter"));
             }
         }
 
-        internal static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration)
+        internal static void ConfigureRollingFile(ILoggingConfigurationCategoryContd categoryConfiguration, EntLibConfig config)
         {
-            if (!string.IsNullOrWhiteSpace(Setting.FilePath))
+            if (!string.IsNullOrWhiteSpace(config.FilePath))
             {
-                string filePath = ResolveFilePath(Setting.FilePath);
+                string filePath = ResolveFilePath(config.FilePath);
 
                 categoryConfiguration
                     .SendTo.RollingFile("RollingFlatFileListener").ToFile(filePath)

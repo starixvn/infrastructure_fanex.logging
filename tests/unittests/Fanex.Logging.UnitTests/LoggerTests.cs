@@ -2,7 +2,6 @@
 {
     using System;
     using System.Diagnostics;
-    using Logging.Adapters;
     using NSubstitute;
     using Xunit;
 
@@ -10,14 +9,14 @@
     public class LoggerTests
     {
         private readonly Logger logger;
-        private readonly ILoggingEngine logEngine;
+        private readonly ILogEngine logEngine;
         private readonly string defaultCategory;
 
         public LoggerTests()
         {
-            logEngine = Substitute.For<ILoggingEngine>();
+            logEngine = Substitute.For<ILogEngine>();
             defaultCategory = "defaultCategory";
-            logger = new Logger(logEngine, defaultCategory, () => { });
+            logger = new Logger(logEngine, defaultCategory);
         }
 
         #region Write Debug Log

@@ -1,21 +1,28 @@
 ﻿namespace Fanex.Logging.IntegrationTests
 {
+    using EntLib;
     using System;
     using System.IO;
     using System.Reflection;
     using Xunit;
+    using EntLib.Configuration;
 
     [Trait("Integration Tests", "LogService")]
     [CollectionDefinition("Log Service Integration Tests")]
     public class LogServiceTests
     {
-        private static bool hasSetUpForRunningTests;
+        private static bool cleanedOutputFiles;
         private static object syncRoot = new object();
         private static string currentDirectoryPath;
 
         public LogServiceTests()
         {
-            SetUp();
+            LogManager
+                .CreateInstance()
+                .SetDefaultLogCategory("Test-Cagegory")
+                .Use(new EntlibLogging(new EntLibConfig(string.Empty, @"~\Logs\")));
+
+            CleanOutputFiles();
         }
 
         [Fact]
@@ -218,15 +225,15 @@
             }
         }
 
-        private static void SetUp()
+        private static void CleanOutputFiles()
         {
-            if (!hasSetUpForRunningTests)
+            if (!cleanedOutputFiles)
             {
                 lock (syncRoot)
                 {
-                    if (!hasSetUpForRunningTests)
+                    if (!cleanedOutputFiles)
                     {
-                        hasSetUpForRunningTests = true;
+                        cleanedOutputFiles = true;
 
                         DeleteAllFiles();
                     }

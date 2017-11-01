@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Adapters
+﻿namespace Fanex.Logging.Entlibs
 {
     using System;
     using System.Diagnostics;
