@@ -52,7 +52,9 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
+
             var exception = Server.GetLastError();
+            System.Web.HttpContext.Current.Request.GetBufferedInputStream();
 
             ExceptionHandler.Handle(
                                 exception,
