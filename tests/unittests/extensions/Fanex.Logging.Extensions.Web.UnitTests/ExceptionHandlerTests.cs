@@ -408,8 +408,8 @@
 
             // Assert
             writeException.Received().Invoke(
-                simulatedException.Message,
-                simulatedException
+                simulatedException.ToString(),
+                exception
                 );
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Logging.Extensions.Web
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
@@ -25,7 +26,7 @@
                     [nameof(request.UrlReferrer)] = request.UrlReferrer,
                     [nameof(request.Form)] = request.Form,
                     [nameof(request.UserHostAddress)] = request.UserHostAddress,
-                    [nameof(request.InputStream)] = ConvertStreamToString(request.InputStream),
+                    ["InputStream"] = ConvertStreamToString(GetInputStream(request)),
                     [nameof(request.UserAgent)] = GetUserAgent(serverVariables ?? request.ServerVariables),
                     ["Client IP"] = GetClientIP(serverVariables ?? request.ServerVariables),
                     [nameof(Thread.CurrentThread.CurrentUICulture)] = Thread.CurrentThread.CurrentUICulture
@@ -43,13 +44,40 @@
                     [nameof(browser.MobileDeviceModel)] = browser.MobileDeviceModel
                 };
 
+        /// <summary>
+        /// This is workaround for this exception:
+        /// Either BinaryRead, Form, Files, or InputStream was accessed before the internal storage was filled by the caller of HttpRequest.GetBufferedInputStream
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        internal static Stream GetInputStream(HttpRequest request)
+        {
+            try
+            {
+                return request.InputStream;
+            }
+            catch(Exception ex)
+            {
+                if(!(ex is InvalidOperationException))
+                {
+                    LogService.Info(ex.ToString());
+                }
+            }
+
+            return null;
+        }
+
         internal static string ConvertStreamToString(Stream requestStream)
         {
             if (requestStream != null)
             {
-                requestStream.Seek(0, SeekOrigin.Begin);
-                var bodyData = new StreamReader(requestStream).ReadToEnd();
-                requestStream.Seek(0, SeekOrigin.Begin);
+                string bodyData = GetStreamData(requestStream);
+
+                if (requestStream.CanSeek)
+                {
+                    requestStream.Seek(0, SeekOrigin.Begin);
+                }
+
                 if (!string.IsNullOrWhiteSpace(bodyData))
                 {
                     return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
@@ -57,6 +85,22 @@
             }
 
             return Constants.NotAvailableAbbr;
+        }
+
+        private static string GetStreamData(Stream requestStream)
+        {
+            string bodyData = string.Empty;
+            var tempStream = new MemoryStream();
+
+            requestStream.CopyTo(tempStream);
+
+            tempStream.Seek(0, SeekOrigin.Begin);
+            using (var streamReader = new StreamReader(tempStream))
+            {
+                bodyData = streamReader.ReadToEnd();
+            }
+
+            return bodyData;
         }
 
         public static IDictionary<string, object> GetSessionInfo(HttpSessionState session)

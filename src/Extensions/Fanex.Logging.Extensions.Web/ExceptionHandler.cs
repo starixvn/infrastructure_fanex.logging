@@ -66,7 +66,7 @@
             }
             catch (Exception loggingException)
             {
-                WriteException(loggingException.Message, loggingException);
+                WriteException(loggingException.ToString(), exception);
             }
         }
 
