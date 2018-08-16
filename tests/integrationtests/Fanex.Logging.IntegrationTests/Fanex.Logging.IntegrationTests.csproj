@@ -72,7 +72,7 @@
       <Name>Fanex.Logging.EntLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
-      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
+      <Project>{716003b9-1671-482a-a4bb-d08057fe95f4}</Project>
       <Name>Fanex.Logging</Name>
     </ProjectReference>
   </ItemGroup>

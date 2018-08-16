@@ -1,14 +1,13 @@
 ﻿namespace Fanex.Logging
 {
     using System;
-    using System.Diagnostics;
 
     public static class LogService
     {
         [ThreadStatic]
         private static ILogger loggerInstance;
 
-        internal static ILogger LoggerInstance
+        public static ILogger LoggerInstance
         {
             get
             {

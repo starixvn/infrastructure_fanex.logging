@@ -101,10 +101,6 @@
       <Project>{00a73fd7-d79f-4fba-852d-1d9465fe2c02}</Project>
       <Name>Fanex.Logging.EntLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
-      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
-      <Name>Fanex.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -95,15 +95,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
-      <Project>{5A5A7B5A-0DAD-4E1E-9A20-A71B6FE950C6}</Project>
+      <Project>{716003b9-1671-482a-a4bb-d08057fe95f4}</Project>
       <Name>Fanex.Logging</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

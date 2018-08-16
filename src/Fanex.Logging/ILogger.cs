@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Logging
 {
     using System;
-    using System.Diagnostics;
 
     public interface ILogger
     {

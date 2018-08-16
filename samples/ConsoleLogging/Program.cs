@@ -8,6 +8,8 @@
     using Fanex.Logging.EntLib;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.RabbitMQ;
+    using Fanex.Logging.RabbitMQ.Configurations;
     using Logging.EntLib.Configuration;
 
     public class Program
@@ -18,12 +20,14 @@
             {
                 LogManager
                     .CreateInstance()
-                    .SetDefaultLogCategory("NAP-Activity-Tracking")
-                    .Use(new EntlibLogging(new EntLibConfig(
-                        "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
-                        @"~\Logs\")));
+                    .SetDefaultLogCategory("Logging-Test")
+                    //.Use(new EntlibLogging(new EntLibConfig(
+                    //    "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
+                    //    @"~\Logs\")));
+                    .Use(new RabbitMQLogging(new RabbitMQLoggingConfigs(
+                        "host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=x0NZFHCcqayXeBG7qrr96MC6Td2x4wTF5Ha+0wCgWTg=",
+                        "Logging-Test")));
 
-                //TestLogging();
                 SimulateSqlException();
             }
             catch (Exception exception)
@@ -40,7 +44,7 @@
                 LogService.Critical(logMessage);
                 LogService.Info(logMessage);
 
-                LogService.Info(logMessage, "Alpha-MBC-AF-LOCAL");
+                LogService.Info(logMessage, "Fanex-Logging-Test1");
 
                 Console.WriteLine(logMessage);
             }

@@ -11,12 +11,12 @@
         private readonly string defaultLogCategory;
         internal readonly ILogEngine loggingEngine;
 
-        private Logger()
+        public Logger()
             : this(null, null)
         {
         }
 
-        internal Logger(
+        public Logger(
             ILogEngine loggingEngine,
             string defaultLogCategory)
         {
@@ -125,7 +125,7 @@
 
         #region WriteLog functions
 
-        internal void WriteLog(string message, string category, TraceEventType traceEventType)
+        public void WriteLog(string message, string category, TraceEventType traceEventType)
         {
             loggingEngine.Write(
                 message,

@@ -106,10 +106,6 @@
       <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
       <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Fanex.Logging\Fanex.Logging.csproj">
-      <Project>{5a5a7b5a-0dad-4e1e-9a20-a71b6fe950c6}</Project>
-      <Name>Fanex.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

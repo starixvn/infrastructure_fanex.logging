@@ -10,7 +10,7 @@
 
         public static LogManager CreateInstance()
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = new LogManager();
             }
@@ -22,7 +22,7 @@
         {
             get
             {
-                if(logEngine == null)
+                if (logEngine == null)
                 {
                     throw new NotImplementedException("Please set log engine before using");
                 }
