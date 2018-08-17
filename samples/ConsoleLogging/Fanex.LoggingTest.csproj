@@ -91,7 +91,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.2.0.0-beta2\lib\net40\Fanex.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.Logging.2.0.0-beta3\lib\net40\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
@@ -106,7 +106,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.0-beta1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.0-beta3\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>

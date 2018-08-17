@@ -6,17 +6,7 @@
     {
         private ILogEngine logEngine;
         internal string DefaultLogCategory;
-        internal static LogManager Instance;
-
-        public static LogManager CreateInstance()
-        {
-            if (Instance == null)
-            {
-                Instance = new LogManager();
-            }
-
-            return Instance;
-        }
+        internal static readonly LogManager Instance = new LogManager();
 
         internal ILogEngine LogEngine
         {
@@ -38,11 +28,11 @@
             return this;
         }
 
-        public LogManager SetDefaultLogCategory(string defaultLogCategory)
+        public static LogManager SetDefaultLogCategory(string defaultLogCategory)
         {
-            DefaultLogCategory = defaultLogCategory;
+            Instance.DefaultLogCategory = defaultLogCategory;
 
-            return this;
+            return Instance;
         }
     }
 }

@@ -6,7 +6,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{808F5173-C16B-4599-9C2C-9A704A6BD59C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Practices.EnterpriseLibrary.Logging.MsmqDistributor</RootNamespace>
     <AssemblyName>ONEbook.Common.Logging.Distributor</AssemblyName>
@@ -44,7 +44,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>..\..\..\bin\Release\ONEbook.Common.Logging.Distributor.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <CodeAnalysisRules>-Microsoft.Reliability#CA2001;-Microsoft.Naming#CA1704;-Microsoft.Performance#CA1824</CodeAnalysisRules>
     <Prefer32Bit>false</Prefer32Bit>
@@ -55,7 +54,7 @@
       <HintPath>..\..\..\packages\EasyNetQ.0.38.0.324\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Fanex.Logging.2.0.0-beta2\lib\net40\Fanex.Logging.dll</HintPath>
+      <HintPath>..\..\..\packages\Fanex.Logging.2.0.0-beta3\lib\net40\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common">
       <HintPath>..\..\..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>

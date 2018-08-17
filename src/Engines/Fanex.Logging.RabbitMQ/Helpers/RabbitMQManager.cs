@@ -4,7 +4,6 @@
 
     public static class RabbitMQManager
     {
-        private static readonly string LogEntryQueueRouteKey = "RabbitMQTraceListener.LogEntryQueueRouteKey";
         private static volatile IBus bus;
         private static object syncRoot = new object();
 

@@ -18,7 +18,6 @@
         public LogServiceTests()
         {
             LogManager
-                .CreateInstance()
                 .SetDefaultLogCategory("Test-Cagegory")
                 .Use(new EntlibLogging(new EntLibConfig(string.Empty, @"~\Logs\")));
 
@@ -253,7 +252,9 @@
                 }
             }
             catch
+#pragma warning disable S108 // Nested blocks of code should not be left empty
             { }
+#pragma warning restore S108 // Nested blocks of code should not be left empty
         }
 
         private static string GetLogContent()

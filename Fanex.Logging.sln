@@ -65,13 +65,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "engines", "engines", "{4A53
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.EntLib.UnitTests", "tests\unittests\engines\Fanex.Logging.EntLib.UnitTests\Fanex.Logging.EntLib.UnitTests.csproj", "{D8FCB57E-E9A6-4F18-81DE-C3E84843AD0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging", "src\Fanex.Logging\Fanex.Logging.csproj", "{716003B9-1671-482A-A4BB-D08057FE95F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging", "src\Fanex.Logging\Fanex.Logging.csproj", "{716003B9-1671-482A-A4BB-D08057FE95F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.RabbitMQ", "src\Engines\Fanex.Logging.RabbitMQ\Fanex.Logging.RabbitMQ.csproj", "{89F341B5-5FC6-455D-A3FD-877698A63830}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distributors", "Distributors", "{2EBDD20A-4C83-42CF-B9C6-079FD9923F48}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONEbook.Common.Logging.Distributor", "src\Distributors\ONEbook.Common.Logging.Distributor\ONEbook.Common.Logging.Distributor.csproj", "{808F5173-C16B-4599-9C2C-9A704A6BD59C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging.RabbitMQ", "src\Engines\Fanex.Logging.RabbitMQ\Fanex.Logging.RabbitMQ.csproj", "{89F341B5-5FC6-455D-A3FD-877698A63830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -248,14 +244,6 @@ Global
 		{89F341B5-5FC6-455D-A3FD-877698A63830}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89F341B5-5FC6-455D-A3FD-877698A63830}.Release|x86.ActiveCfg = Release|Any CPU
 		{89F341B5-5FC6-455D-A3FD-877698A63830}.Release|x86.Build.0 = Release|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|x86.Build.0 = Debug|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|x86.ActiveCfg = Release|Any CPU
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -288,8 +276,6 @@ Global
 		{D8FCB57E-E9A6-4F18-81DE-C3E84843AD0A} = {4A53C278-D166-4914-9CE9-AA431B6CA450}
 		{716003B9-1671-482A-A4BB-D08057FE95F4} = {799107CD-999B-467D-93A0-9594DE44DA15}
 		{89F341B5-5FC6-455D-A3FD-877698A63830} = {0B857728-7B8F-4A33-9179-FC87F5E1D395}
-		{2EBDD20A-4C83-42CF-B9C6-079FD9923F48} = {799107CD-999B-467D-93A0-9594DE44DA15}
-		{808F5173-C16B-4599-9C2C-9A704A6BD59C} = {2EBDD20A-4C83-42CF-B9C6-079FD9923F48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B62823C2-6323-4A03-9E80-97F014DC4E41}

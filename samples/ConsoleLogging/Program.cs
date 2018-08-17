@@ -19,7 +19,6 @@
             try
             {
                 LogManager
-                    .CreateInstance()
                     .SetDefaultLogCategory("Logging-Test")
                     //.Use(new EntlibLogging(new EntLibConfig(
                     //    "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
@@ -27,7 +26,7 @@
                     .Use(new RabbitMQLogging(new RabbitMQLoggingConfigs(
                         "host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=x0NZFHCcqayXeBG7qrr96MC6Td2x4wTF5Ha+0wCgWTg=",
                         "Logging-Test")));
-
+                //LogService.Error("test message");
                 SimulateSqlException();
             }
             catch (Exception exception)
