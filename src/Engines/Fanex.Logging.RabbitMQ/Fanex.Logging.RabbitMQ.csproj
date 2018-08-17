@@ -2,9 +2,17 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.0-beta3</Version>
+    <Version>1.0.0-beta6</Version>
     <Authors>_</Authors>
     <Product>_</Product>
+    <Description>- RabbitQM Log Engine for sending message log
+- To use this engine, please add this code in your application start method:
+LogManager
+                    .SetDefaultLogCategory("Your-Site-Log-Category")
+                    .Use(new RabbitMQLogging("RabbitMQ-ConnectionString"));
+- RabbitMQ connection string
++ LOCAL: host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=x0NZFHCcqayXeBG7qrr96MC6Td2x4wTF5Ha+0wCgWTg=</Description>
+    <PackageTags>Fanex.Logging, Logging, RabbitMQ</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

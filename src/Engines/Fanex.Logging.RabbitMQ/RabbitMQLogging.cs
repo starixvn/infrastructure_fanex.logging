@@ -3,45 +3,49 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Net;
     using System.Threading;
     using EasyNetQ;
-    using Fanex.Logging.RabbitMQ.Configurations;
     using Fanex.Logging.RabbitMQ.Helpers;
 
     public class RabbitMQLogging : ILogEngine
     {
         private const string RoutingKey = "RabbitMQTraceListener.LogEntryQueueRouteKey";
-        private readonly IRabbitMQLoggingConfigs rabbitMQLoggingConfigs;
+        private readonly string connectionString;
         private readonly IBus bus;
 
         public RabbitMQLogging(
-            IRabbitMQLoggingConfigs rabbitMQLoggingConfigs,
+            string connectionString,
             IBus bus = null)
         {
-            this.rabbitMQLoggingConfigs = rabbitMQLoggingConfigs
-                ?? throw new ArgumentNullException(nameof(rabbitMQLoggingConfigs));
-            this.bus = bus ?? RabbitMQManager.CreateBus(rabbitMQLoggingConfigs.ConnectionString);
+            this.connectionString = connectionString
+                ?? throw new ArgumentNullException(nameof(connectionString));
+            this.bus = bus ?? RabbitMQManager.CreateBus(connectionString);
         }
 
         public void Write(string message, TraceEventType severity, string category)
         {
+            var currentThread = Thread.CurrentThread;
+            var currentProcess = Process.GetCurrentProcess();
+            var now = DateTime.Now;
+            var categoryList = new List<string> { category };
             var logEntry = new LogEntry
             {
                 AppDomainName = "AppDomainName",
                 ActivityId = Guid.NewGuid(),
-                TimeStampString = DateTime.Now.ToString(),
+                TimeStampString = now.ToString(),
                 ExtendedProperties = new Dictionary<string, object>(),
-                Win32ThreadId = Thread.CurrentThread.ManagedThreadId.ToString(),
-                ProcessName = Process.GetCurrentProcess().ProcessName,
-                ProcessId = Process.GetCurrentProcess().Id.ToString(),
-                TimeStamp = DateTime.Now,
-                CategoriesStrings = new List<string> { category },
-                Categories = new List<string> { category },
+                Win32ThreadId = currentThread.ManagedThreadId.ToString(),
+                ProcessName = currentProcess.ProcessName,
+                ProcessId = currentProcess.Id.ToString(),
+                TimeStamp = now,
+                CategoriesStrings = categoryList,
+                Categories = categoryList,
                 Title = category,
                 Severity = severity,
                 Message = message,
-                MachineName = System.Net.Dns.GetHostName(),
-                ManagedThreadName = Thread.CurrentThread.Name
+                MachineName = Dns.GetHostName(),
+                ManagedThreadName = currentThread.Name
             };
 
             bus.Publish(logEntry, RoutingKey);
