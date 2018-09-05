@@ -27,11 +27,11 @@
         {
             var currentThread = Thread.CurrentThread;
             var currentProcess = Process.GetCurrentProcess();
-            var now = DateTime.Now;
+            var now = DateTime.Now.ToUniversalTime();
             var categoryList = new List<string> { category };
             var logEntry = new LogEntry
             {
-                AppDomainName = "AppDomainName",
+                AppDomainName = "NotFound",
                 ActivityId = Guid.NewGuid(),
                 TimeStampString = now.ToString(),
                 ExtendedProperties = new Dictionary<string, object>(),

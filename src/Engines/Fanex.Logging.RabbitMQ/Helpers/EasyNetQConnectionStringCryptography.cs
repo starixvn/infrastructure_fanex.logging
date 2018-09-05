@@ -4,10 +4,8 @@ namespace Fanex.Logging.RabbitMQ.Helpers
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// The ConnectionStringCryptography class using for encrypt and decrypt connection string.
@@ -18,6 +16,8 @@ namespace Fanex.Logging.RabbitMQ.Helpers
         private const int KeyLength = 32;
         private const int IVLength = 16;
         private const int RandomNumber = 223;
+        private const string Key = "QWERT!@#$%12345";
+        private const string IV = "%$#@!TREWQ54321";
 
         /// <summary>
         /// Encrypts the specified connection string.
@@ -31,15 +31,11 @@ namespace Fanex.Logging.RabbitMQ.Helpers
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
             {
-                myRijndael.Key = ConvertToKey(configurationConfig["host"], KeyLength);
-                myRijndael.IV = ConvertToKey(configurationConfig["virtualHost"], IVLength);
+                myRijndael.Key = ConvertToKey(Key, KeyLength);
+                myRijndael.IV = ConvertToKey(IV, IVLength);
 
                 // Encrypt the string to an array of bytes.
                 encrypted = EncryptStringToBytes(configurationConfig["password"], myRijndael.Key, myRijndael.IV);
-
-                myRijndael.IV = ConvertToKey(configurationConfig["username"], IVLength);
-
-                encrypted = EncryptStringToBytes(Convert.ToBase64String(encrypted), myRijndael.Key, myRijndael.IV);
             }
 
             configurationConfig["password"] = Convert.ToBase64String(encrypted);
@@ -53,15 +49,11 @@ namespace Fanex.Logging.RabbitMQ.Helpers
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
             {
-                myRijndael.Key = ConvertToKey(configurationConfig["host"], KeyLength);
-                myRijndael.IV = ConvertToKey(configurationConfig["username"], IVLength);
+                myRijndael.Key = ConvertToKey(Key, KeyLength);
+                myRijndael.IV = ConvertToKey(IV, IVLength);
 
                 // Decrypt the bytes to a string.
                 decrypted = DecryptStringFromBytes(Convert.FromBase64String(configurationConfig["password"]), myRijndael.Key, myRijndael.IV);
-
-                myRijndael.IV = ConvertToKey(configurationConfig["virtualHost"], IVLength);
-
-                decrypted = DecryptStringFromBytes(Convert.FromBase64String(decrypted), myRijndael.Key, myRijndael.IV);
             }
 
             return decrypted;

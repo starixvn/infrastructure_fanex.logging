@@ -105,9 +105,6 @@
       <HintPath>..\..\packages\Fanex.Logging.Extensions.Web.1.0.0\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.0-beta3\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
     </Reference>
@@ -139,7 +136,7 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+      <HintPath>..\..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -198,6 +195,10 @@
     <ProjectReference Include="..\..\src\engines\Fanex.Logging.EntLib\Fanex.Logging.EntLib.csproj">
       <Project>{00a73fd7-d79f-4fba-852d-1d9465fe2c02}</Project>
       <Name>Fanex.Logging.EntLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.RabbitMQ\Fanex.Logging.RabbitMQ.csproj">
+      <Project>{89f341b5-5fc6-455d-a3fd-877698a63830}</Project>
+      <Name>Fanex.Logging.RabbitMQ</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,12 +5,9 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
-    using Fanex.Logging.EntLib;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.RabbitMQ;
-    using Fanex.Logging.RabbitMQ.Configurations;
-    using Logging.EntLib.Configuration;
 
     public class Program
     {
@@ -19,13 +16,11 @@
             try
             {
                 LogManager
-                    .SetDefaultLogCategory("Logging-Test")
+                    .SetDefaultLogCategory("Fanex-Logging-Test")
                     //.Use(new EntlibLogging(new EntLibConfig(
                     //    "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
                     //    @"~\Logs\")));
-                    .Use(new RabbitMQLogging(new RabbitMQLoggingConfigs(
-                        "host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=x0NZFHCcqayXeBG7qrr96MC6Td2x4wTF5Ha+0wCgWTg=",
-                        "Logging-Test")));
+                    .Use(new RabbitMQLogging("host=10.40.40.47:5673;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8="));
                 //LogService.Error("test message");
                 SimulateSqlException();
             }

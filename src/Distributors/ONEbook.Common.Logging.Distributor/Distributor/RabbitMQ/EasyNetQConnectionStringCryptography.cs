@@ -11,6 +11,8 @@
         private const int KeyLength = 32;
         private const int IVLength = 16;
         private const int RandomNumber = 223;
+        private const string Key = "QWERT!@#$%12345";
+        private const string IV = "%$#@!TREWQ54321";
 
         public static string Encrypt(string connectionString)
         {
@@ -19,15 +21,11 @@
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
             {
-                myRijndael.Key = ConvertToKey(configurationConfig["host"], KeyLength);
-                myRijndael.IV = ConvertToKey(configurationConfig["virtualHost"], IVLength);
+                myRijndael.Key = ConvertToKey(Key, KeyLength);
+                myRijndael.IV = ConvertToKey(IV, IVLength);
 
                 // Encrypt the string to an array of bytes.
                 encrypted = EncryptStringToBytes(configurationConfig["password"], myRijndael.Key, myRijndael.IV);
-
-                myRijndael.IV = ConvertToKey(configurationConfig["username"], IVLength);
-
-                encrypted = EncryptStringToBytes(Convert.ToBase64String(encrypted), myRijndael.Key, myRijndael.IV);
             }
 
             configurationConfig["password"] = Convert.ToBase64String(encrypted);
@@ -41,15 +39,11 @@
 
             using (RijndaelManaged myRijndael = new RijndaelManaged())
             {
-                myRijndael.Key = ConvertToKey(configurationConfig["host"], KeyLength);
-                myRijndael.IV = ConvertToKey(configurationConfig["username"], IVLength);
+                myRijndael.Key = ConvertToKey(Key, KeyLength);
+                myRijndael.IV = ConvertToKey(IV, IVLength);
 
                 // Decrypt the bytes to a string.
                 decrypted = DecryptStringFromBytes(Convert.FromBase64String(configurationConfig["password"]), myRijndael.Key, myRijndael.IV);
-
-                myRijndael.IV = ConvertToKey(configurationConfig["virtualHost"], IVLength);
-
-                decrypted = DecryptStringFromBytes(Convert.FromBase64String(decrypted), myRijndael.Key, myRijndael.IV);
             }
 
             return decrypted;
