@@ -3,25 +3,26 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading.Tasks;
     using System.Web.SessionState;
     using NSubstitute;
     using Xunit;
 
-    [Trait("Unit Tests", "Extensions/ExceptionHandler.cs")]
+    [Trait("Unit Tests", "Extensions/AspNetFramework/ExceptionHandler.cs")]
     public class ExceptionHandlerTests
     {
-        private readonly Action<string> writeError;
-        private readonly Action<string, Exception> writeException;
+        private readonly Func<string, Task> writeError;
+        private readonly Func<string, Exception, Task> writeException;
         private readonly LoggingConfiguration config;
 
         public ExceptionHandlerTests()
         {
-            writeError = Substitute.For<Action<string>>();
-            writeException = Substitute.For<Action<string, Exception>>();
+            writeError = Substitute.For<Func<string, Task>>();
+            writeException = Substitute.For<Func<string, Exception, Task>>();
             config = new LoggingConfiguration();
 
-            ExceptionHandler.WriteError = writeError;
-            ExceptionHandler.WriteException = writeException;
+            ExceptionHandler.WriteErrorAsync = writeError;
+            ExceptionHandler.WriteExceptionAsync = writeException;
         }
 
         [Fact]
@@ -73,6 +74,8 @@
             // Act
             ExceptionHandler.Handle(exception);
             ExceptionHandler.Handle(exception, null);
+            ExceptionHandler.Handle(exception, null, TraceEventType.Error);
+            ExceptionHandler.Handle(exception, null, null, TraceEventType.Error);
 
             // Assert
             writeError.DidNotReceiveWithAnyArgs().Invoke("string");
@@ -246,8 +249,8 @@
             ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
             ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
 
-            var writeDebug = Substitute.For<Action<string>>();
-            ExceptionHandler.WriteDebug = writeDebug;
+            var writeDebug = Substitute.For<Func<string, Task>>();
+            ExceptionHandler.WriteDebugAsync = writeDebug;
 
             // Act
             ExceptionHandler.Handle(
@@ -282,8 +285,8 @@
             ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
             ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
 
-            var writeInfo = Substitute.For<Action<string>>();
-            ExceptionHandler.WriteInfo = writeInfo;
+            var writeInfo = Substitute.For<Func<string, Task>>();
+            ExceptionHandler.WriteInfoAsync = writeInfo;
 
             // Act
             ExceptionHandler.Handle(
@@ -318,8 +321,8 @@
             ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
             ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
 
-            var writeWarn = Substitute.For<Action<string>>();
-            ExceptionHandler.WriteWarn = writeWarn;
+            var writeWarn = Substitute.For<Func<string, Task>>();
+            ExceptionHandler.WriteWarnAsync = writeWarn;
 
             // Act
             ExceptionHandler.Handle(
@@ -354,8 +357,8 @@
             ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
             ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
 
-            var writeCritical = Substitute.For<Action<string>>();
-            ExceptionHandler.WriteCritical = writeCritical;
+            var writeCritical = Substitute.For<Func<string, Task>>();
+            ExceptionHandler.WriteCriticalAsync = writeCritical;
 
             // Act
             ExceptionHandler.Handle(
@@ -391,13 +394,13 @@
             ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
 
             var simulatedException = new Exception("Simulated Exception");
-            ExceptionHandler.WriteError = (message) =>
+            ExceptionHandler.WriteErrorAsync = (message) =>
             {
                 throw simulatedException;
             };
 
-            var writeException = Substitute.For<Action<string, Exception>>();
-            ExceptionHandler.WriteException = writeException;
+            var writeException = Substitute.For<Func<string, Exception, Task>>();
+            ExceptionHandler.WriteExceptionAsync = writeException;
 
             // Act
             ExceptionHandler.Handle(
@@ -408,9 +411,8 @@
 
             // Assert
             writeException.Received().Invoke(
-                simulatedException.ToString(),
-                exception
-                );
+                Arg.Is<string>(message => message.Contains("Consumer Exception:System.DllNotFoundException: Dll was not found.,")),
+                exception);
         }
     }
 }

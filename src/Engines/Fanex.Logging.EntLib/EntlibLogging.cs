@@ -1,9 +1,10 @@
 ﻿namespace Fanex.Logging.EntLib
 {
-    using Configuration;
-    using Microsoft.Practices.EnterpriseLibrary.Logging;
     using System;
     using System.Diagnostics;
+    using System.Threading.Tasks;
+    using Configuration;
+    using Microsoft.Practices.EnterpriseLibrary.Logging;
 
     public class EntlibLogging : ILogEngine
     {
@@ -43,6 +44,13 @@
             logEntry.Categories.Add(category);
 
             WriteLog(logEntry);
+        }
+
+        public Task WriteAsync(string message, TraceEventType severity, string category)
+        {
+            Write(message, severity, category);
+
+            return Task.FromResult(0);
         }
     }
 }

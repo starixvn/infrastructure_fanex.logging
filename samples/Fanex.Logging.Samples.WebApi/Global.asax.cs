@@ -1,14 +1,15 @@
 ﻿namespace Fanex.Logging.Samples.WebApi
 {
+    using System.Configuration;
+    using System.Linq;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
     using Data;
-    using Data.CrossCutting.WrappingException;
-    using Data.OldConnectionStringProvider;
     using Extensions.Database;
     using Extensions.Web;
+    using Fanex.Logging.RabbitMQ;
 
     public class WebApiApplication : System.Web.HttpApplication
     {
@@ -20,13 +21,20 @@
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            var connectionStrings = ConfigurationManager.ConnectionStrings
+                .Cast<ConnectionStringSettings>()
+                .ToDictionary(connection => connection.Name, connection => connection.ConnectionString);
+
             DbSettingProviderManager
                .StartNewSession()
-               .Use(new OldConnectionStringProvider())
+               .UseConnectionStrings(connectionStrings)
                .UseDefaultDbSettingProvider(
                    resourcePath: "~/App_Data/")
-               .Use((settingKey, commandTimeout) => new WrappingExceptionObjectDb(settingKey, commandTimeout))
                .Run();
+
+            LogManager
+                    .SetDefaultLogCategory("Fanex-Logging-Test-new")
+                    .Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
 
             ExceptionHandler
                 // To use custom config

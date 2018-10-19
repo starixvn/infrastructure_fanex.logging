@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface ILogger
+    public partial interface ILogger
     {
         void Debug(string message);
 

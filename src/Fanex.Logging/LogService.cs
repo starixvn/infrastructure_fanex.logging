@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging
 {
     using System;
+    using System.Threading.Tasks;
 
     public static class LogService
     {
@@ -97,6 +98,86 @@
 
         public static void Critical(string format, string category, params object[] args)
             => LoggerInstance.Critical(format, category, args);
+
+        #endregion Critical
+
+        #region DebugAsync
+
+        public static Task DebugAsync(string message)
+            => LoggerInstance.DebugAsync(message);
+
+        public static Task DebugAsync(string message, string category)
+            => LoggerInstance.DebugAsync(message, category);
+
+        public static Task DebugAsync(string format, params object[] args)
+            => LoggerInstance.DebugAsync(format, args);
+
+        public static Task DebugAsync(string format, string category, params object[] args)
+            => LoggerInstance.DebugAsync(format, category, args);
+
+        #endregion DebugAsync
+
+        #region Info
+
+        public static Task InfoAsync(string message)
+            => LoggerInstance.InfoAsync(message);
+
+        public static Task InfoAsync(string message, string category)
+            => LoggerInstance.InfoAsync(message, category);
+
+        public static Task InfoAsync(string format, params object[] args)
+            => LoggerInstance.InfoAsync(format, args);
+
+        public static Task InfoAsync(string format, string category, params object[] args)
+            => LoggerInstance.InfoAsync(format, category, args);
+
+        #endregion Info
+
+        #region Warn
+
+        public static Task WarnAsync(string message)
+            => LoggerInstance.WarnAsync(message);
+
+        public static Task WarnAsync(string message, string category)
+            => LoggerInstance.WarnAsync(message, category);
+
+        public static Task WarnAsync(string format, params object[] args)
+            => LoggerInstance.WarnAsync(format, args);
+
+        public static Task WarnAsync(string format, string category, params object[] args)
+            => LoggerInstance.WarnAsync(format, category, args);
+
+        #endregion Warn
+
+        #region Error
+
+        public static Task ErrorAsync(string message)
+            => LoggerInstance.ErrorAsync(message);
+
+        public static Task ErrorAsync(string message, string category)
+            => LoggerInstance.ErrorAsync(message, category);
+
+        public static Task ErrorAsync(string message, Exception exception)
+            => LoggerInstance.ErrorAsync(message, exception);
+
+        public static Task ErrorAsync(string message, string category, Exception exception)
+            => LoggerInstance.ErrorAsync(message, category, exception);
+
+        #endregion Error
+
+        #region Critical
+
+        public static Task CriticalAsync(string message)
+            => LoggerInstance.CriticalAsync(message);
+
+        public static Task CriticalAsync(string message, string category)
+            => LoggerInstance.CriticalAsync(message, category);
+
+        public static Task CriticalAsync(string format, params object[] args)
+            => LoggerInstance.CriticalAsync(format, args);
+
+        public static Task CriticalAsync(string format, string category, params object[] args)
+            => LoggerInstance.CriticalAsync(format, category, args);
 
         #endregion Critical
     }

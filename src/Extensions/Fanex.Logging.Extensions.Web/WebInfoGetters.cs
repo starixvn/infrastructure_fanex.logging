@@ -26,7 +26,7 @@
                     [nameof(request.UrlReferrer)] = request.UrlReferrer,
                     [nameof(request.Form)] = request.Form,
                     [nameof(request.UserHostAddress)] = request.UserHostAddress,
-                    ["InputStream"] = ConvertStreamToString(GetInputStream(request)),
+                    ["InputStream"] = CommonInfoGetters.ConvertStreamToString(GetInputStream(request)),
                     [nameof(request.UserAgent)] = GetUserAgent(serverVariables ?? request.ServerVariables),
                     ["Client IP"] = GetClientIP(serverVariables ?? request.ServerVariables),
                     [nameof(Thread.CurrentThread.CurrentUICulture)] = Thread.CurrentThread.CurrentUICulture
@@ -56,51 +56,15 @@
             {
                 return request.InputStream;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if(!(ex is InvalidOperationException))
+                if (!(ex is InvalidOperationException))
                 {
                     LogService.Info(ex.ToString());
                 }
             }
 
             return null;
-        }
-
-        internal static string ConvertStreamToString(Stream requestStream)
-        {
-            if (requestStream != null)
-            {
-                string bodyData = GetStreamData(requestStream);
-
-                if (requestStream.CanSeek)
-                {
-                    requestStream.Seek(0, SeekOrigin.Begin);
-                }
-
-                if (!string.IsNullOrWhiteSpace(bodyData))
-                {
-                    return HttpUtility.UrlDecode(bodyData).Replace(@"\", string.Empty);
-                }
-            }
-
-            return Constants.NotAvailableAbbr;
-        }
-
-        private static string GetStreamData(Stream requestStream)
-        {
-            string bodyData = string.Empty;
-            var tempStream = new MemoryStream();
-
-            requestStream.CopyTo(tempStream);
-
-            tempStream.Seek(0, SeekOrigin.Begin);
-            using (var streamReader = new StreamReader(tempStream))
-            {
-                bodyData = streamReader.ReadToEnd();
-            }
-
-            return bodyData;
         }
 
         public static IDictionary<string, object> GetSessionInfo(HttpSessionState session)

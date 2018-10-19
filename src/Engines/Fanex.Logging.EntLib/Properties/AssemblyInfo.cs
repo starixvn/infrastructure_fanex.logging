@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Fanex.Logging.EntLib")]
 [assembly: AssemblyDescription("Fanex.Logging.EntLib")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Starixsoft")]
-[assembly: AssemblyProduct("Fanex.Logging")]
-[assembly: AssemblyCopyright("Starixsoft.com")]
+[assembly: AssemblyCompany("R&D")]
+[assembly: AssemblyProduct("_")]
+[assembly: AssemblyCopyright("_")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

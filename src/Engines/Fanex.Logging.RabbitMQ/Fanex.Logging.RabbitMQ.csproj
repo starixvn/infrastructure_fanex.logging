@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.0-beta8</Version>
+    <Version>1.0.0-beta81</Version>
     <Authors>_</Authors>
     <Product>_</Product>
     <Description>- RabbitQM Log Engine for sending message log
@@ -17,9 +17,21 @@ RabbitMQ-ConnectionString:
     <PackageTags>Fanex.Logging, Logging, RabbitMQ</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.RabbitMQ.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.RabbitMQ.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="EasyNetQ" Version="[2.3.3]" />
-    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta3" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta5" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

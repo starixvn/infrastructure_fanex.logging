@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="App_Data\SampleSPNames.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Data\SampleSPNames.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fanex.Data" Version="3.0.0-rc4" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta2" />
+    <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0-beta3" />
+    <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.4-beta1" />
+    <PackageReference Include="Fanex.Logging.RabbitMQ" Version="1.0.0-beta81" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

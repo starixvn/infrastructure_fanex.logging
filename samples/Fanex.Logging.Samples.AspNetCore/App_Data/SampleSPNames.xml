@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+    <Function Name="Log">
+        <Setting Key="Logging_UpdateMachine" SpName="Acc_AppLog_MachineUpd" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    </Function>
+</Functions>

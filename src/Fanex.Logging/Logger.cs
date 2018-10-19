@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
 
-    public sealed class Logger : ILogger
+    public sealed partial class Logger : ILogger
     {
         private static volatile Logger logger;
         private static object syncRoot = new object();

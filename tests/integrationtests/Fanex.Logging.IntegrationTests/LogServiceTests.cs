@@ -1,11 +1,11 @@
 ﻿namespace Fanex.Logging.IntegrationTests
 {
-    using EntLib;
     using System;
     using System.IO;
     using System.Reflection;
-    using Xunit;
+    using EntLib;
     using EntLib.Configuration;
+    using Xunit;
 
     [Trait("Integration Tests", "LogService")]
     [CollectionDefinition("Log Service Integration Tests")]
@@ -202,6 +202,184 @@
                 + "Title:Custom-Category");
         }
 
+        [Fact]
+        public void ErrorAsync_Always_WriteErrorAsync()
+        {
+            // Act
+            LogService.ErrorAsync("ErrorAsync Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: ErrorAsync Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void ErrorAsync_Always_WriteErrorAsyncWithExceptionInfoAsync()
+        {
+            // Act
+            LogService.ErrorAsync("ErrorAsync Message 2", new DllNotFoundException());
+
+            // Assert
+            AssertLogContent(
+                "Message: ErrorAsync Message 2\n"
+                + "System.DllNotFoundException: Dll was not found.\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void ErrorAsync_Always_WriteErrorAsyncWithCustomCategory()
+        {
+            // Act
+            LogService.ErrorAsync("ErrorAsync Message 3", "Custom-Category", new DllNotFoundException());
+
+            // Assert
+            AssertLogContent(
+                "Message: ErrorAsync Message 3\n"
+                + "System.DllNotFoundException: Dll was not found.\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Error\r\n\n"
+                + "Title:Custom-Category\r\n\n");
+        }
+
+        [Fact]
+        public void WarnAsync_Always_WriteWarnAsyncing()
+        {
+            // Act
+            LogService.WarnAsync("WarnAsync Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: WarnAsync Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Warning\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void WarnAsync_Always_WriteWarnAsyncingWithCustomCategory()
+        {
+            // Act
+            LogService.WarnAsync("WarnAsync Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: WarnAsync Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Warning\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void InfoAsync_Always_WriteInfoAsyncrmation()
+        {
+            // Act
+            LogService.InfoAsync("InfoAsync Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: InfoAsync Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Information\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void InfoAsync_Always_WriteInfoAsyncWithCustomCategory()
+        {
+            // Act
+            LogService.InfoAsync("InfoAsync Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: InfoAsync Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Information\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void CriticalAsync_Always_WriteCriticalAsyncInfoAsync()
+        {
+            // Act
+            LogService.CriticalAsync("CriticalAsync Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: CriticalAsync Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Critical\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void CriticalAsync_Always_WriteCriticalAsyncInfoAsyncWithCustomCategory()
+        {
+            // Act
+            LogService.CriticalAsync("CriticalAsync Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: CriticalAsync Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Critical\r\n\n"
+                + "Title:Custom-Category");
+        }
+
+        [Fact]
+        public void DebugAsync_Always_WriteDebugAsyncInfoAsync()
+        {
+            // Act
+            LogService.DebugAsync("DebugAsync Message 1");
+
+            // Assert
+            AssertLogContent(
+                "Message: DebugAsync Message 1\r\n\n"
+                + "Category: Test-Cagegory\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Verbose\r\n\n"
+                + "Title:Test-Cagegory");
+        }
+
+        [Fact]
+        public void DebugAsync_Always_WriteDebugAsyncInfoAsyncWithCustomCategory()
+        {
+            // Act
+            LogService.DebugAsync("DebugAsync Message 2", "Custom-Category");
+
+            // Assert
+            AssertLogContent(
+                "Message: DebugAsync Message 2\r\n\n"
+                + "Category: Custom-Category\r\n\n"
+                + "Priority: -1\r\n\n"
+                + "EventId: 0\r\n\n"
+                + "Severity: Verbose\r\n\n"
+                + "Title:Custom-Category");
+        }
+
         public void AssertLogContent(string shouldBeExistedContent)
         {
             var logContent = GetLogContent();
@@ -224,7 +402,7 @@
             }
         }
 
-        private static void CleanOutputFiles()
+        public static void CleanOutputFiles()
         {
             if (!cleanedOutputFiles)
             {
@@ -257,7 +435,7 @@
 #pragma warning restore S108 // Nested blocks of code should not be left empty
         }
 
-        private static string GetLogContent()
+        public static string GetLogContent()
         {
             var fileName = $"Logs.{DateTime.Now.ToString("yyyyMMdd")}.log";
             var fileCopiedName = $"Logs.{DateTime.Now.ToString("yyyyMMdd")}.ForTesting.log";

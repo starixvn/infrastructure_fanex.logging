@@ -1,18 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <Version>2.0.0-beta4</Version>
-    <Authors>_</Authors>
+    <Version>2.0.0-beta5</Version>
+    <Authors>R&amp;D</Authors>
     <Product>_</Product>
+    <Company>_</Company>
+    <Description>- Provide Logging mechanism for .Net Application</Description>
+    <PackageReleaseNotes>- Support .Net Core
+- Break EntLibs dependencies
+- Support Async</PackageReleaseNotes>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
     <CodeAnalysisRuleSet>Fanex.Logging.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
     <CodeAnalysisRuleSet>Fanex.Logging.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 

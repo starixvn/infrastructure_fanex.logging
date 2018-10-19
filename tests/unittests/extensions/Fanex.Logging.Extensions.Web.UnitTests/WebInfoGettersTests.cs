@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using System.IO;
     using System.Threading;
     using System.Web;
     using System.Web.Configuration;
@@ -14,7 +13,7 @@
     using Xunit;
     using static WebHelper;
 
-    [Trait("Unit Tests", "Extensions/WebInfoGetters.cs")]
+    [Trait("Unit Tests", "Extensions/AspNetFramework/WebInfoGetters.cs")]
     public class WebInfoGettersTests
     {
         private readonly HttpRequest request;
@@ -106,34 +105,6 @@
 
             // Assert
             Assert.Equal("127.0.0.1", clientIP);
-        }
-
-        [Fact]
-        public void ConvertStreamToString_RequestStreamIsNull_ReturnNAString()
-        {
-            // Act
-            var bodyData = WebInfoGetters.ConvertStreamToString(null);
-
-            // Assert
-            Assert.Equal("N/A", bodyData);
-        }
-
-        [Theory]
-        [InlineData("{ 'demo': 1, 'demo2': '33333' }", "{ 'demo': 1, 'demo2': '33333' }")]
-        [InlineData("{ \\\"demo\\\": 1, \\\"demo2\\\": '33333' }", "{ \"demo\": 1, \"demo2\": '33333' }")]
-        public void ConvertStreamToString_RequestStreamContainsJsonData_ReturnEmpty(
-            string requestJson,
-            string expectedJson)
-        {
-            // Arrange
-            using (Stream stream = GenerateStreamFromString(requestJson))
-            {
-                // Act
-                var bodyData = WebInfoGetters.ConvertStreamToString(stream);
-
-                // Assert
-                Assert.Equal(expectedJson, bodyData);
-            }
         }
 
         [Fact]

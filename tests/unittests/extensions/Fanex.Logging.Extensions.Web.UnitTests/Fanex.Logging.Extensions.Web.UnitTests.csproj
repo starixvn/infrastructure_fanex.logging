@@ -32,6 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -103,7 +107,7 @@
       <Name>Fanex.Logging.Extensions.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
-      <Project>{0e19cd38-243b-4974-9fcf-4252579a92de}</Project>
+      <Project>{f8807f7e-29f5-44b2-a8db-52b85844ae87}</Project>
       <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>
   </ItemGroup>

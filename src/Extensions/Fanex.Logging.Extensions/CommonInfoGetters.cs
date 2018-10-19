@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
+    using System.IO;
     using System.Net;
     using System.Net.Sockets;
 
@@ -87,5 +88,41 @@
             => ex.InnerException is SqlException
                             ? (ex.InnerException as SqlException).LineNumber
                             : 0;
+
+        internal static string ConvertStreamToString(Stream requestStream)
+        {
+            if (requestStream != null)
+            {
+                string bodyData = GetStreamData(requestStream);
+
+                if (requestStream.CanSeek)
+                {
+                    requestStream.Seek(0, SeekOrigin.Begin);
+                }
+
+                if (!string.IsNullOrWhiteSpace(bodyData))
+                {
+                    return Uri.UnescapeDataString(bodyData).Replace(@"\", string.Empty);
+                }
+            }
+
+            return Constants.NotAvailableAbbr;
+        }
+
+        private static string GetStreamData(Stream requestStream)
+        {
+            string bodyData = string.Empty;
+            var tempStream = new MemoryStream();
+
+            requestStream.CopyTo(tempStream);
+
+            tempStream.Seek(0, SeekOrigin.Begin);
+            using (var streamReader = new StreamReader(tempStream))
+            {
+                bodyData = streamReader.ReadToEnd();
+            }
+
+            return bodyData;
+        }
     }
 }
