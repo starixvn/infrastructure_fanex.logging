@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Logging
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
 
     public sealed partial class Logger : ILogger
@@ -9,7 +10,7 @@
         private static object syncRoot = new object();
 
         private readonly string defaultLogCategory;
-        internal readonly ILogEngine loggingEngine;
+        internal readonly IEnumerable<ILogEngine> logEngines;
 
         public Logger()
             : this(null, null)
@@ -17,10 +18,10 @@
         }
 
         public Logger(
-            ILogEngine loggingEngine,
+            IEnumerable<ILogEngine> logEngines,
             string defaultLogCategory)
         {
-            this.loggingEngine = loggingEngine ?? LogManager.Instance.LogEngine;
+            this.logEngines = logEngines ?? LogManager.Instance.LogEngines;
             this.defaultLogCategory = defaultLogCategory ?? LogManager.Instance.DefaultLogCategory;
         }
 
@@ -127,10 +128,15 @@
 
         public void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            loggingEngine.Write(
-                message,
-                GetSeverity(traceEventType),
-                string.IsNullOrEmpty(category) ? defaultLogCategory : category);
+            foreach (var logEngine in logEngines)
+            {
+                logEngine.Write(
+                            message,
+                            GetSeverity(traceEventType),
+                            string.IsNullOrEmpty(category)
+                                ? defaultLogCategory
+                                : category);
+            }
         }
 
         private static TraceEventType GetSeverity(TraceEventType traceEventType)

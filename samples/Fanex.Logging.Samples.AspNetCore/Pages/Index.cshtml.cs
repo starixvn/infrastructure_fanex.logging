@@ -11,7 +11,7 @@ namespace Fanex.Logging.Samples.AspNetCore.Pages
             HttpContext.Session.SetString("demo", "value");
             HttpContext.Session.SetInt32("demo1", 34343);
 
-            SqlException();
+            //SqlException();
         }
 
         public void OnPost()

@@ -75,7 +75,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging.Samples.AspNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging.RabbitMQ.UnitTests", "tests\unittests\engines\Fanex.Logging.RabbitMQ.UnitTests\Fanex.Logging.RabbitMQ.UnitTests.csproj", "{BB15D9F0-159B-454E-B8AE-DACC0D6D6F39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Extensions.AspNetCore.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.AspNetCore.UnitTests\Fanex.Logging.Extensions.AspNetCore.UnitTests.csproj", "{5BD8580E-5281-4018-A602-4B1C9133EB5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging.Extensions.AspNetCore.UnitTests", "tests\unittests\extensions\Fanex.Logging.Extensions.AspNetCore.UnitTests\Fanex.Logging.Extensions.AspNetCore.UnitTests.csproj", "{5BD8580E-5281-4018-A602-4B1C9133EB5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Logging.Sentry", "src\Engines\Fanex.Logging.Sentry\Fanex.Logging.Sentry.csproj", "{92CFD250-AA76-496A-82DD-17C00B00025E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Logging.Sentry.UnitTests", "tests\unittests\engines\Fanex.Logging.Sentry.UnitTests\Fanex.Logging.Sentry.UnitTests.csproj", "{E7D030FB-4805-4E7D-8821-77FDD4106F4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -284,6 +288,22 @@ Global
 		{5BD8580E-5281-4018-A602-4B1C9133EB5E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5BD8580E-5281-4018-A602-4B1C9133EB5E}.Release|x86.ActiveCfg = Release|Any CPU
 		{5BD8580E-5281-4018-A602-4B1C9133EB5E}.Release|x86.Build.0 = Release|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Debug|x86.Build.0 = Debug|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Release|x86.ActiveCfg = Release|Any CPU
+		{92CFD250-AA76-496A-82DD-17C00B00025E}.Release|x86.Build.0 = Release|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Debug|x86.Build.0 = Debug|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -320,6 +340,8 @@ Global
 		{6D49E15C-69EE-40D2-8163-D49715732DA3} = {3A35E630-28E6-4529-BA6C-D4316FD5B5CF}
 		{BB15D9F0-159B-454E-B8AE-DACC0D6D6F39} = {4A53C278-D166-4914-9CE9-AA431B6CA450}
 		{5BD8580E-5281-4018-A602-4B1C9133EB5E} = {DD1DE1B0-3472-44E0-B1B9-DC3366FBCDFB}
+		{92CFD250-AA76-496A-82DD-17C00B00025E} = {0B857728-7B8F-4A33-9179-FC87F5E1D395}
+		{E7D030FB-4805-4E7D-8821-77FDD4106F4A} = {4A53C278-D166-4914-9CE9-AA431B6CA450}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B62823C2-6323-4A03-9E80-97F014DC4E41}

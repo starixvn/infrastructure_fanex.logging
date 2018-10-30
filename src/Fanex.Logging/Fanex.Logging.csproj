@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <Version>2.0.0-beta5</Version>
+    <Version>2.0.0-beta6</Version>
     <Authors>R&amp;D</Authors>
     <Product>_</Product>
     <Company>_</Company>
     <Description>- Provide Logging mechanism for .Net Application</Description>
     <PackageReleaseNotes>- Support .Net Core
 - Break EntLibs dependencies
-- Support Async</PackageReleaseNotes>
+- Support Async
+- Support multiple logging engines</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">

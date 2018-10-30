@@ -9,6 +9,8 @@
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Extensions.Database.V62.UnitTests")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Extensions.Database.V59.UnitTests")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Extensions.AspNetCore.UnitTests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Sentry")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Sentry.UnitTests")]
 
 namespace Fanex.Logging.Extensions
 {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
 
     public partial class Logger
@@ -87,11 +88,13 @@
         #endregion Critical
 
         public Task WriteLogAsync(string message, string category, TraceEventType traceEventType)
-        {
-            return loggingEngine.WriteAsync(
-                message,
-                GetSeverity(traceEventType),
-                string.IsNullOrEmpty(category) ? defaultLogCategory : category);
-        }
+            => Task.WhenAll(
+                        logEngines.Select(
+                            logEngine => logEngine.WriteAsync(
+                                        message,
+                                        GetSeverity(traceEventType),
+                                        string.IsNullOrEmpty(category)
+                                            ? defaultLogCategory
+                                            : category)));
     }
 }

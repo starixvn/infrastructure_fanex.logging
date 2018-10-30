@@ -1,29 +1,42 @@
-﻿namespace Fanex.Logging
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Sentry")]
+
+namespace Fanex.Logging
 {
     using System;
+    using System.Collections.Generic;
 
     public class LogManager
     {
-        private ILogEngine logEngine;
+        private IEnumerable<ILogEngine> logEngines;
         internal string DefaultLogCategory;
         internal static readonly LogManager Instance = new LogManager();
 
-        internal ILogEngine LogEngine
+        internal IEnumerable<ILogEngine> LogEngines
         {
             get
             {
-                if (logEngine == null)
+                if (logEngines == null)
                 {
-                    throw new NotImplementedException("Please set log engine before using");
+                    throw new NotImplementedException("Please set log engines before using");
                 }
 
-                return logEngine;
+                return logEngines;
             }
         }
 
         public LogManager Use(ILogEngine logEngine)
         {
-            this.logEngine = logEngine;
+            logEngines = new List<ILogEngine>
+            {
+                logEngine ?? throw new ArgumentNullException(nameof(logEngine))
+            };
+
+            return this;
+        }
+
+        public LogManager Use(IEnumerable<ILogEngine> logEngines)
+        {
+            this.logEngines = logEngines ?? throw new ArgumentNullException(nameof(logEngines));
 
             return this;
         }

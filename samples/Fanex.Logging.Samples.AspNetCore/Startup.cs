@@ -3,12 +3,14 @@ using Fanex.Data;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.RabbitMQ;
+using Fanex.Logging.Sentry;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sentry;
 
 namespace Fanex.Logging.Samples.AspNetCore
 {
@@ -29,7 +31,18 @@ namespace Fanex.Logging.Samples.AspNetCore
                    //.Use(new EntlibLogging(new EntLibConfig(
                    //    "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
                    //    @"~\Logs\")));
-                   .Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+                   .Use(new List<ILogEngine>
+                   {
+                       new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
+                       new SentryLogging(new SentryOptions
+                       {
+                           Dsn = new Dsn("http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3"),
+                           Debug = true,
+                           Release = "Release-2018-10-25",
+                           //AttachStacktrace = true,
+                           SendDefaultPii = true
+                       })
+                   });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
