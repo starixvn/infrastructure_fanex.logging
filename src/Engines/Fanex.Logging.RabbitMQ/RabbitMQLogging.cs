@@ -73,5 +73,8 @@
 
         private void SettingPublishConfiguration(IPublishConfiguration publishConfiguration)
             => publishConfiguration.WithTopic(RoutingKey).WithExpires(expirationInMiliseconds);
+
+        public string RenderJavascriptLogger()
+            => string.Empty;
     }
 }

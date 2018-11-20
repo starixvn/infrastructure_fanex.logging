@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test SENTRY</title>
+</head>
+<body>
+     SENTRY IO SERVICE
+    <script type="text/javascript" src="https://cdn.ravenjs.com/3.26.4/raven.min.js"></script>
+    <script type="text/javascript">
+        Raven.config('https://79b22dd5d90045329abfa6733b4056d3@sentry.io/1325665').install();
+        throw new Error("test js ricky");
+    </script>
+</body>
+</html>

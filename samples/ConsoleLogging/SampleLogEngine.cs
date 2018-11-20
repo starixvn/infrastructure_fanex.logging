@@ -7,6 +7,9 @@
 
     public class SampleLogEngine : ILogEngine
     {
+        public string RenderJavascriptLogger()
+            => string.Empty;
+
         public void Write(string message, TraceEventType severity, string category)
         {
             Console.WriteLine($"Message:{message}, Severity:{severity}, Category:{category}");

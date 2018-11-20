@@ -163,6 +163,7 @@
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\demo.pubxml" />
     <Content Include="Views\Home\ViewError.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

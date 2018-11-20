@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Fanex.Logging.Samples.AspNetCore</title>
@@ -70,11 +71,24 @@
         </environment>*@
 
     @*@RenderSection("Scripts", required: false)*@
-    @*@Html.Raw(Fanex.Logging.Sentry.SentryJavascriptLogging.Render())*@
-    @*<script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>*@
-    <script src="~/js/raven.min.js"></script>
+
+    @*<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+        <script src="https://browser.sentry-cdn.com/4.3.2/bundle.min.js" crossorigin="anonymous"></script>*@
+    @*<script src="~/js/index.js"></script>*@
+    @*<script src="~/js/sentry.min.js"></script>*@
+    @*@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger());
+        <script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
+
+        <script type="text/javascript" crossorigin="anonymous">
+            //Raven.config('http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3').install();
+            //throw new Error("test js 2");
+
+            Sentry.captureMessage('Test');
+        </script>*@
+
+    <script type="text/javascript" src="https://cdn.ravenjs.com/3.26.4/raven.min.js"></script>
     <script type="text/javascript">
-        Raven.config('http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3').install();
+        Raven.config('https://79b22dd5d90045329abfa6733b4056d3@sentry.io/1325665').install();
         throw new Error("test js 2");
     </script>
 </body>

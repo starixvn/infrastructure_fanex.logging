@@ -3,6 +3,7 @@
 namespace Fanex.Logging
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
 
     public class LogManager
@@ -47,5 +48,10 @@ namespace Fanex.Logging
 
             return Instance;
         }
+
+        public static string RenderJavascriptLogger()
+            => string.Join(
+                string.Empty,
+                Instance.LogEngines.Select(engine => engine.RenderJavascriptLogger()));
     }
 }

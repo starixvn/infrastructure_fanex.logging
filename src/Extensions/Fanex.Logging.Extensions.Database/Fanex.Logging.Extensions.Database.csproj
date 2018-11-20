@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
-    <Version>1.0.4-beta1</Version>
+    <Version>1.0.4-beta2</Version>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
@@ -19,8 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Data" Version="3.0.0-rc4" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta1" />
+    <PackageReference Include="Fanex.Data" Version="3.0.0" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta2" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

@@ -29,7 +29,7 @@
                         {
                             Dsn = new Dsn("http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3"),
                             Debug = true,
-                            Release = "Release-2018-10-25",
+                            Release = "Ricky-Release-2018-10-25",
                             SendDefaultPii = true
                         }),
                         new EntlibLogging(new EntLibConfig(

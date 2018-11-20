@@ -1,4 +1,4 @@
-﻿namespace Fanex.Logging.Extensions.AspNetCore
+﻿namespace Fanex.Logging.Extensions
 {
     using System;
     using System.Collections.Generic;

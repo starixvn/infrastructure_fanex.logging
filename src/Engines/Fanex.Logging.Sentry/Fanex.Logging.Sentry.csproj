@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <Version>1.0.0-beta1</Version>
+    <Authors>RnD</Authors>
+    <Company>_</Company>
+    <Description>- Sentry Logging Engine for Fanex.Logging</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
@@ -13,16 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta6" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta7" />
     <PackageReference Include="Sentry" Version="1.0.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Fanex.Logging\Fanex.Logging.csproj" />
   </ItemGroup>
 
 </Project>

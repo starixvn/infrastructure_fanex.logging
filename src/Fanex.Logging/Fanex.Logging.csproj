@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <Version>2.0.0-beta6</Version>
+    <Version>2.0.0-beta7</Version>
     <Authors>R&amp;D</Authors>
     <Product>_</Product>
     <Company>_</Company>

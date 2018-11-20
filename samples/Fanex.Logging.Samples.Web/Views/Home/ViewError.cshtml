@@ -11,7 +11,13 @@
 </head>
 <body>
     <div>
-        @Html.Action("SqlException")
+        @*@Html.Action("SqlException")*@
     </div>
+    @*<script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>*@
+    <script src="~/js/raven.min.js"></script>
+    <script type="text/javascript">
+        Raven.config('http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3').install();
+        throw new Error("test js 2");
+    </script>
 </body>
 </html>

@@ -94,10 +94,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.2.0.0-beta6\lib\net461\Fanex.Logging.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.Logging.2.0.0-beta7\lib\net461\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging.EntLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.EntLib.1.0.0-beta3\lib\net461\Fanex.Logging.EntLib.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.Logging.EntLib.1.0.0-beta4\lib\net461\Fanex.Logging.EntLib.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
@@ -108,7 +108,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.0-beta81\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+      <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.0-beta82\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging.Sentry, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Logging.Sentry.1.0.0-beta1\lib\net461\Fanex.Logging.Sentry.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
@@ -213,12 +216,6 @@
     <Content Include="App_Data\SampleSPNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.Sentry\Fanex.Logging.Sentry.csproj">
-      <Project>{3591f578-be15-4680-a9e9-f7beadd83003}</Project>
-      <Name>Fanex.Logging.Sentry</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

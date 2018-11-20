@@ -52,5 +52,8 @@
 
             return Task.FromResult(0);
         }
+
+        public string RenderJavascriptLogger()
+            => string.Empty;
     }
 }

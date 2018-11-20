@@ -8,5 +8,7 @@
         void Write(string message, TraceEventType severity, string category);
 
         Task WriteAsync(string message, TraceEventType severity, string category);
+
+        string RenderJavascriptLogger();
     }
 }
