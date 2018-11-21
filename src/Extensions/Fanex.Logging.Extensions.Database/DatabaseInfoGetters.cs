@@ -1,4 +1,6 @@
-﻿namespace Fanex.Logging.Extensions.Database
+﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Extensions.Database.UnitTests")]
+
+namespace Fanex.Logging.Extensions.Database
 {
     using System;
     using System.Collections;
@@ -6,7 +8,7 @@
     using System.Data.Common;
     using System.Data.SqlClient;
     using System.Linq;
-    using Data.CrossCutting.WrappingException;
+    using Fanex.Data;
 
     public static class DatabaseInfoGetters
     {
@@ -21,14 +23,14 @@
 
         private static IDictionary<string, object> GetObjectDbExceptionInfo(ObjectDbException ex)
         {
-            var connString = new SqlConnectionStringBuilder(ex.DbSetting.ConnectionString);
+            var connString = new SqlConnectionStringBuilder(ex.ConnectionString);
 
             return new Dictionary<string, object>
             {
                 ["Server"] = connString.DataSource,
-                [nameof(ex.DbSetting.DbName)] = ex.DbSetting.DbName,
+                [nameof(ex.DbName)] = ex.DbName,
                 [nameof(connString.UserID)] = connString.UserID,
-                [nameof(ex.DbSetting.SpName)] = ex.DbSetting.SpName,
+                [nameof(ex.SpName)] = ex.SpName,
                 ["Parameters"] = GetParameters(ex.Parameters),
                 ["Line"] = CommonInfoGetters.GetLineNumber(ex),
                 [nameof(ex.CommandTimeout)] = ex.CommandTimeout

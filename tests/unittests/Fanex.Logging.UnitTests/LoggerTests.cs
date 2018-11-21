@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Logging.UnitTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
-    using Logging.Adapters;
     using NSubstitute;
     using Xunit;
 
@@ -10,14 +10,16 @@
     public class LoggerTests
     {
         private readonly Logger logger;
-        private readonly ILoggingEngine logEngine;
+        private readonly IEnumerable<ILogEngine> logEngines;
+        private readonly ILogEngine logEngine;
         private readonly string defaultCategory;
 
         public LoggerTests()
         {
-            logEngine = Substitute.For<ILoggingEngine>();
+            logEngine = Substitute.For<ILogEngine>();
+            logEngines = new List<ILogEngine> { logEngine };
             defaultCategory = "defaultCategory";
-            logger = new Logger(logEngine, defaultCategory, () => { });
+            logger = new Logger(logEngines, defaultCategory);
         }
 
         #region Write Debug Log

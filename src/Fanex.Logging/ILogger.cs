@@ -1,9 +1,8 @@
 ﻿namespace Fanex.Logging
 {
     using System;
-    using System.Diagnostics;
 
-    public interface ILogger
+    public partial interface ILogger
     {
         void Debug(string message);
 

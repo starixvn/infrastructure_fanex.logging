@@ -8,14 +8,15 @@
     {
         public ActionResult Index()
         {
-            SetSampleSession();
+            //SetSampleSession();
 
-            var sampleZero = 0;
-            var sampleNumber = 10;
-            // Simutate exception
-            sampleNumber = sampleNumber / sampleZero;
+            //var sampleZero = 0;
+            //var sampleNumber = 10;
+            //// Simutate exception
+            //sampleNumber = sampleNumber / sampleZero;
 
-            return Content("Index View");
+            //return Content("Index View");
+            return View();
         }
 
         public ActionResult ViewError()

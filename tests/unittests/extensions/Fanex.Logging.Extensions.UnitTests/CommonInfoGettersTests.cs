@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using Xunit;
@@ -86,6 +87,44 @@
                 && serverInfo.Keys.Any(info => info.Contains("OSVersion"))
                 && serverInfo.Keys.Any(info => info.Contains("System Time"))
                 && serverInfo.Keys.Any(info => info.Contains("User Domain")));
+        }
+
+        [Fact]
+        public void ConvertStreamToString_RequestStreamIsNull_ReturnNAString()
+        {
+            // Act
+            var bodyData = ConvertStreamToString(null);
+
+            // Assert
+            Assert.Equal("N/A", bodyData);
+        }
+
+        [Theory]
+        [InlineData("{ 'demo': 1, 'demo2': '33333' }", "{ 'demo': 1, 'demo2': '33333' }")]
+        [InlineData("{ \\\"demo\\\": 1, \\\"demo2\\\": '33333' }", "{ \"demo\": 1, \"demo2\": '33333' }")]
+        public void ConvertStreamToString_RequestStreamContainsJsonData_ReturnEmpty(
+            string requestJson,
+            string expectedJson)
+        {
+            // Arrange
+            using (Stream stream = GenerateStreamFromString(requestJson))
+            {
+                // Act
+                var bodyData = ConvertStreamToString(stream);
+
+                // Assert
+                Assert.Equal(expectedJson, bodyData);
+            }
+        }
+
+        internal static Stream GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
     }
 }

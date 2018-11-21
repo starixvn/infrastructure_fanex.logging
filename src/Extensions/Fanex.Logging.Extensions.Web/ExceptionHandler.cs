@@ -5,6 +5,7 @@
     using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web;
     using System.Web.SessionState;
 
@@ -14,41 +15,50 @@
 
         public static LoggingConfiguration UseConfig(LoggingConfiguration loggingConfiguration)
         {
-            if (loggingConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(loggingConfiguration));
-            }
-
-            config = loggingConfiguration;
+            config = loggingConfiguration ?? throw new ArgumentNullException(nameof(loggingConfiguration));
 
             return config;
         }
 
         public static LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, IDictionary<string, object>> getDbExceptionInfo)
         {
-            if (getDbExceptionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(getDbExceptionInfo));
-            }
-
-            config.GetDbExceptionInfo = getDbExceptionInfo;
+            config.GetDbExceptionInfo = getDbExceptionInfo ?? throw new ArgumentNullException(nameof(getDbExceptionInfo));
 
             return config;
         }
 
         public static void Handle(Exception exception)
-            => Handle(exception, null, HttpContext.Current, TraceEventType.Error);
+            => Handle(exception, null);
 
         public static void Handle(Exception exception, TraceEventType traceEventType)
-            => Handle(exception, null, HttpContext.Current, traceEventType);
+            => Handle(exception, null, traceEventType);
 
         public static void Handle(Exception exception, IDictionary<string, object> customData)
-            => Handle(exception, customData, HttpContext.Current, TraceEventType.Error);
+            => Handle(exception, customData, TraceEventType.Error);
 
         public static void Handle(Exception exception, IDictionary<string, object> customData, TraceEventType traceEventType)
-           => Handle(exception, customData, HttpContext.Current, traceEventType);
+            => HandleAsync(exception, customData, HttpContext.Current, traceEventType).GetAwaiter().GetResult();
 
         internal static void Handle(
+            Exception exception,
+            IDictionary<string, object> customData,
+            HttpContext context,
+            TraceEventType traceEventType)
+            => HandleAsync(exception, customData, HttpContext.Current, traceEventType).GetAwaiter().GetResult();
+
+        public static Task HandleAsync(Exception exception)
+            => HandleAsync(exception, null);
+
+        public static Task HandleAsync(Exception exception, TraceEventType traceEventType)
+            => HandleAsync(exception, null, traceEventType);
+
+        public static Task HandleAsync(Exception exception, IDictionary<string, object> customData)
+            => HandleAsync(exception, customData, TraceEventType.Error);
+
+        public static Task HandleAsync(Exception exception, IDictionary<string, object> customData, TraceEventType traceEventType)
+           => HandleAsync(exception, customData, HttpContext.Current, traceEventType);
+
+        internal static Task HandleAsync(
             Exception exception,
             IDictionary<string, object> customData,
             HttpContext context,
@@ -57,20 +67,20 @@
             if (config.IgnoredExceptionTypes.Contains(exception.GetType())
                 || exception.GetBaseException() is HttpException)
             {
-                return;
+                return Task.FromResult(0);
             }
 
             try
             {
-                WriteLog(exception, customData, context, traceEventType);
+                return WriteLogAsync(exception, customData, context, traceEventType);
             }
             catch (Exception loggingException)
             {
-                WriteException(loggingException.ToString(), exception);
+                return WriteExceptionAsync($"Consumer Exception:{exception},\r\n Fanex.Logging.Extensions.Web Exception:{loggingException}", exception);
             }
         }
 
-        private static void WriteLog(
+        private static Task WriteLogAsync(
             Exception exception,
             IDictionary<string, object> customData,
             HttpContext context,
@@ -79,34 +89,34 @@
             if (context != null)
             {
                 var message = ComposeMessage(exception, customData);
-                var writeLog = GetWriteLogMethod(traceEventType);
+                var writeLogAsync = GetWriteLogMethod(traceEventType);
 
-                writeLog(message);
+                return writeLogAsync(message);
             }
             else
             {
-                WriteException(exception.Message, exception);
+                return WriteExceptionAsync(exception.Message, exception);
             }
         }
 
-        private static Action<string> GetWriteLogMethod(TraceEventType traceEventType)
+        private static Func<string, Task> GetWriteLogMethod(TraceEventType traceEventType)
         {
             switch (traceEventType)
             {
                 case TraceEventType.Verbose:
-                    return WriteDebug;
+                    return WriteDebugAsync;
 
                 case TraceEventType.Warning:
-                    return WriteWarn;
+                    return WriteWarnAsync;
 
                 case TraceEventType.Critical:
-                    return WriteCritical;
+                    return WriteCriticalAsync;
 
                 case TraceEventType.Error:
-                    return WriteError;
+                    return WriteErrorAsync;
 
                 default:
-                    return WriteInfo;
+                    return WriteInfoAsync;
             }
         }
 
@@ -145,11 +155,11 @@
         internal static Func<Exception, IDictionary<string, object>> GetExceptionInfo { get; set; } = CommonInfoGetters.GetExceptionInfo;
         internal static Func<NameValueCollection, IDictionary<string, object>> GetRequestHeader { get; set; } = WebInfoGetters.GetRequestHeader;
         internal static Func<HttpSessionState, IDictionary<string, object>> GetSessionInfo { get; set; } = WebInfoGetters.GetSessionInfo;
-        internal static Action<string> WriteError { get; set; } = LogService.Error;
-        internal static Action<string> WriteCritical { get; set; } = LogService.Critical;
-        internal static Action<string> WriteWarn { get; set; } = LogService.Warn;
-        internal static Action<string> WriteInfo { get; set; } = LogService.Info;
-        internal static Action<string> WriteDebug { get; set; } = LogService.Debug;
-        internal static Action<string, Exception> WriteException { get; set; } = LogService.Error;
+        internal static Func<string, Task> WriteErrorAsync { get; set; } = LogService.ErrorAsync;
+        internal static Func<string, Task> WriteCriticalAsync { get; set; } = LogService.CriticalAsync;
+        internal static Func<string, Task> WriteWarnAsync { get; set; } = LogService.WarnAsync;
+        internal static Func<string, Task> WriteInfoAsync { get; set; } = LogService.InfoAsync;
+        internal static Func<string, Task> WriteDebugAsync { get; set; } = LogService.DebugAsync;
+        internal static Func<string, Exception, Task> WriteExceptionAsync { get; set; } = LogService.ErrorAsync;
     }
 }

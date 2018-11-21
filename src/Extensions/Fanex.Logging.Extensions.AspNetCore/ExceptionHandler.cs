@@ -1,0 +1,145 @@
+﻿namespace Fanex.Logging.Extensions.AspNetCore
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+
+    public static class ExceptionHandler
+    {
+#pragma warning disable S2223 // Non-constant static fields should not be visible
+        internal static LoggingConfiguration config = new LoggingConfiguration();
+#pragma warning restore S2223 // Non-constant static fields should not be visible
+
+        public static LoggingConfiguration UseConfig(LoggingConfiguration loggingConfiguration)
+        {
+            config = loggingConfiguration ?? throw new ArgumentNullException(nameof(loggingConfiguration));
+
+            return config;
+        }
+
+        public static LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, IDictionary<string, object>> getDbExceptionInfo)
+        {
+            config.GetDbExceptionInfo = getDbExceptionInfo ?? throw new ArgumentNullException(nameof(getDbExceptionInfo));
+
+            return config;
+        }
+
+        public static Task HandleAsync(Exception exception, HttpContext httpContext)
+            => HandleAsync(exception, httpContext, TraceEventType.Error);
+
+        public static Task HandleAsync(Exception exception, HttpContext httpContext, TraceEventType traceEventType)
+            => HandleAsync(exception, null, httpContext, traceEventType);
+
+        public static Task HandleAsync(Exception exception, HttpContext httpContext, IDictionary<string, object> customData)
+            => HandleAsync(exception, customData, httpContext, TraceEventType.Error);
+
+        public static Task HandleAsync(Exception exception, HttpContext httpContext, IDictionary<string, object> customData, TraceEventType traceEventType)
+           => HandleAsync(exception, customData, httpContext, traceEventType);
+
+        internal static Task HandleAsync(
+             Exception exception,
+             IDictionary<string, object> customData,
+             HttpContext context,
+             TraceEventType traceEventType)
+        {
+            if (config.IgnoredExceptionTypes.Contains(exception.GetType()))
+            {
+                return Task.FromResult(0);
+            }
+
+            try
+            {
+                return WriteLogAsync(exception, customData, context, traceEventType);
+            }
+            catch (Exception loggingException)
+            {
+                return WriteExceptionAsync($"Consumer Exception:{exception},\r\n Fanex.Logging.Extensions.Web Exception:{loggingException}", exception);
+            }
+        }
+
+        private static Task WriteLogAsync(
+            Exception exception,
+            IDictionary<string, object> customData,
+            HttpContext context,
+            TraceEventType traceEventType)
+        {
+            if (context != null)
+            {
+                var message = ComposeMessage(exception, context, customData);
+                var writeLogAsync = GetWriteLogMethod(traceEventType);
+
+                return writeLogAsync(message);
+            }
+            else
+            {
+                return WriteExceptionAsync(exception.Message, exception);
+            }
+        }
+
+        private static Func<string, Task> GetWriteLogMethod(TraceEventType traceEventType)
+        {
+            switch (traceEventType)
+            {
+                case TraceEventType.Verbose:
+                    return WriteDebugAsync;
+
+                case TraceEventType.Warning:
+                    return WriteWarnAsync;
+
+                case TraceEventType.Critical:
+                    return WriteCriticalAsync;
+
+                case TraceEventType.Error:
+                    return WriteErrorAsync;
+
+                default:
+                    return WriteInfoAsync;
+            }
+        }
+
+        private static string ComposeMessage(
+            Exception exception,
+            HttpContext context,
+            IDictionary<string, object> customData)
+        {
+            var request = context.Request;
+            var logMessage = new LogMessage()
+                                .AddMessage(exception.Message)
+                                .AddSection("request info", () => GetRequestInfo(context))
+                                .AddSection("browser info", () => GetBrowserInfo(request))
+                                .AddSection("server info", () => GetServerInfo())
+                                .AddSection("database info", () => config.GetDbExceptionInfo != null
+                                                                    ? config.GetDbExceptionInfo(exception)
+                                                                    : Constants.EmptyDictionary)
+                                .AddSection("custom info", () => customData)
+                                .AddSection("exception info", () => GetExceptionInfo(exception));
+
+            if (config.EnabledLogHttpHeader)
+            {
+                logMessage.AddSection("request headers", () => GetRequestHeader(request.Headers));
+            }
+
+            if (config.EnabledLogHttpSession)
+            {
+                logMessage.AddSection("session info", () => GetSessionInfo(context));
+            }
+
+            return logMessage.ToCleanMessage(config.Patterns);
+        }
+
+        internal static Func<HttpContext, IDictionary<string, object>> GetRequestInfo { get; set; } = WebInfoGetters.GetRequestInfo;
+        internal static Func<HttpRequest, IDictionary<string, object>> GetBrowserInfo { get; set; } = WebInfoGetters.GetBrowserInfo;
+        internal static Func<IDictionary<string, object>> GetServerInfo { get; set; } = CommonInfoGetters.GetServerInfo;
+        internal static Func<Exception, IDictionary<string, object>> GetExceptionInfo { get; set; } = CommonInfoGetters.GetExceptionInfo;
+        internal static Func<IHeaderDictionary, IDictionary<string, object>> GetRequestHeader { get; set; } = WebInfoGetters.GetRequestHeader;
+        internal static Func<HttpContext, IDictionary<string, object>> GetSessionInfo { get; set; } = WebInfoGetters.GetSessionInfo;
+        internal static Func<string, Task> WriteErrorAsync { get; set; } = LogService.ErrorAsync;
+        internal static Func<string, Task> WriteCriticalAsync { get; set; } = LogService.CriticalAsync;
+        internal static Func<string, Task> WriteWarnAsync { get; set; } = LogService.WarnAsync;
+        internal static Func<string, Task> WriteInfoAsync { get; set; } = LogService.InfoAsync;
+        internal static Func<string, Task> WriteDebugAsync { get; set; } = LogService.DebugAsync;
+        internal static Func<string, Exception, Task> WriteExceptionAsync { get; set; } = LogService.ErrorAsync;
+    }
+}

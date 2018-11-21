@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONEbook.Common.Logging.Distributor", "src\Distributors\ONEbook.Common.Logging.Distributor\ONEbook.Common.Logging.Distributor.csproj", "{808F5173-C16B-4599-9C2C-9A704A6BD59C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808F5173-C16B-4599-9C2C-9A704A6BD59C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCB55209-316D-4D52-8FC1-CB9C6723A936}
+	EndGlobalSection
+EndGlobal

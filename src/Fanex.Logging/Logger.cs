@@ -1,31 +1,28 @@
 ﻿namespace Fanex.Logging
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
-    using Adapters;
-    using Configuration;
 
-    public sealed class Logger : ILogger
+    public sealed partial class Logger : ILogger
     {
         private static volatile Logger logger;
         private static object syncRoot = new object();
 
         private readonly string defaultLogCategory;
-        internal readonly ILoggingEngine loggingEngine;
+        internal readonly IEnumerable<ILogEngine> logEngines;
 
-        private Logger()
-            : this(null, null, LoggerConfiguration.Run)
+        public Logger()
+            : this(null, null)
         {
         }
 
-        internal Logger(
-            ILoggingEngine loggingEngine,
-            string defaultLogCategory,
-            Action initLogConfig)
+        public Logger(
+            IEnumerable<ILogEngine> logEngines,
+            string defaultLogCategory)
         {
-            this.loggingEngine = loggingEngine ?? new EntlibLogging();
-            this.defaultLogCategory = defaultLogCategory ?? LoggerConfiguration.Setting.DefaultCategory;
-            initLogConfig();
+            this.logEngines = logEngines ?? LogManager.Instance.LogEngines;
+            this.defaultLogCategory = defaultLogCategory ?? LogManager.Instance.DefaultLogCategory;
         }
 
         public static ILogger Log
@@ -129,12 +126,17 @@
 
         #region WriteLog functions
 
-        internal void WriteLog(string message, string category, TraceEventType traceEventType)
+        public void WriteLog(string message, string category, TraceEventType traceEventType)
         {
-            loggingEngine.Write(
-                message,
-                GetSeverity(traceEventType),
-                string.IsNullOrEmpty(category) ? defaultLogCategory : category);
+            foreach (var logEngine in logEngines)
+            {
+                logEngine.Write(
+                            message,
+                            GetSeverity(traceEventType),
+                            string.IsNullOrEmpty(category)
+                                ? defaultLogCategory
+                                : category);
+            }
         }
 
         private static TraceEventType GetSeverity(TraceEventType traceEventType)

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <Version>1.0.0-beta82</Version>
+    <Authors>_</Authors>
+    <Product>_</Product>
+    <Description>- RabbitQM Log Engine for sending message log
+- To use this engine, please add this code in your application start method:
+LogManager
+                    .SetDefaultLogCategory("Your-Site-Log-Category")
+                    .Use(new RabbitMQLogging("RabbitMQ-ConnectionString"));
+RabbitMQ-ConnectionString:
++ LOCAL: host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw==
++ UAT: host=10.40.40.47:5673;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=
++ PRO: host=10.40.40.47;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=</Description>
+    <PackageTags>Fanex.Logging, Logging, RabbitMQ</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.RabbitMQ.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.RabbitMQ.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EasyNetQ" Version="[2.3.3]" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta7" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

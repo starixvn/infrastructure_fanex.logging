@@ -32,6 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Data, Version=0.5.404.62, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Fanex.Data.0.5.404.62\lib\net40\Fanex.Data.dll</HintPath>

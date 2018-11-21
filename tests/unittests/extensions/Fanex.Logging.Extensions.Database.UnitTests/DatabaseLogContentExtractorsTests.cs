@@ -1,12 +1,10 @@
 ﻿namespace Fanex.Logging.Extensions.Database.UnitTests
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Data.Common;
     using System.Data.SqlClient;
     using Data;
-    using Data.CrossCutting.WrappingException;
-    using NSubstitute;
     using Xunit;
 
     [Trait("Unit Tests", "Extensions/DatabaseInfoGetters.cs")]
@@ -26,22 +24,14 @@
         public void GetDbExceptionInfo_ExceptionIsObjectDbException_ReturnDbExceptionInfo()
         {
             // Arrnage
-            var dbSetting = Substitute.For<IDbSetting>();
-            dbSetting.ConnectionString.Returns("packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;");
-            dbSetting.SpName.Returns("SPNAME");
-            dbSetting.DbName.Returns("DbName");
-            var dbParameter = Substitute.ForPartsOf<DbParameter>();
-            dbParameter.ParameterName.Returns("Name");
-            dbParameter.Value.Returns("Value");
-            var dbParameterCollection = Substitute.ForPartsOf<DbParameterCollection>();
-            dbParameterCollection["demo"] = dbParameter;
-
             var objectDBException = new ObjectDbException(
                 new Exception("Inner exception"),
                 "Setting Key",
-                dbSetting,
-                dbParameterCollection,
-                600);
+                "SPNAME",
+                "DbName",
+                "packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;",
+                600,
+                new Hashtable { { "Name", "Value" } });
 
             // Act
             var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(objectDBException);
@@ -126,22 +116,14 @@
         public void GetDbExceptionInfo_InnerExceptionIsObjectDbException_ReturnDbExceptionInfo()
         {
             // Arrnage
-            var dbSetting = Substitute.For<IDbSetting>();
-            dbSetting.ConnectionString.Returns("packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;");
-            dbSetting.SpName.Returns("SPNAME");
-            dbSetting.DbName.Returns("DbName");
-            var dbParameter = Substitute.ForPartsOf<DbParameter>();
-            dbParameter.ParameterName.Returns("Name");
-            dbParameter.Value.Returns("Value");
-            var dbParameterCollection = Substitute.ForPartsOf<DbParameterCollection>();
-            dbParameterCollection["demo"] = dbParameter;
-
             var objectDBException = new ObjectDbException(
                 new Exception("Inner exception"),
                 "Setting Key",
-                dbSetting,
-                dbParameterCollection,
-                600);
+                "SPNAME",
+                "DbName",
+                "packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;",
+                600,
+                new Hashtable { { "Name", "Value" } });
 
             // Act
             var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(new Exception("Message", objectDBException));

@@ -32,18 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data, Version=2.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Fanex.Data.2.1.0.1\lib\net461\Fanex.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Fanex.Data.CrossCutting.WrappingException, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\Fanex.Data.CrossCutting.WrappingException.1.0.0.3\lib\net461\Fanex.Data.CrossCutting.WrappingException.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Data, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Fanex.Data.3.0.0-rc4\lib\net461\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -106,8 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj">
-      <Project>{c0a8fbb9-0184-4bc0-808a-17fdcbcc0a98}</Project>
+      <Project>{7dc7331b-a548-4a10-9f6e-8a621adac739}</Project>
       <Name>Fanex.Logging.Extensions.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Extensions\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj">
+      <Project>{f8807f7e-29f5-44b2-a8db-52b85844ae87}</Project>
+      <Name>Fanex.Logging.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Logging.Extensions.Database.V59.UnitTests\Fanex.Logging.Extensions.Database.V59.UnitTests.csproj">
       <Project>{c90bf9f0-6d69-4916-b441-76fe72490014}</Project>

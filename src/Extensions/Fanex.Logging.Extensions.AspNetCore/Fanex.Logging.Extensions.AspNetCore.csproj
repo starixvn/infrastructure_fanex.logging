@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>R&amp;D</Authors>
+    <Company>_</Company>
+    <Product>_</Product>
+    <Version>1.0.0-beta4</Version>
+    <PackageReleaseNotes>- Support logging for AspNetCore site</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.AspNetCore.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.AspNetCore.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fanex.Logging" Version="2.0.0-beta7" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta3" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.4" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

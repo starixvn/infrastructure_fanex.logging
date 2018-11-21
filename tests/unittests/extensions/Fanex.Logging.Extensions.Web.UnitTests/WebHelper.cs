@@ -8,16 +8,6 @@
 
     public static class WebHelper
     {
-        internal static Stream GenerateStreamFromString(string s)
-        {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
-
         internal static HttpContext CreateFakeHttpContext(string queryString, SessionStateItemCollection sessionStateItemCollection)
         {
             SimpleWorkerRequest request = new SimpleWorkerRequest(string.Empty, string.Empty, string.Empty, queryString, new StringWriter());

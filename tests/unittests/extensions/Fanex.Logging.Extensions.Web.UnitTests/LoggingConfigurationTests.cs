@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Xunit;
 
-    [Trait("Unit Tests", "Extensions/LoggingConfiguration.cs")]
+    [Trait("Unit Tests", "Extensions/AspNetFramework/LoggingConfiguration.cs")]
     public class LoggingConfigurationTests
     {
         private readonly LoggingConfiguration loggingConfiguration;
