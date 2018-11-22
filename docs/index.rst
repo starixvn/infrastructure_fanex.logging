@@ -31,7 +31,7 @@ High level architect overview
 Integration
 =========================================
 
-**Step 1. Setup LogManger**
+**Step 1. Setup LogManager**
 
 .. code:: csharp
 
