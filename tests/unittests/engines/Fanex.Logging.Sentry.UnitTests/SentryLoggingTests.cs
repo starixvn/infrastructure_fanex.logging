@@ -11,7 +11,7 @@
     {
         private readonly SentryLogging sentryLogging;
         private readonly Action<SentryOptions, string, string, SentryLevel> captureMessageAction;
-        private SentryOptions sentryOptions = new SentryOptions();
+        private SentryEngineOptions sentryOptions = new SentryEngineOptions();
 
         public SentryLoggingTests()
         {

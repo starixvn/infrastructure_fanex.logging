@@ -13,10 +13,12 @@ You can study more at https://docs.sentry.io/
 
 .. code:: csharp
 
-       new SentryLogging(new SentryOptions
+       new SentryLogging(new SentryEngineOptions
                         {
                             Dsn = new Dsn("{Your-site-sentry-token}"),
-                            Release = "{Your-release-key}"
+                            Release = "{Your-release-key}",
+                            // You need to set FrontEndDns in case your front-end side access to different Sentry endpoint with back-end side
+                            FrontEndDns = new Dsn("{Your-site-sentry-token}"),
                         });
 
 

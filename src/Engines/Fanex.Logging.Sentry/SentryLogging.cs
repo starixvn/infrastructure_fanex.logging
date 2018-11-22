@@ -15,10 +15,10 @@ namespace Fanex.Logging.Sentry
     {
         private const string sentryScriptDefault = "https://browser.sentry-cdn.com/4.3.2/bundle.min.js";
         private const string es6PromiseScriptDefault = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js";
-        private readonly SentryOptions sentryOptions;
+        private readonly SentryEngineOptions sentryOptions;
         private readonly string sentryScript;
         private readonly string es6PromiseScript; 
-        private readonly Action<SentryOptions, string, string, SentryLevel> captureMessageAction;
+        private readonly Action<SentryEngineOptions, string, string, SentryLevel> captureMessageAction;
         private static readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -26,7 +26,7 @@ namespace Fanex.Logging.Sentry
             };
 
     public SentryLogging(
-            SentryOptions sentryOptions, 
+            SentryEngineOptions sentryOptions, 
             string sentryScript = sentryScriptDefault,
             string es6PromiseScript = es6PromiseScriptDefault)
             : this(sentryOptions, null, sentryScript, es6PromiseScript)
@@ -34,8 +34,8 @@ namespace Fanex.Logging.Sentry
         }
 
         internal SentryLogging(
-            SentryOptions sentryOptions,
-            Action<SentryOptions, string, string, SentryLevel> captureMessageAction, 
+            SentryEngineOptions sentryOptions,
+            Action<SentryEngineOptions, string, string, SentryLevel> captureMessageAction, 
             string sentryScript,
             string es6PromiseScript)
         {
@@ -45,7 +45,7 @@ namespace Fanex.Logging.Sentry
             this.es6PromiseScript = es6PromiseScript;
         }
 
-        internal SentryOptions GetSentryOptions
+        internal SentryEngineOptions GetSentryOptions
             => sentryOptions
                 ?? throw new InvalidOperationException("Please init Fanex.Logging for Sentry before using.");
 
@@ -53,7 +53,7 @@ namespace Fanex.Logging.Sentry
             => captureMessageAction(sentryOptions, message, category, GetLogLevel(severity));
 
         private static void CaptureMessage(
-            SentryOptions sentryOptions,
+            SentryEngineOptions sentryOptions,
             string message,
             string category,
             SentryLevel sentryLevel)
@@ -121,7 +121,7 @@ namespace Fanex.Logging.Sentry
                     : $"<script src=\"{sentryScript}\" crossorigin=\"anonymous\"></script>",
                 "<script type=\"text/javascript\">",
                 $"var option = {JsonConvert.SerializeObject(options, jsonSerializerSettings)};",
-                $"option.dsn=\"{options.Dsn}\";",
+                $"option.dsn=\"{options.FrontEndDns ?? options.Dsn}\";",
                 "option.onerror=true;",
                 "option.onunhandledrejection=true;",
                 "Sentry.init(option);",
