@@ -19,11 +19,11 @@ Reasons behind the change
 Due to some drawbacks, Fanex Logging need to be revised to resolve these:
 
 - Fanex Logging sticks tight coupling with *Logging Application Block (one of Microsoft Enterprise Library)*, so there is no way to use other logging engines.
-- Enterprise Library is *no longer maintain* by microsoft
+- Enterprise Library is *no longer maintained* by microsoft
 - Fanex Logging cannot support *.net core*, so there is no way to use it in *.net core* project.
 - Fanex Logging does not support async method.
 
-High level architect overview
+High level architect
 =========================================
 
 .. image:: _static/architect-overview.png
