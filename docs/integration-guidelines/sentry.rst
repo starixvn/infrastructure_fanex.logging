@@ -2,6 +2,10 @@
 Sentry Integration
 **************************
 
+Sentry is Open-source error tracking that helps developers monitor and fix crashes in real time. Iterate continuously. Boost efficiency. Improve user experience. 
+You can study more at https://docs.sentry.io/
+
+
 **Step 1. Setup SentryLogging**
 
 - Install this package http://nuget.nexdev.net/packages/Fanex.Logging.Sentry 
@@ -16,6 +20,9 @@ Sentry Integration
                         });
 
 
+To config more Sentry Options you can refer to https://docs.sentry.io/error-reporting/configuration/?platform=csharp
+
+
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
 
 +-------------+-----------------------------+
@@ -25,5 +32,3 @@ Sentry Integration
 +-------------+-----------------------------+
 | UAT - PRO   | http://sentry.oneops.net    |
 +-------------+-----------------------------+
-
-**Notes:** In order to inquire more Sentry Documentation please go to this site https://docs.sentry.io/
