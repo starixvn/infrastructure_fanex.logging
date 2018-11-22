@@ -40,16 +40,15 @@ Integration
         .Use(new List<ILogEngine>
         {
             new RabbitMQLogging("{RabbitMQ-ConnectionString}"),
-            new SentryLogging("{Sentry-Option}"),
-            new EntlibLogging("{Entlib-Configs}")
+            new SentryLogging("{Sentry-Option}")
         });
 
-**Notes:** You can use *multiple logging engines*, Fanex Logging supports 3 types of Logging Engine, each type has different delivery mechanism. To config it, please refer below information:
+**Notes:** You can use *single or multiple logging engines*, Fanex Logging supports 2 types of Logging Engine, each type has different delivery mechanism. You can implement your own log engine also.
+To use supported log engines, please refer below information:
 
 .. toctree::
    :maxdepth: 2
    
-   Entlibs using MSMQ  <integration-guidelines/entlibs> 
    Entlibs using RabbitMQ <integration-guidelines/rabbitmq> 
    Sentry <integration-guidelines/sentry>
 
