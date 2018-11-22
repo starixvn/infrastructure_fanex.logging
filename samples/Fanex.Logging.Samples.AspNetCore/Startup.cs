@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Fanex.Data;
+using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.RabbitMQ;
@@ -36,8 +37,7 @@ namespace Fanex.Logging.Samples.AspNetCore
                        //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                        new SentryLogging(new SentryOptions
                        {
-                           Dsn = new Dsn("https://79b22dd5d90045329abfa6733b4056d3@sentry.io/1325665"),
-                           Debug = true,
+                           Dsn = new Dsn("http://8cb9537d2fd44e48a2b37bc23104301b@sentry.nexdev.net/6"),
                            Release = "Release-2018-10-25",
                            //AttachStacktrace = true,
                            SendDefaultPii = true

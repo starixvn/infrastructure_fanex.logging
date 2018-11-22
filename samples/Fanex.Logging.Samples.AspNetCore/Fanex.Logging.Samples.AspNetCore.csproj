@@ -20,20 +20,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Data" Version="3.0.0-rc4" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta2" />
-    <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0-beta3" />
-    <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.4-beta1" />
-    <PackageReference Include="Fanex.Logging.RabbitMQ" Version="1.0.0-beta81" />
+    <PackageReference Include="Fanex.Data" Version="3.0.0" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta3" />
+    <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0-beta4" />
+    <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.4-beta2" />
+    <PackageReference Include="Fanex.Logging.RabbitMQ" Version="1.0.0-beta82" />
+    <PackageReference Include="Fanex.Logging.Sentry" Version="1.0.0-beta2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.Sentry\Fanex.Logging.Sentry.csproj" />
   </ItemGroup>
 </Project>

@@ -86,10 +86,16 @@
             Sentry.captureMessage('Test');
         </script>*@
 
-    <script type="text/javascript" src="https://cdn.ravenjs.com/3.26.4/raven.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.ravenjs.com/3.26.4/raven.min.js"></script>
+        <script type="text/javascript">
+            Raven.config('https://79b22dd5d90045329abfa6733b4056d3@sentry.io/1325665').install();
+            throw new Error("test js 2");
+        </script>*@
+
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger());
+
     <script type="text/javascript">
-        Raven.config('https://79b22dd5d90045329abfa6733b4056d3@sentry.io/1325665').install();
-        throw new Error("test js 2");
+        throw new Error("test js - test new");
     </script>
 </body>
 </html>

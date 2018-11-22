@@ -16,7 +16,7 @@
         public SentryLoggingTests()
         {
             captureMessageAction = Substitute.For<Action<SentryOptions, string, string, SentryLevel>>();
-            sentryLogging = new SentryLogging(sentryOptions, captureMessageAction);
+            sentryLogging = new SentryLogging(sentryOptions, captureMessageAction, "sentry-script", "es6-script");
         }
 
         [Theory]

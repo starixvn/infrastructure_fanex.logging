@@ -27,8 +27,8 @@ namespace Fanex.Logging.Sentry
 
     public SentryLogging(
             SentryOptions sentryOptions, 
-            string sentryScript = null,
-            string es6PromiseScript = null)
+            string sentryScript = sentryScriptDefault,
+            string es6PromiseScript = es6PromiseScriptDefault)
             : this(sentryOptions, null, sentryScript, es6PromiseScript)
         {
         }
@@ -36,8 +36,8 @@ namespace Fanex.Logging.Sentry
         internal SentryLogging(
             SentryOptions sentryOptions,
             Action<SentryOptions, string, string, SentryLevel> captureMessageAction, 
-            string sentryScript = sentryScriptDefault,
-            string es6PromiseScript = es6PromiseScriptDefault)
+            string sentryScript,
+            string es6PromiseScript)
         {
             this.sentryOptions = sentryOptions ?? throw new ArgumentNullException(nameof(sentryOptions));
             this.captureMessageAction = captureMessageAction ?? CaptureMessage;

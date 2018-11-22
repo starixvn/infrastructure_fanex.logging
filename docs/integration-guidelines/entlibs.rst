@@ -1,0 +1,32 @@
+*********************************
+Entlibs with MSMQ Integration
+*********************************
+
+**Step 1. Setup EntlibLogging**
+
+- Install this package http://nuget.nexdev.net/packages/Fanex.Logging.EntLib/
+- Create new EntlibLogging Instance before adding it to LogManager
+
+.. code:: csharp
+
+       new EntlibLogging(new EntLibConfig(
+                                {MSMQ-ConnectionString},
+                                {Local-File-Path}))
+
+
+**Step 2. Change {MSMQ-ConnectionString} depend on your environment**
+
+
++-------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| Environment | MSMQ-ConnectionString                                                                                                                  |
++=============+========================================================================================================================================+
+| LOCAL       | - FormatName:DIRECT=tcp:10.18.200.103\private$\entlib                                                                                  |
+|             | - FormatName:DIRECT=tcp:10.18.200.104\private$\entlib                                                                                  |
++-------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| UAT         | - FormatName:DIRECT=tcp:10.40.40.73\private$\entlib                                                                                    |
+|             | - FormatName:DIRECT=tcp:10.40.40.75\private$\entlib                                                                                    |
++-------------+----------------------------------------------------------------------------------------------------------------------------------------+
+| PRO         | - ALPHA: FormatName:DIRECT=tcp:10.40.40.20\private$\entlib                                                                             |
+|             | - NAP/LRF: FormatName:DIRECT=tcp:10.40.40.22\private$\entlib                                                                           |
+|             | - Backup: FormatName:DIRECT=tcp:10.40.40.127\private$\entlib                                                                           |
++-------------+----------------------------------------------------------------------------------------------------------------------------------------+
