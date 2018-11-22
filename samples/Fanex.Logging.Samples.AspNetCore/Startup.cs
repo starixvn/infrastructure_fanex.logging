@@ -38,7 +38,7 @@ namespace Fanex.Logging.Samples.AspNetCore
                        new SentryLogging(new SentryEngineOptions
                        {
                            Dsn = new Dsn("http://8cb9537d2fd44e48a2b37bc23104301b@sentry.nexdev.net/6"),
-                           //FrontEndDns = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
+                           FrontEndDns = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
                            Release = "Release-2018-10-25",
                            //AttachStacktrace = true,
                            SendDefaultPii = true

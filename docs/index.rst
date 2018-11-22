@@ -66,7 +66,7 @@ To use supported log engines, please refer below information:
 
 - Second way, you can use by create new instance of **Logger** class, this way is easy for you to do dependency injection and unit-test, and I strongly recommend you use this way.
 
-**Step 2.b. To log information in your front-end code, you can add this code in your cshml file:**
+**Step 2.b. To log information in your front-end code, you can add this code in your *.cshtml file:**
 
 .. code:: csharp
 
