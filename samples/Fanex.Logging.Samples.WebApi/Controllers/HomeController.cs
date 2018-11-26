@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Fanex.Data;
 
 namespace Fanex.Logging.Samples.WebApi.Controllers
@@ -12,11 +13,24 @@ namespace Fanex.Logging.Samples.WebApi.Controllers
             return View();
         }
 
-        public ActionResult TestLogging()
+        public ActionResult TestDBException()
         {
             SimulateDBException();
 
             return View();
+        }
+
+        public ActionResult TestLogging()
+        {
+            var logMessage = $"This is Fanex Logging testing messsage at {DateTime.Now}";
+
+            LogService.Error(logMessage);
+            LogService.Warn(logMessage);
+            LogService.Debug(logMessage);
+            LogService.Critical(logMessage);
+            LogService.Info(logMessage);
+
+            return new EmptyResult();
         }
 
         private void SimulateDBException()
