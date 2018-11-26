@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
-    <Version>1.0.4-beta2</Version>
+    <Version>1.0.5</Version>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
     <Description>- Extension for logging Database Information</Description>
-    <PackageReleaseNotes>- Support .net core</PackageReleaseNotes>
+    <PackageReleaseNotes>- Support .net core
+- Add more log information</PackageReleaseNotes>
+    <AssemblyVersion>1.0.5.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
@@ -20,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="3.0.0" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta2" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

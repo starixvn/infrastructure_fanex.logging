@@ -39,8 +39,8 @@ namespace Fanex.Logging.Extensions.Database
 
         internal static string GetParameters(ICollection parameters)
             => parameters.Count > 0
-                ? parameters.Cast<DbParameter>()
-                        .Select(parameter => $"{parameter.ParameterName}={parameter.Value}")
+                ? parameters.Cast<KeyValuePair<string, object>>()
+                        .Select(parameter => $"{parameter.Key}={parameter.Value}")
                         .Aggregate((firstPair, secondPair) => $"{firstPair};{secondPair}")
                 : string.Empty;
     }

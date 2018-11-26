@@ -11,7 +11,7 @@ namespace Fanex.Logging.Samples.AspNetCore.Pages
             HttpContext.Session.SetString("demo", "value");
             HttpContext.Session.SetInt32("demo1", 34343);
 
-            //SqlException();
+            SqlException();
         }
 
         public void OnPost()
@@ -32,12 +32,12 @@ namespace Fanex.Logging.Samples.AspNetCore.Pages
 
         public void SqlException()
         {
-            using (var db = ObjectDbFactory.CreateInstance("Logging_UpdateMachine"))
+            using (var db = ObjectDbFactory.CreateInstance("InsertUser"))
             {
                 db.ExecuteNonQuery(new
                 {
-                    MachineIP = "45454",
-                    Timezone = "GMT8"
+                    SubAccountId = "343433434",
+                    MachineIP = "45454"
                 });
             }
         }

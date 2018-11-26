@@ -34,7 +34,7 @@ namespace Fanex.Logging.Samples.AspNetCore
                    //    @"~\Logs\")));
                    .Use(new List<ILogEngine>
                    {
-                       //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
+                       new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                        new SentryLogging(new SentryEngineOptions
                        {
                            Dsn = new Dsn("http://8cb9537d2fd44e48a2b37bc23104301b@sentry.nexdev.net/6"),
@@ -66,7 +66,7 @@ namespace Fanex.Logging.Samples.AspNetCore
                 .StartNewSession()
                 .UseConnectionStrings(new Dictionary<string, string>
                 {
-                    { "DBLOG.bodb_CustomerLog.bodbAdminNet", "packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=i9hNnaZltx04XF6oTNOKTnvvtLC/zfxr;" }
+                    { "DBBOT.bodb_Chatbot.BODBDownlineNet", "packet size=4096; Data Source=DB231\\SQLSERVER2008R2;Initial Catalog=bodb_Chatbot;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk==" }
                 })
                 .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/")
                 .Run();

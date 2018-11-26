@@ -100,16 +100,18 @@
         public void GetParameters_Always_ReturnCombinedParameterString()
         {
             // Arrange
-            var parameters = new[] {
-                new SqlParameter(){ ParameterName="name1", Value="value1" },
-                new SqlParameter(){ ParameterName="name2", Value="value2" }
+            var parameters = new Dictionary<string,object> {
+                { "name1", "value1" },
+                { "name2", "value2"},
+                { "name3", null},
+                { "name4", 2}
             };
 
             // Act
             string actualParamsString = DatabaseInfoGetters.GetParameters(parameters);
 
             // Assert
-            Assert.Equal("name1=value1;name2=value2", actualParamsString);
+            Assert.Equal("name1=value1;name2=value2;name3=;name4=2", actualParamsString);
         }
 
         [Fact]
