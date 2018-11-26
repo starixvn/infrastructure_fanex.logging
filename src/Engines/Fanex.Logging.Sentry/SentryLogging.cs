@@ -25,7 +25,7 @@ namespace Fanex.Logging.Sentry
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
 
-    public SentryLogging(
+        public SentryLogging(
             SentryEngineOptions sentryOptions, 
             string sentryScript = sentryScriptDefault,
             string es6PromiseScript = es6PromiseScriptDefault)
