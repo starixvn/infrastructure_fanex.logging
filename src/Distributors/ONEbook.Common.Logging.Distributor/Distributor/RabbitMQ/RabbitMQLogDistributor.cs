@@ -1,5 +1,6 @@
 ﻿namespace ONEbook.Common.Logging.Distributor
 {
+    using System;
     using System.Linq;
     using EasyNetQ;
     using Fanex.Logging;
@@ -20,8 +21,17 @@
 
         public void Start()
         {
-            _rabbitMQBus = RabbitHutch.CreateBus(_rabbitMQConnectionString);
-            this.SubscribeLogEntry();
+            try
+            {
+                _rabbitMQBus = RabbitHutch.CreateBus(_rabbitMQConnectionString);
+                this.SubscribeLogEntry();
+
+                entlibLog.Logger.Write("Fanex.Logging.Distributor.Service has been started.", "Fanex-Logging-Test");
+            }
+            catch(Exception ex)
+            {
+                entlibLog.Logger.Write(ex.ToString(), "Fanex-Logging-Test");
+            }
         }
 
         public void Stop()
