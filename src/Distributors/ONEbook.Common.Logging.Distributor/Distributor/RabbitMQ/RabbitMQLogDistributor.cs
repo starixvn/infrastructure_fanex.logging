@@ -16,7 +16,6 @@
         public RabbitMQLogDistributor(string rabbitMQConnectionString)
         {
             _rabbitMQConnectionString = EasyNetQConnectionStringCryptography.DecryptConnectionString(rabbitMQConnectionString);
-            this.Start();
         }
 
         public void Start()
