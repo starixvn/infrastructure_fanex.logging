@@ -9,6 +9,7 @@
     using Data;
     using Extensions.Database;
     using Extensions.Web;
+    using Fanex.Logging.Extensions;
     using Fanex.Logging.RabbitMQ;
 
     public class WebApiApplication : System.Web.HttpApplication
@@ -33,8 +34,8 @@
                .Run();
 
             LogManager
-                    .SetDefaultLogCategory("Fanex-Logging-Test-new")
-                    .Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+                    .SetDefaultLogCategory("Fanex-Logging-Test")
+                    .Use(new RabbitMQLogging(ConfigurationManager.AppSettings["RabbitMQConnectionString"]));
 
             ExceptionHandler
                 // To use custom config
