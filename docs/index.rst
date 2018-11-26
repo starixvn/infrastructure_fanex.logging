@@ -19,7 +19,7 @@ Reasons behind the change
 Due to some drawbacks, Fanex Logging need to be revised to resolve these:
 
 - Fanex Logging sticks tight coupling with *Logging Application Block (one of Microsoft Enterprise Library)*, so there is no way to use other logging engines.
-- Enterprise Library is *no longer maintained* by microsoft
+- Enterprise Library is *no longer maintained* by Microsoft
 - Fanex Logging cannot support *.net core*, so there is no way to use it in *.net core* project.
 - Fanex Logging does not support async method.
 
@@ -32,6 +32,8 @@ Integration
 =========================================
 
 **Step 1. Setup LogManager**
+
+This code you must put in your application startup.
 
 .. code:: csharp
 
