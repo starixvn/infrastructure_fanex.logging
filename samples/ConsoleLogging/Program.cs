@@ -21,7 +21,7 @@
             try
             {
                 LogManager
-                    .SetDefaultLogCategory("{Your-Category}")
+                    .SetDefaultLogCategory("Fanex.Logging.Tests")
                     .Use(new List<ILogEngine>
                     {
                         new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),

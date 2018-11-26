@@ -24,4 +24,8 @@ Entlibs with RabbitMQ Integration
 | PRO         | host=10.40.40.47;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=                |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
 
+**Notes:**
+
+- To view log, you can visit MSite
+
 

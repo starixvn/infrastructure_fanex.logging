@@ -45,8 +45,10 @@ This code you must put in your application startup.
             new SentryLogging("{Sentry-Option}")
         });
 
-**Notes:** You can use *single or multiple logging engines*, Fanex Logging supports 2 types of Logging Engine, each type has different delivery mechanism. You can implement your own log engine also.
+**Notes:** 
+- You can use *single or multiple logging engines*, Fanex Logging supports 2 types of Logging Engine, each type has different delivery mechanism. You can implement your own log engine also.
 To use supported log engines, please refer below information:
+- {Your-Site-Category} is same with Fanex Logging version 1.0
 
 .. toctree::
    :maxdepth: 2
@@ -86,3 +88,5 @@ In order to log useful information, Fanex Logging provides some extensions that 
    
    Website/WebAPI Application  <integration-guidelines/web> 
    Service <integration-guidelines/service> 
+
+   
