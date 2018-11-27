@@ -4,6 +4,6 @@
 
     public class SentryEngineOptions : SentryOptions
     {
-        public Dsn FrontEndDns { get; set; }
+        public Dsn FrontEndDsn { get; set; }
     }
 }

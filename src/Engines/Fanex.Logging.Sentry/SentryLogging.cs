@@ -97,31 +97,20 @@ namespace Fanex.Logging.Sentry
         }
 
         public string RenderJavascriptLogger()
-            => Render();
-
-#pragma warning disable S3994 // URI Parameters should not be strings
-        public string Render()
-#pragma warning restore S3994 // URI Parameters should not be strings
         {
-            var sentryEngine =
-                LogManager.Instance.LogEngines.FirstOrDefault(logEngine => logEngine is SentryLogging)
-                ?? throw new InvalidOperationException("Please init Fanex.Logging for Sentry before using.");
-
-#pragma warning disable S3215 // "interface" instances should not be cast to concrete types
-            var options = (sentryEngine as SentryLogging).GetSentryOptions;
-#pragma warning restore S3215 // "interface" instances should not be cast to concrete types
+            var options = GetSentryOptions;
 
             return string.Join(
                 string.Empty,
                  string.IsNullOrWhiteSpace(es6PromiseScript)
                     ? string.Empty
                     : $"<script src=\"{es6PromiseScript}\" crossorigin=\"anonymous\"></script>",
-                string.IsNullOrWhiteSpace(sentryScript) 
-                    ? string.Empty 
+                string.IsNullOrWhiteSpace(sentryScript)
+                    ? string.Empty
                     : $"<script src=\"{sentryScript}\" crossorigin=\"anonymous\"></script>",
                 "<script type=\"text/javascript\">",
                 $"var option = {JsonConvert.SerializeObject(options, jsonSerializerSettings)};",
-                $"option.dsn=\"{options.FrontEndDns ?? options.Dsn}\";",
+                $"option.dsn=\"{options.FrontEndDsn ?? options.Dsn}\";",
                 "option.onerror=true;",
                 "option.onunhandledrejection=true;",
                 "Sentry.init(option);",
