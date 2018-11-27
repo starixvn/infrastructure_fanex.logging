@@ -46,9 +46,11 @@ This code you must put in your application startup.
         });
 
 **Notes:** 
+
 - You can use *single or multiple logging engines*, Fanex Logging supports 2 types of Logging Engine, each type has different delivery mechanism. You can implement your own log engine also.
+- {Your-Site-Category} is same with property "defaultCategory" in Fanex Logging version 1.0
+
 To use supported log engines, please refer below information:
-- {Your-Site-Category} is same with Fanex Logging version 1.0
 
 .. toctree::
    :maxdepth: 2
@@ -67,6 +69,12 @@ To use supported log engines, please refer below information:
         LogService.Debug(logMessage);
         LogService.Critical(logMessage);
         LogService.Info(logMessage);
+
+        LogService.ErrorAsync(logMessage);
+        LogService.WarnAsync(logMessage);
+        LogService.DebugAsync(logMessage);
+        LogService.CriticalAsync(logMessage);
+        LogService.InfoAsync(logMessage);
 
 - Second way, you can use by create new instance of **Logger** class, this way is easy for you to do dependency injection and unit-test, and I strongly recommend you use this way.
 
