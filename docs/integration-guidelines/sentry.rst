@@ -34,3 +34,7 @@ To config more Sentry Options you can refer to https://docs.sentry.io/error-repo
 +-------------+-----------------------------+
 | UAT - PRO   | http://sentry.oneops.net    |
 +-------------+-----------------------------+
+
+*Notes:* 
+
+- In order to login to above sites, please contact NexOps team to get login account
