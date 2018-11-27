@@ -15,10 +15,10 @@ You can study more at https://docs.sentry.io/
 
        new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("{Your-site-sentry-token}"),
+                            Dsn = new Dsn("{Your-site-sentry-token-with-intranet-ip}"),
                             Release = "{Your-release-key}",
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
-                            FrontEndDsn = new Dsn("{Your-site-sentry-token}"),
+                            FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),
                         });
 
 
