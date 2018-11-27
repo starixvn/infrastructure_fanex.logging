@@ -17,8 +17,8 @@ You can study more at https://docs.sentry.io/
                         {
                             Dsn = new Dsn("{Your-site-sentry-token}"),
                             Release = "{Your-release-key}",
-                            // You need to set FrontEndDns in case your front-end side accesses to different Sentry endpoint with back-end side
-                            FrontEndDns = new Dsn("{Your-site-sentry-token}"),
+                            // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
+                            FrontEndDsn = new Dsn("{Your-site-sentry-token}"),
                         });
 
 
