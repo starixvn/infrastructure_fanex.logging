@@ -25,15 +25,16 @@ You can study more at https://docs.sentry.io/
 To config more Sentry Options you can refer to https://docs.sentry.io/error-reporting/configuration/?platform=csharp
 
 
+
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
 
-+-------------+-----------------------------+
-| Environment | Sentry Admin Site           |
-+=============+=============================+
-| LOCAL       | http://sentry.nexdev.net    |
-+-------------+-----------------------------+
-| UAT - PRO   | http://sentry.oneops.net    |
-+-------------+-----------------------------+
++-------------+-------------------------------------+-------------------------------------------+
+| Environment | Sentry Admin Site (Public domain)   | Intranet IP                               |                                
++=============+=====================================+===========================================+
+| LOCAL       | http://sentry.nexdev.net                                                        |
++-------------+-------------------------------------+-------------------------------------------+
+| UAT - PRO   | http://sentry.starific.net          | 10.40.40.47:801                           |
++-------------+-------------------------------------+-------------------------------------------+
 
 *Notes:* 
 

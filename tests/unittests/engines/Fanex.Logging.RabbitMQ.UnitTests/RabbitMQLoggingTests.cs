@@ -26,6 +26,7 @@
             var message = "log-message";
             var severity = TraceEventType.Error;
             var category = "log-category";
+            bus.IsConnected.Returns(true);
 
             rabbitMQLogging.Write(message, severity, category);
 
@@ -43,6 +44,7 @@
             var message = "log-message";
             var severity = TraceEventType.Error;
             var category = "log-category";
+            bus.IsConnected.Returns(true);
 
             rabbitMQLogging.WriteAsync(message, severity, category);
 

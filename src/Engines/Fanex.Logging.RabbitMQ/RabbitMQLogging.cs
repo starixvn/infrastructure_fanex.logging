@@ -32,7 +32,10 @@
         {
             var logEntry = BuildLogEntry(message, severity, category);
 
-            bus.Publish(logEntry, SettingPublishConfiguration);
+            if (bus.IsConnected)
+            {
+                bus.Publish(logEntry, SettingPublishConfiguration);
+            }
         }
 
         private static LogEntry BuildLogEntry(string message, TraceEventType severity, string category)
@@ -68,7 +71,12 @@
         {
             var logEntry = BuildLogEntry(message, severity, category);
 
-            return bus.PublishAsync(logEntry, SettingPublishConfiguration);
+            if (bus.IsConnected)
+            {
+                return bus.PublishAsync(logEntry, SettingPublishConfiguration);
+            }
+
+            return Task.FromResult(0);
         }
 
         private void SettingPublishConfiguration(IPublishConfiguration publishConfiguration)
