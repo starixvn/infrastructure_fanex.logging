@@ -33,9 +33,9 @@ You can get the Your-site-sentry-token in Sentry Admin site follow this image:
 +-------------+-------------------------------------+-------------------------------------------+
 | Environment | Sentry Admin Site (Public domain)   | Intranet IP                               |                                
 +=============+=====================================+===========================================+
-| LOCAL       | http://sentry.nexdev.net                                                        |
+| LOCAL       | https://sentry.nexdev.net                                                        |
 +-------------+-------------------------------------+-------------------------------------------+
-| UAT - PRO   | http://sentry.starific.net          | 10.40.40.47:801                           |
+| UAT - PRO   | https://sentry.starific.net          | 10.40.40.47:801                           |
 +-------------+-------------------------------------+-------------------------------------------+
 
 *Notes:* 
