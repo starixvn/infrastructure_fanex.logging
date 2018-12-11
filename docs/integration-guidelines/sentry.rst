@@ -16,7 +16,7 @@ You can study more at https://docs.sentry.io/
        new SentryLogging(new SentryEngineOptions
                         {
                             Dsn = new Dsn("{Your-site-sentry-token-with-intranet-ip}"),
-                            Release = "{Your-release-key}",
+                            Release = "{Your-release-key}", // In case you want to keep track new issue for your releases
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
                             FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),
                         });
@@ -24,7 +24,9 @@ You can study more at https://docs.sentry.io/
 
 To config more Sentry Options you can refer to https://docs.sentry.io/error-reporting/configuration/?platform=csharp
 
+You can get the Your-site-sentry-token in Sentry Admin site follow this image:
 
+.. image:: ../_static/sentry-dsn.png
 
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
 
