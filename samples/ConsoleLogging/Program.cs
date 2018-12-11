@@ -25,13 +25,13 @@
                     .Use(new List<ILogEngine>
                     {
                         new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
-                        //new SentryLogging(new SentryOptions
-                        //{
-                        //    Dsn = new Dsn("http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3"),
-                        //    Debug = true,
-                        //    Release = "Ricky-Release-2018-10-25",
-                        //    SendDefaultPii = true
-                        //}),
+                        new SentryLogging(new SentryEngineOptions
+                        {
+                            Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
+                            Debug = true,
+                            Release = "Ricky-Release-2018-10-25",
+                            SendDefaultPii = true
+                        }),
                         //new EntlibLogging(new EntLibConfig(
                         //        @"FormatName:DIRECT=tcp:10.18.200.103\private$\entlib",
                         //        @"~\Logs\"))

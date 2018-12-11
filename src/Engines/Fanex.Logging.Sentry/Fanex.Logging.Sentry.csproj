@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>RnD</Authors>
     <Company>_</Company>
     <Description>- Sentry Logging Engine for Fanex.Logging</Description>
@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fanex.Logging" Version="2.0.0" />
-    <PackageReference Include="Sentry" Version="1.0.0" />
+    <PackageReference Include="Sentry" Version="1.1.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>

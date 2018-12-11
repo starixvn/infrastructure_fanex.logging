@@ -109,6 +109,9 @@
     <Reference Include="Fanex.Logging.RabbitMQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.RabbitMQ.1.0.1\lib\net461\Fanex.Logging.RabbitMQ.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Logging.Sentry, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Logging.Sentry.1.0.4\lib\net461\Fanex.Logging.Sentry.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
     </Reference>
@@ -142,14 +145,14 @@
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Sentry, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fba2ec45388e2af0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sentry.1.0.0\lib\netstandard2.0\Sentry.dll</HintPath>
+    <Reference Include="Sentry, Version=1.1.0.0, Culture=neutral, PublicKeyToken=fba2ec45388e2af0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Sentry.1.1.0\lib\net461\Sentry.dll</HintPath>
     </Reference>
     <Reference Include="Sentry.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fba2ec45388e2af0, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sentry.PlatformAbstractions.1.0.0\lib\net45\Sentry.PlatformAbstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Sentry.Protocol, Version=1.0.1.0, Culture=neutral, PublicKeyToken=fba2ec45388e2af0, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sentry.Protocol.1.0.1\lib\net46\Sentry.Protocol.dll</HintPath>
+    <Reference Include="Sentry.Protocol, Version=1.0.2.0, Culture=neutral, PublicKeyToken=fba2ec45388e2af0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Sentry.Protocol.1.0.2\lib\net46\Sentry.Protocol.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -212,12 +215,6 @@
     <Content Include="App_Data\SampleSPNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.Sentry\Fanex.Logging.Sentry.csproj">
-      <Project>{92cfd250-aa76-496a-82dd-17c00b00025e}</Project>
-      <Name>Fanex.Logging.Sentry</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
