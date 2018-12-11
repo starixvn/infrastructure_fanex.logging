@@ -29,7 +29,7 @@ You can get the Your-site-sentry-token in Sentry Admin site follow this image:
 .. image:: ../_static/sentry-dsn.png
 
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
-
+ 
 +-------------+-------------------------------------+-------------------------------------------+
 | Environment | Sentry Admin Site (Public domain)   | Intranet IP                               |                                
 +=============+=====================================+===========================================+
@@ -41,3 +41,5 @@ You can get the Your-site-sentry-token in Sentry Admin site follow this image:
 *Notes:* 
 
 - In order to login to above sites, please contact NexOps team to get login account
+- Because of the security reason, All accounts in domain https://sentry.starific.net are required to use 2FA to login, `please follow these steps below to setup it  <sentry-otp.html>`_
+
