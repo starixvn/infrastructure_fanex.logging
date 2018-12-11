@@ -82,7 +82,7 @@ To use supported log engines, please refer below information:
 
 .. code:: csharp
 
-        @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger());
+        @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 
 Fannex Logging will auto generate script and listen global exception and log information for you
 
