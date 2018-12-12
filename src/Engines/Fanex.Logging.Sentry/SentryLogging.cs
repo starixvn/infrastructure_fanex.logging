@@ -4,7 +4,6 @@ namespace Fanex.Logging.Sentry
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
     using global::Sentry;
     using global::Sentry.Protocol;
@@ -17,16 +16,16 @@ namespace Fanex.Logging.Sentry
         private const string es6PromiseScriptDefault = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js";
         private readonly SentryEngineOptions sentryOptions;
         private readonly string sentryScript;
-        private readonly string es6PromiseScript; 
+        private readonly string es6PromiseScript;
         private readonly Action<SentryEngineOptions, string, string, SentryLevel> captureMessageAction;
         private static readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
+        {
+            Formatting = Formatting.Indented,
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
 
         public SentryLogging(
-            SentryEngineOptions sentryOptions, 
+            SentryEngineOptions sentryOptions,
             string sentryScript = sentryScriptDefault,
             string es6PromiseScript = es6PromiseScriptDefault)
             : this(sentryOptions, null, sentryScript, es6PromiseScript)
@@ -35,7 +34,7 @@ namespace Fanex.Logging.Sentry
 
         internal SentryLogging(
             SentryEngineOptions sentryOptions,
-            Action<SentryEngineOptions, string, string, SentryLevel> captureMessageAction, 
+            Action<SentryEngineOptions, string, string, SentryLevel> captureMessageAction,
             string sentryScript,
             string es6PromiseScript)
         {
@@ -60,7 +59,11 @@ namespace Fanex.Logging.Sentry
         {
             using (SentrySdk.Init(sentryOptions))
             {
-                SentrySdk.ConfigureScope(scope => scope.Environment = category);
+                SentrySdk.ConfigureScope(scope =>
+                {
+                    scope.Environment = category;
+                    scope.User = sentryOptions.GetUserInfo?.Invoke();
+                });
                 SentrySdk.CaptureMessage(message, sentryLevel);
             }
         }

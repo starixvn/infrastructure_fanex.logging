@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Sentry;
+using Sentry.Protocol;
 
 namespace Fanex.Logging.Samples.AspNetCore
 {
@@ -41,7 +42,11 @@ namespace Fanex.Logging.Samples.AspNetCore
                            //FrontEndDsn = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
                            Release = "Release-2018-10-25",
                            //AttachStacktrace = true,
-                           SendDefaultPii = true
+                           //SendDefaultPii = true,
+                           GetUserInfo = () => new User
+                           {
+                               Username = "ricky.nguyen2"
+                           }
                        })
                    });
 
