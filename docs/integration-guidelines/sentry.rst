@@ -19,7 +19,7 @@ You can study more at https://docs.sentry.io/
                             Release = "{Your-release-key}", // In case you want to keep track new issue for your releases
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
                             FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),
-                            // If you want log what user face with error
+                            // If you want to log what user faces with error
                             GetUserInfo = () => new User
                             {
                                 Username = "ricky.nguyen2"
