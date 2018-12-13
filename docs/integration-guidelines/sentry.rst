@@ -8,7 +8,9 @@ You can study more at https://docs.sentry.io/
 
 **Step 1. Setup SentryLogging**
 
-- Install this package http://nuget.nexdev.net/packages/Fanex.Logging.Sentry 
+- Install this package 
+    - For .Net Core: http://nuget.nexdev.net/packages/Fanex.Logging.Sentry 
+    - For .Net Framework: http://nuget.nexdev.net/packages/Fanex.Logging.Sentry.RavenClient 
 - Create new SentryLogging Instance before adding it to LogManager
 
 .. code:: csharp
@@ -20,10 +22,10 @@ You can study more at https://docs.sentry.io/
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
                             FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),
                             // If you want to log what user faces with error
-                            GetUserInfo = () => new User
+                            GetUserInfo = () => new User(.net core)/SentryUser(.net framework)
                             {
                                 Username = "ricky.nguyen2"
-                            } 
+                            }
                         });
 
 

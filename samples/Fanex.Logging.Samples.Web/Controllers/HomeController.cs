@@ -10,12 +10,13 @@
         {
             //SetSampleSession();
 
-            //var sampleZero = 0;
-            //var sampleNumber = 10;
+            var sampleZero = 0;
+            var sampleNumber = 10;
             //// Simutate exception
-            //sampleNumber = sampleNumber / sampleZero;
+            sampleNumber = sampleNumber / sampleZero;
 
             //return Content("Index View");
+            //LogService.Error("Ricky test on wweb 2");
             return View();
         }
 

@@ -6,13 +6,11 @@
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging;
-    using Fanex.Logging.EntLib;
-    using Fanex.Logging.EntLib.Configuration;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.RabbitMQ;
-    using Fanex.Logging.Sentry;
-    using Sentry;
+    using Fanex.Logging.Sentry.RavenClient;
+    using SharpRaven;
 
     public class Program
     {
@@ -24,21 +22,19 @@
                     .SetDefaultLogCategory("Fanex.Logging.Tests")
                     .Use(new List<ILogEngine>
                     {
-                        new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
+                        //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
-                            Debug = true,
-                            Release = "Ricky-Release-2018-10-25",
-                            SendDefaultPii = true
+                            Dsn = new Dsn("http://2dfee6c5bbc844558ad3bef5f4b59ee1@sentry.nexdev.net/9"),
+                            //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1")
                         }),
                         //new EntlibLogging(new EntLibConfig(
                         //        @"FormatName:DIRECT=tcp:10.18.200.103\private$\entlib",
                         //        @"~\Logs\"))
                     });
                 //.Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
-                //LogService.Error("test message");
-                SimulateSqlException();
+                LogService.Error("test message");
+                //SimulateSqlException();
             }
             catch (Exception exception)
             {

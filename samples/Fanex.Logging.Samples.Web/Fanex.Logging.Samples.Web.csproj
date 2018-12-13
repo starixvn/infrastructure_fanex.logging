@@ -100,7 +100,14 @@
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\..\packages\RabbitMQ.Client.5.0.1\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -181,6 +188,10 @@
       <Project>{89f341b5-5fc6-455d-a3fd-877698a63830}</Project>
       <Name>Fanex.Logging.RabbitMQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.Sentry.RavenClient\Fanex.Logging.Sentry.RavenClient.csproj">
+      <Project>{07d988e3-20ff-4b3d-903a-e9fbff53b3ad}</Project>
+      <Name>Fanex.Logging.Sentry.RavenClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Extensions\Fanex.Logging.Extensions.Database\Fanex.Logging.Extensions.Database.csproj">
       <Project>{7dc7331b-a548-4a10-9f6e-8a621adac739}</Project>
       <Name>Fanex.Logging.Extensions.Database</Name>
@@ -201,6 +212,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

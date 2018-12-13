@@ -12,11 +12,11 @@
 </head>
 <body>
     <div>
+        done
     </div>
-    <script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
     <script type="text/javascript">
-        Raven.config('http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@10.18.200.119:800/3').install();
-        throw new Error("test js 2");
+        throw new Error("test js ricky");
     </script>
 </body>
 </html>

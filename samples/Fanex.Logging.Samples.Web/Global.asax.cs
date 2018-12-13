@@ -10,6 +10,8 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions.Web;
     using Fanex.Logging.RabbitMQ;
+    using Fanex.Logging.Sentry.RavenClient;
+    using SharpRaven;
     using static Fanex.Logging.Extensions.Database.DatabaseInfoGetters;
 
     public class MvcApplication : System.Web.HttpApplication
@@ -35,7 +37,15 @@
                    //.Use(new EntlibLogging(new EntLibConfig(
                    //    "FormatName:DIRECT=http://10.18.200.103:808/msmq/Private$/entlib",
                    //    @"~\Logs\")));
-                   .Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+                   //.Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+                   .Use(new SentryLogging(new SentryEngineOptions
+                   {
+                       Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
+                       GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1"),
+                       Environment = "test-loca",
+                       Release = "release1",
+                       FrontEndDsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
+                   }));
 
             ExceptionHandler
                 // To use custom config
