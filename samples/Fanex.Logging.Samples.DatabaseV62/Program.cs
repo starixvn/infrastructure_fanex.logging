@@ -35,12 +35,12 @@
                     });
                 //.Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
 
-                for (int i = 0; i < 1000; i++)
-                {
-                    CalculateLoggingSpeed();
-                }
+                //for (int i = 0; i < 2; i++)
+                //{
+                //    CalculateLoggingSpeed();
+                //}
                 
-                //SimulateSqlException();
+                SimulateSqlException();
                 Console.WriteLine("-----------DONE-----------");
             }
             catch (Exception exception)

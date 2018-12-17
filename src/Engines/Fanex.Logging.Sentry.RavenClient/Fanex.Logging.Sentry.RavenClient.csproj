@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.0-beta1</Version>
+    <Version>1.0.0</Version>
     <Authors>RnD</Authors>
     <Company>_</Company>
-    <Description>- Raven Client Sentry Logging Engine for Fanex.Logging</Description>
+    <Description>- Raven Client Sentry Logging Engine for Fanex.Logging
+- https://docs.nexdev.net/docs/fanexlogging/en/latest/</Description>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://docs.nexdev.net/docs/fanexlogging/en/latest/</PackageProjectUrl>
+    <RepositoryUrl>https://gitlab.nexcel.vn/infrastructure/fanex.logging</RepositoryUrl>
+    <PackageTags>Fanex.Logging, Logging, Sentry</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
