@@ -17,7 +17,7 @@ You can study more at https://docs.sentry.io/
 
        new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("{Your-site-sentry-token-with-intranet-ip}"),
+                            Dsn = new Dsn("{Your-site-sentry-token}"),
                             Release = "{Your-release-key}", // In case you want to keep track new issue for your releases
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
                             FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),

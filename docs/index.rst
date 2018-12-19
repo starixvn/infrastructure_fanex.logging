@@ -84,7 +84,8 @@ To use supported log engines, please refer below information:
 
         @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 
-Fannex Logging will auto generate script and listen global exception and log information for you
+- Fannex Logging will auto generate script and listen global exception and log information for you
+- As for webform site, you just need call this method to render logger `Fanex.Logging.LogManager.RenderJavascriptLogger()`
 
 Application Logging Extensions
 =========================================
