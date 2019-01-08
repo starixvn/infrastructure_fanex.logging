@@ -35,6 +35,23 @@ You can get the Your-site-sentry-token in Sentry Admin site follow this image:
 
 .. image:: ../_static/sentry-dsn.png
 
+Example:
+
+.. code:: csharp
+
+       new SentryLogging(new SentryEngineOptions
+                        {
+                            Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@10.40.40.47:801/3"),
+                            Release = "Release-2018-10-25", // In case you want to keep track new issue for your releases
+                            // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side, if you dont config, Dns config above will be used for FrontEndDsn
+                            FrontEndDsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.starific.net/3"),
+                            // If you want to log what user faces with error
+                            GetUserInfo = () => new User(.net core)/SentryUser(.net framework)
+                            {
+                                Username = "ricky.nguyen2"
+                            }
+                        });
+
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
  
 +-------------+-------------------------------------+-------------------------------------------+
