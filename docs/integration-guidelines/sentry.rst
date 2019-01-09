@@ -19,7 +19,7 @@ You can study more at https://docs.sentry.io/
                         {
                             Dsn = new Dsn("{Your-site-sentry-token}"),
                             Release = "{Your-release-key}", // In case you want to keep track new issue for your releases
-                            // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side
+                            // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side, if you dont config, Dns config above will be used for FrontEndDsn
                             FrontEndDsn = new Dsn("{Your-site-sentry-token-with-public-domain}"),
                             // If you want to log what user faces with error
                             GetUserInfo = () => new User(.net core)/SentryUser(.net framework)
@@ -58,6 +58,10 @@ Example:
 | Environment | Sentry Admin Site (Public domain)   | Intranet IP                               |                                
 +=============+=====================================+===========================================+
 | LOCAL       | https://sentry.nexdev.net                                                       |
++-------------+-------------------------------------+-------------------------------------------+
+| SIT         | http://sentry.playthefun.com        | 172.16.4.109:800                          |
++-------------+-------------------------------------+-------------------------------------------+
+| MNL         | http://sentry.ibcbk.com             | 10.11.200.202:800                         |
 +-------------+-------------------------------------+-------------------------------------------+
 | UAT - PRO   | https://sentry.starific.net         | 10.40.40.47:801                           |
 +-------------+-------------------------------------+-------------------------------------------+
