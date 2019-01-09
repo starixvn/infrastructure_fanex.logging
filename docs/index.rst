@@ -16,7 +16,7 @@ Fanex Logging, is a logging library, is one of library in Fanex Library universe
 Reasons behind the change
 =========================================
 
-Due to some drawbacks, Fanex Logging need to be revised to resolve these:
+Due to some drawbacks, Fanex Logging 1.0 need to be revised to resolve these:
 
 - Fanex Logging sticks tight coupling with *Logging Application Block (one of Microsoft Enterprise Library)*, so there is no way to use other logging engines.
 - Enterprise Library is *no longer maintained* by Microsoft
@@ -28,7 +28,7 @@ High level architect
 
 .. image:: _static/architect-overview.png
 
-Integration
+Integration Fanex Logging 2.0
 =========================================
 
 **Step 1. Setup LogManager**
