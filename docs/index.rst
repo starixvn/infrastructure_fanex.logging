@@ -33,7 +33,9 @@ Integration Fanex Logging 2.0
 
 **Step 1. Setup LogManager**
 
-This code you must put in your application startup.
+Install this Nuget package http://nuget.nexdev.net/packages/Fanex.Logging/
+
+Then you must put this code in your application startup.
 
 .. code:: csharp
 
