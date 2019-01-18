@@ -37,14 +37,18 @@
             => Handle(exception, customData, TraceEventType.Error);
 
         public static void Handle(Exception exception, IDictionary<string, object> customData, TraceEventType traceEventType)
+#pragma warning disable S4462 // Calls to "async" methods should not be blocking
             => HandleAsync(exception, customData, HttpContext.Current, traceEventType).GetAwaiter().GetResult();
+#pragma warning restore S4462 // Calls to "async" methods should not be blocking
 
         internal static void Handle(
             Exception exception,
             IDictionary<string, object> customData,
             HttpContext context,
             TraceEventType traceEventType)
+#pragma warning disable S4462 // Calls to "async" methods should not be blocking
             => HandleAsync(exception, customData, HttpContext.Current, traceEventType).GetAwaiter().GetResult();
+#pragma warning restore S4462 // Calls to "async" methods should not be blocking
 
         public static Task HandleAsync(Exception exception)
             => HandleAsync(exception, null);

@@ -88,13 +88,35 @@
         #endregion Critical
 
         public Task WriteLogAsync(string message, string category, TraceEventType traceEventType)
-            => Task.WhenAll(
-                        logEngines.Select(
+        {
+            var writeLogTasks = logEngines.Select(
                             logEngine => logEngine.WriteAsync(
                                         message,
                                         GetSeverity(traceEventType),
                                         string.IsNullOrEmpty(category)
                                             ? defaultLogCategory
-                                            : category)));
+                                            : category));
+
+#if NETSTANDARD2_0 || NET461
+            return Task.WhenAll(writeLogTasks);
+#else
+#pragma warning disable S4462 // Calls to "async" methods should not be blocking
+            Task.WaitAll(writeLogTasks.ToArray());
+#pragma warning restore S4462 // Calls to "async" methods should not be blocking
+
+            return FromResult(0);
+#endif
+
+
+        }
+
+#if NET40
+        public static Task<T> FromResult<T>(T value)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            tcs.SetResult(value);
+            return tcs.Task;
+        }
+#endif
     }
 }

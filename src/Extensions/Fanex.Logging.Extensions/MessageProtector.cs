@@ -5,7 +5,9 @@
 
     public static class MessageProtector
     {
+#pragma warning disable S4226 // Extensions should be in separate namespaces
         public static string ToCleanMessage(this LogMessage logMessage, List<string> patterns)
+#pragma warning restore S4226 // Extensions should be in separate namespaces
             => logMessage.ToString().HideSensitiveInfo(patterns);
 
         public static string HideSensitiveInfo(this string message, List<string> patterns)

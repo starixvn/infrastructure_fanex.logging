@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Data;
+    using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions.Web;
@@ -31,7 +32,7 @@
                 .UseDefaultDbSettingProvider(
                     resourcePath: "~/App_Data/")
                 .Run();
-
+            
             LogManager
                    .SetDefaultLogCategory("Fanex-Logging-Test-Web-new")
                    //.Use(new EntlibLogging(new EntLibConfig(

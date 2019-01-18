@@ -18,5 +18,7 @@ namespace Fanex.Logging.Sentry.RavenClient
         public string Environment { get; set; }
 
         public string Release { get; set; }
+
+        public int WriteLogTimeout { get; set; } = 1;
     }
 }

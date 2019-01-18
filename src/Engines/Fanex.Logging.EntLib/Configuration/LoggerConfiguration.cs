@@ -70,7 +70,9 @@
 
                 categoryConfiguration
                     .SendTo.RollingFile("RollingFlatFileListener").ToFile(filePath)
+#pragma warning disable S109 // Magic numbers should not be used
                     .RollEvery(RollInterval.Day).UseTimeStampPattern("yyyyMMdd").WhenRollFileExists(RollFileExistsBehavior.Increment).CleanUpArchivedFilesWhenMoreThan(90)
+#pragma warning restore S109 // Magic numbers should not be used
                     .WithTraceOptions(traceOptions)
                     .FormatWith(new FormatterBuilder().TextFormatterNamed("TextFormatter"));
             }

@@ -25,7 +25,7 @@
                         //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("http://2dfee6c5bbc844558ad3bef5f4b59ee1@sentry.nexdev.net/9"),
+                            Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
                             //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1")
                         }),
                         //new EntlibLogging(new EntLibConfig(
@@ -69,6 +69,7 @@
                 Console.WriteLine(logMessageAsyncMessage);
             }
 
+            Console.WriteLine("Done!!!");
             Console.ReadLine();
         }
 

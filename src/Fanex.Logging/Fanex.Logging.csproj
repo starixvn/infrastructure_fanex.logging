@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <Version>2.0.0-beta7</Version>
+    <TargetFrameworks>net40;net461;netstandard2.0</TargetFrameworks>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <Version>2.0.1-beta1</Version>
     <Authors>R&amp;D</Authors>
     <Product>_</Product>
     <Company>_</Company>
-    <Description>- Provide Logging mechanism for .Net Application</Description>
-    <PackageReleaseNotes>- Support .Net Core
+    <Description>- Support .Net Core
 - Break EntLibs dependencies
 - Support Async
-- Support multiple logging engines</PackageReleaseNotes>
+- Support multiple logging engines- Provide Logging mechanism for .Net Application</Description>
+    <PackageReleaseNotes>- Support .Net Framework 4.0</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

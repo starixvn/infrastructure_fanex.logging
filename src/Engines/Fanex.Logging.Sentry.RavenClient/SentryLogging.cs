@@ -33,13 +33,15 @@ namespace Fanex.Logging.Sentry.RavenClient
         private static RavenClient CreateRaventClient(
             SentryEngineOptions sentryEngineOptions,
             string category = null)
-            => new RavenClient(sentryEngineOptions.Dsn,
+            => new RavenClient(
+                sentryEngineOptions.Dsn,
                 sentryUserFactory: sentryEngineOptions.GetUserInfo != null
                     ? new SentryUserFactory(sentryEngineOptions.GetUserInfo)
                     : null)
             {
                 Environment = sentryEngineOptions.Environment ?? category,
-                Release = sentryEngineOptions.Release
+                Release = sentryEngineOptions.Release,
+                Timeout = TimeSpan.FromSeconds(sentryEngineOptions.WriteLogTimeout)
             };
 
         internal SentryEngineOptions GetSentryOptions
@@ -87,7 +89,11 @@ namespace Fanex.Logging.Sentry.RavenClient
         {
             Write(message, severity, category);
 
+#if NETSTANDARD2_0 || NET461
             return Task.FromResult(0);
+#else
+            return Logger.FromResult(0);
+#endif
         }
 
         public string RenderJavascriptLogger()

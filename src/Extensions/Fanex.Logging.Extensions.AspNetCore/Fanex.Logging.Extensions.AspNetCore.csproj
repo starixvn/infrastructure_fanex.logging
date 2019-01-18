@@ -21,7 +21,7 @@
     <PackageReference Include="Fanex.Logging" Version="2.0.0" />
     <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta3" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.4" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

@@ -1,21 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.0</Version>
+    <TargetFrameworks>net40;net461;netstandard2.0</TargetFrameworks>
+    <Version>1.0.1-beta2</Version>
     <Authors>RnD</Authors>
     <Company>_</Company>
     <Description>- Raven Client Sentry Logging Engine for Fanex.Logging
 - https://docs.nexdev.net/docs/fanexlogging/en/latest/</Description>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>- Support .net 4.0
+- Support config timeout for writing logs</PackageReleaseNotes>
     <PackageProjectUrl>https://docs.nexdev.net/docs/fanexlogging/en/latest/</PackageProjectUrl>
     <RepositoryUrl>https://gitlab.nexcel.vn/infrastructure/fanex.logging</RepositoryUrl>
     <PackageTags>Fanex.Logging, Logging, Sentry</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.Sentry.RavenClient.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <CodeAnalysisRuleSet>Fanex.Logging.Sentry.RavenClient.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.0" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1-beta1" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

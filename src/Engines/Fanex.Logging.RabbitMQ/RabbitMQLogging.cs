@@ -13,8 +13,11 @@
     public class RabbitMQLogging : ILogEngine
     {
         private const string RoutingKey = "RabbitMQTraceListener.LogEntryQueueRouteKey";
+        private const int OneThousand = 1000;
         private readonly IBus bus;
+#pragma warning disable S2148 // Underscores should be used to make large numbers readable
         private readonly int expirationInMiliseconds = 3600000;
+#pragma warning restore S2148 // Underscores should be used to make large numbers readable
 
         public RabbitMQLogging(
             string connectionString,
@@ -24,7 +27,7 @@
             this.bus = bus ?? RabbitMQManager.CreateBus(connectionString ?? throw new ArgumentNullException(nameof(connectionString)));
             if (expirationInSeconds > 0)
             {
-                this.expirationInMiliseconds = expirationInSeconds * 1000;
+                this.expirationInMiliseconds = expirationInSeconds * OneThousand;
             }
         }
 
