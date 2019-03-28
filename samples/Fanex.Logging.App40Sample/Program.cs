@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
@@ -26,7 +29,7 @@
                         //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
+                            Dsn = new Dsn(ConfigurationManager.AppSettings["sentryurl"]),
                             //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1")
                         }),
                         //new EntlibLogging(new EntLibConfig(
@@ -35,7 +38,15 @@
                     });
                 //.Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
                 //LogService.Error("test message");
-                SimulateSqlException();
+                for (int i = 0; i < 20; i++)
+                {
+                    if(i % 3 == 0)
+                    {
+                        Thread.Sleep(2000);
+                    }
+
+                    Task.Factory.StartNew(WriteLog, i);
+                }
             }
             catch (Exception exception)
             {
@@ -87,6 +98,17 @@
 
             Console.WriteLine("Done");
             Console.ReadLine();
+        }
+
+        private static void WriteLog(object index)
+        {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            LogService.Error("test message");
+            //SimulateSqlException();
+            stopwatch.Stop();
+
+            Console.WriteLine($"Write log {(int)index} completed at {stopwatch.ElapsedMilliseconds}");
         }
 
         private static void TestLogging()

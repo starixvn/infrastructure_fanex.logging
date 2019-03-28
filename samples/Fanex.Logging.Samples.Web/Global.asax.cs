@@ -20,6 +20,7 @@
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             //DbSettartiderManager.Current.SetConfig();
             // Fanex.Data version 2
@@ -46,6 +47,7 @@
                        Environment = "test-loca",
                        Release = "release1",
                        FrontEndDsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
+                       WriteLogTimeoutSeconds = 1
                    }));
 
             ExceptionHandler

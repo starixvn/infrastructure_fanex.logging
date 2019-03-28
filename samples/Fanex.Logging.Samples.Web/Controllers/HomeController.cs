@@ -1,19 +1,21 @@
 ﻿namespace Fanex.Logging.Samples.Web.Controllers
 {
+    using System.Threading;
     using System.Web.Mvc;
     using Fanex.Data;
     using Models;
 
     public class HomeController : Controller
     {
+        [HttpGet, HttpPost]
         public ActionResult Index()
         {
             //SetSampleSession();
-
-            var sampleZero = 0;
-            var sampleNumber = 10;
-            //// Simutate exception
-            sampleNumber = sampleNumber / sampleZero;
+            //Thread.Sleep(10000);
+            //var sampleZero = 0;
+            //var sampleNumber = 10;
+            ////// Simutate exception
+            //sampleNumber = sampleNumber / sampleZero;
 
             //return Content("Index View");
             //LogService.Error("Ricky test on wweb 2");
@@ -50,6 +52,14 @@
             };
 
             Session["Session2"] = "Session2";
+        }
+
+        [Route("test")]
+        public ActionResult SentryEndPointSimulator()
+        {
+            //Thread.Sleep(10000);
+            
+            return View();
         }
     }
 }

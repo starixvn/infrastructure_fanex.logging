@@ -4,6 +4,7 @@ namespace Fanex.Logging.Sentry
 {
     using System;
     using System.Diagnostics;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using global::Sentry;
     using global::Sentry.Protocol;
@@ -12,6 +13,7 @@ namespace Fanex.Logging.Sentry
 
     public class SentryLogging : ILogEngine
     {
+        private const int writeLogTimeoutSeconds = 1;
         private const string sentryScriptDefault = "https://browser.sentry-cdn.com/4.3.2/bundle.min.js";
         private const string es6PromiseScriptDefault = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.min.js";
         private readonly SentryEngineOptions sentryOptions;
@@ -21,9 +23,11 @@ namespace Fanex.Logging.Sentry
         private static readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            MaxDepth = 1
         };
-
+        
         public SentryLogging(
             SentryEngineOptions sentryOptions,
             string sentryScript = sentryScriptDefault,
@@ -44,6 +48,11 @@ namespace Fanex.Logging.Sentry
             this.es6PromiseScript = es6PromiseScript;
         }
 
+        private static void DefaultConfigClient(HttpClient httpClient, Dsn dsn)
+        {
+            httpClient.Timeout = TimeSpan.FromSeconds(writeLogTimeoutSeconds);
+        }
+
         internal SentryEngineOptions GetSentryOptions
             => sentryOptions
                 ?? throw new InvalidOperationException("Please init Fanex.Logging for Sentry before using.");
@@ -57,6 +66,21 @@ namespace Fanex.Logging.Sentry
             string category,
             SentryLevel sentryLevel)
         {
+            if(sentryOptions.ConfigureClient == null)
+            {
+                sentryOptions.ConfigureClient = DefaultConfigClient;
+            }
+            else
+            {
+                var customConfigureClient = sentryOptions.ConfigureClient;
+
+                sentryOptions.ConfigureClient = (httpclient, dsn) =>
+                {
+                    DefaultConfigClient(httpclient, dsn);
+                    customConfigureClient(httpclient, dsn);
+                };
+            }
+
             using (SentrySdk.Init(sentryOptions))
             {
                 SentrySdk.ConfigureScope(scope =>
@@ -101,7 +125,25 @@ namespace Fanex.Logging.Sentry
 
         public string RenderJavascriptLogger()
         {
-            var options = GetSentryOptions;
+            var backEndSentryOptions = GetSentryOptions;
+            var frontEndSentryOptions = new JavascriptSentryOptions
+            {
+                AttachStacktrace = backEndSentryOptions.AttachStacktrace,
+                Debug = backEndSentryOptions.Debug,
+                DecompressionMethods = backEndSentryOptions.DecompressionMethods,
+                DiagnosticLogger = backEndSentryOptions.DiagnosticLogger,
+                DiagnosticsLevel = backEndSentryOptions.DiagnosticsLevel,
+                Environment = backEndSentryOptions.Environment,
+                MaxBreadcrumbs = backEndSentryOptions.MaxBreadcrumbs,
+                MaxQueueItems = backEndSentryOptions.MaxQueueItems,
+                Release = backEndSentryOptions.Release,
+                RequestBodyCompressionBuffered = backEndSentryOptions.RequestBodyCompressionBuffered,
+                RequestBodyCompressionLevel = backEndSentryOptions.RequestBodyCompressionLevel,
+                SampleRate = backEndSentryOptions.SampleRate,
+                SendDefaultPii = backEndSentryOptions.SendDefaultPii,
+                ShutdownTimeout = backEndSentryOptions.ShutdownTimeout,
+                Dsn = backEndSentryOptions.FrontEndDsn ?? backEndSentryOptions.Dsn
+            };
 
             return string.Join(
                 string.Empty,
@@ -112,8 +154,8 @@ namespace Fanex.Logging.Sentry
                     ? string.Empty
                     : $"<script src=\"{sentryScript}\" crossorigin=\"anonymous\"></script>",
                 "<script type=\"text/javascript\">",
-                $"var option = {JsonConvert.SerializeObject(options, jsonSerializerSettings)};",
-                $"option.dsn=\"{options.FrontEndDsn ?? options.Dsn}\";",
+                $"var option = {JsonConvert.SerializeObject(frontEndSentryOptions, jsonSerializerSettings)};",
+                $"option.dsn=\"{frontEndSentryOptions.Dsn}\";",
                 "option.onerror=true;",
                 "option.onunhandledrejection=true;",
                 "Sentry.init(option);",

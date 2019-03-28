@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Fanex.Data;
     using Fanex.Data.CrossCutting.WrappingException;
     using Fanex.Data.OldConnectionStringProvider;
@@ -25,16 +26,22 @@
                         //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
-                            //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1")
+                            Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@demo.com/5"),
+                            //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1"),
+                            WriteLogTimeoutSeconds = 5
                         }),
                         //new EntlibLogging(new EntLibConfig(
                         //        @"FormatName:DIRECT=tcp:10.18.200.103\private$\entlib",
                         //        @"~\Logs\"))
                     });
                 //.Use(new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 LogService.Error("test message");
                 //SimulateSqlException();
+                stopwatch.Stop();
+
+                Console.WriteLine($"Completed at {stopwatch.ElapsedMilliseconds}");
             }
             catch (Exception exception)
             {

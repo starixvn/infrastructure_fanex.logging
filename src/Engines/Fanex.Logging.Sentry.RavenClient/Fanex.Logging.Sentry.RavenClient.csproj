@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40;net461;netstandard2.0</TargetFrameworks>
-    <Version>1.0.1-beta2</Version>
+    <Version>1.0.1</Version>
     <Authors>RnD</Authors>
     <Company>_</Company>
     <Description>- Raven Client Sentry Logging Engine for Fanex.Logging
@@ -23,9 +23,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.1-beta1" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

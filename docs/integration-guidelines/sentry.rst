@@ -25,7 +25,16 @@ You can study more at https://docs.sentry.io/
                             GetUserInfo = () => new User(.net core)/SentryUser(.net framework)
                             {
                                 Username = "ricky.nguyen2"
+                            },
+                            // Incase you need to config timeout when write log, you can config:
+                            // For .net framework
+                            WriteLogTimeoutSeconds = 2
+                            // For .net core
+                            ConfigureClient = (httpClient, dsn) =>
+                            {
+                               httpClient.Timeout = TimeSpan.FromSeconds(2);
                             }
+                            // Be noted that default timeout is 1 second when you don't config
                         });
 
 
@@ -49,25 +58,37 @@ Example:
                             GetUserInfo = () => new User(.net core)/SentryUser(.net framework)
                             {
                                 Username = "ricky.nguyen2"
+                            },
+                            // Incase you need to config timeout when write log, you can config:
+                            // For .net framework
+                            WriteLogTimeoutSeconds = 2
+                            // For .net core
+                            ConfigureClient = (httpClient, dsn) =>
+                            {
+                               httpClient.Timeout = TimeSpan.FromSeconds(2);
                             }
+                            // Be noted that default timeout is 1 second when you don't config
                         });
 
 **Step 2. Change {Your-site-sentry-token} depend on your environment, this information you can config in sentry admin site**
  
-+-------------+-------------------------------------+-------------------------------------------+
-| Environment | Sentry Admin Site (Public domain)   | Intranet IP                               |                                
-+=============+=====================================+===========================================+
-| LOCAL       | https://sentry.nexdev.net                                                       |
-+-------------+-------------------------------------+-------------------------------------------+
-| SIT         | http://sentry.playthefun.com        | 172.16.4.109:800                          |
-+-------------+-------------------------------------+-------------------------------------------+
-| MNL         | http://sentry.ibcbk.com             | 10.11.200.202:800                         |
-+-------------+-------------------------------------+-------------------------------------------+
-| UAT - PRO   | https://sentry.starific.net         | 10.40.40.47:801                           |
-+-------------+-------------------------------------+-------------------------------------------+
++-------------+----------------------------------+-----------------------------------+-------------------------------------------+
+| Environment | Sentry Admin Site (Public domain)| Dsn (Back-end) Config             | FrontEndDsn Config                        |                               
++=============+==================================+===================================+===========================================+
+| LOCAL       | https://sentry.nexdev.net        | http://xxx@sentry.nexdev.net/xxx  | http://xxx@sentry.nexdev.net/xxx          |                    
++-------------+----------------------------------+-----------------------------------+-------------------------------------------+
+| SIT         | http://sentry.playthefun.com     | http://xxx@172.16.4.109:800/xxx   | https://xxx@sentry.playthefun.com/xxx     |                            
++-------------+----------------------------------+-----------------------------------+-------------------------------------------+
+| MNL         | http://sentry.ibcbk.com          | http://xxx@10.11.200.202:800/xxx  | http://xxx@sentry.ibcbk.com/xxx           |                               
++-------------+----------------------------------+-----------------------------------+-------------------------------------------+
+| UAT - PRO   | https://sentry.starific.net      | http://xxx@10.40.40.47:801/xxx    | https://xxx@sentry.starific.net/xxx       |                       
++-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 
 *Notes:* 
 
+- After your site started, you should write an information log to ensure your site can send log to sentry server
+- You must replace xxx by your site Dsn
+- When using intranet IP, please remove 's' in https, in
 - In order to login to above sites, please contact NexOps team to get login account
 - Because of the security reason, All accounts in domain https://sentry.starific.net are required to use 2FA to login, `please follow these steps below to setup it  <sentry-otp.html>`_
 

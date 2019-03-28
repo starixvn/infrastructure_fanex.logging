@@ -24,6 +24,7 @@
     <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
     <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.5" />
+    <PackageReference Include="Fanex.Logging.Sentry" Version="1.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.7.1.4347">
@@ -34,6 +35,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Engines\Fanex.Logging.RabbitMQ\Fanex.Logging.RabbitMQ.csproj" />
-    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.Sentry\Fanex.Logging.Sentry.csproj" />
   </ItemGroup>
 </Project>

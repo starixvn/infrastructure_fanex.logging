@@ -19,6 +19,8 @@ namespace Fanex.Logging.Sentry.RavenClient
 
         public string Release { get; set; }
 
-        public int WriteLogTimeout { get; set; } = 1;
+        public double WriteLogTimeoutSeconds { get; set; } = 1d;
+
+        public bool IgnoreBreadcrumbs { get; set; }
     }
 }

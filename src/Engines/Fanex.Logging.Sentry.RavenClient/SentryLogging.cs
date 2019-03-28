@@ -3,7 +3,6 @@ namespace Fanex.Logging.Sentry.RavenClient
 {
     using System;
     using System.Diagnostics;
-    using System.Net;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
@@ -34,14 +33,14 @@ namespace Fanex.Logging.Sentry.RavenClient
             SentryEngineOptions sentryEngineOptions,
             string category = null)
             => new RavenClient(
-                sentryEngineOptions.Dsn,
-                sentryUserFactory: sentryEngineOptions.GetUserInfo != null
-                    ? new SentryUserFactory(sentryEngineOptions.GetUserInfo)
-                    : null)
+                    sentryEngineOptions.Dsn,
+                    sentryUserFactory: sentryEngineOptions.GetUserInfo != null
+                        ? new SentryUserFactory(sentryEngineOptions.GetUserInfo)
+                        : null)
             {
                 Environment = sentryEngineOptions.Environment ?? category,
                 Release = sentryEngineOptions.Release,
-                Timeout = TimeSpan.FromSeconds(sentryEngineOptions.WriteLogTimeout)
+                Timeout = TimeSpan.FromSeconds(sentryEngineOptions.WriteLogTimeoutSeconds)
             };
 
         internal SentryEngineOptions GetSentryOptions

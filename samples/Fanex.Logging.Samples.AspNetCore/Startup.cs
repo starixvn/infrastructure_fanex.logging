@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Fanex.Data;
 using Fanex.Logging.Extensions;
@@ -38,14 +39,18 @@ namespace Fanex.Logging.Samples.AspNetCore
                        new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                        new SentryLogging(new SentryEngineOptions
                        {
-                           Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.nexdev.net/3"),
-                           //FrontEndDsn = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
+                           Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
+                           FrontEndDsn = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
                            Release = "Release-2018-10-25",
                            //AttachStacktrace = true,
                            //SendDefaultPii = true,
                            GetUserInfo = () => new User
                            {
                                Username = "ricky.nguyen2"
+                           },
+                           ConfigureClient = (httpClient, dsn) =>
+                           {
+                               httpClient.Timeout = TimeSpan.FromSeconds(0.0005);
                            }
                        })
                    });
