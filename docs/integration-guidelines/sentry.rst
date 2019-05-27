@@ -92,7 +92,7 @@ Example:
 - When using intranet IP, please remove 's' in https because IP does not have SSL
 - In order to login to above sites, please contact NexOps team to get login account
 - Because of the security reason, All accounts in domain https://sentry.starific.net are required to use 2FA to login, `please follow these steps below to setup it  <sentry-otp.html>`_
-- To name you project, *please do not include environment name to your project, you can use Environment filter instead*
+- To name you project, **please do not include environment name to your project, you can use Environment filter instead**
 
 .. image:: ../_static/en-filter.png 
 
