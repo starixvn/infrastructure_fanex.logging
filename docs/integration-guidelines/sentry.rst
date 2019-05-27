@@ -4,6 +4,7 @@ Sentry Integration
 
 Sentry is Open-source error tracking that helps developers monitor and fix crashes in real time. Iterate continuously. Boost efficiency. Improve user experience. 
 You can study more at https://docs.sentry.io/
+[Notes]_
 
 
 **Step 1. Setup SentryLogging**
@@ -84,7 +85,7 @@ Example:
 | UAT - PRO   | https://sentry.starific.net      | http://xxx@10.40.40.47:801/xxx    | https://xxx@sentry.starific.net/xxx       |                       
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 
-*Notes:* 
+.. [Notes] :
 
 - After your site started, you should write an information log to ensure your site can send log to sentry server
 - You must replace xxx by your site Dsn
@@ -98,5 +99,6 @@ Example:
 - To select which event level will be sent through email, you can config project rule
 
 .. image:: ../_static/filter-level.png 
+
 
 
