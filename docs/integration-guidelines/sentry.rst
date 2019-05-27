@@ -96,7 +96,7 @@ Example:
 
 .. image:: ../_static/en-filter.png 
 
-- To select which event level will be sent through email, you can config project rule
+- To select which event level will be sent through email, you can config project rules
 
 .. image:: ../_static/filter-level.png 
 
