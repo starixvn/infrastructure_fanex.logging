@@ -37,6 +37,10 @@
     <!-- Exclude the project from analysis -->
     <SonarQubeExclude>true</SonarQubeExclude>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Exclude the project from analysis -->
+    <SonarQubeExclude>true</SonarQubeExclude>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Dapper.1.50.2\lib\net40\Dapper.dll</HintPath>
@@ -84,7 +88,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Fanex.Logging.App40Sample.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -99,8 +99,18 @@
             }
             else
             {
-                return WriteExceptionAsync(exception.Message, exception);
+                return WriteNullContextException(exception);
             }
+        }
+
+        private static Task WriteNullContextException(Exception exception)
+        {
+            var logMessage = new LogMessage()
+                               .AddMessage(exception.Message);
+
+            AddCommonSections(logMessage, exception);
+
+            return WriteExceptionAsync(logMessage.ToCleanMessage(config.Patterns), exception);
         }
 
         private static Func<string, Task> GetWriteLogMethod(TraceEventType traceEventType)
@@ -132,13 +142,9 @@
             var logMessage = new LogMessage()
                                 .AddMessage(exception.Message)
                                 .AddSection("request info", () => GetRequestInfo(request))
-                                .AddSection("browser info", () => GetBrowserInfo(request.Browser))
-                                .AddSection("server info", () => GetServerInfo())
-                                .AddSection("database info", () => config.GetDbExceptionInfo != null
-                                                                    ? config.GetDbExceptionInfo(exception)
-                                                                    : Constants.EmptyDictionary)
-                                .AddSection("custom info", () => customData)
-                                .AddSection("exception info", () => GetExceptionInfo(exception));
+                                .AddSection("browser info", () => GetBrowserInfo(request.Browser));
+
+            AddCommonSections(logMessage, exception, customData);
 
             if (config.EnabledLogHttpHeader)
             {
@@ -151,6 +157,20 @@
             }
 
             return logMessage.ToCleanMessage(config.Patterns);
+        }
+
+        private static void AddCommonSections(
+            LogMessage logMessage, 
+            Exception exception, 
+            IDictionary<string, object> customData = null)
+        {
+            logMessage
+                .AddSection("server info", () => GetServerInfo())
+                .AddSection("database info", () => config.GetDbExceptionInfo != null
+                                                    ? config.GetDbExceptionInfo(exception)
+                                                    : Constants.EmptyDictionary)
+                .AddSection("custom info", () => customData)
+                .AddSection("exception info", () => GetExceptionInfo(exception));
         }
 
         internal static Func<HttpRequest, IDictionary<string, object>> GetRequestInfo { get; set; } = WebInfoGetters.GetRequestInfo;

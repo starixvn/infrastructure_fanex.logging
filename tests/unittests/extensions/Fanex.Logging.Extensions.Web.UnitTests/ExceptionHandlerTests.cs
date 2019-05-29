@@ -88,11 +88,20 @@
             // Arrange
             var exception = new DllNotFoundException();
 
+            ExceptionHandler.GetServerInfo = () => new Dictionary<string, object> { ["server"] = "server data" };
+            ExceptionHandler.GetExceptionInfo = (ex) => new Dictionary<string, object> { ["exception"] = "exception data" };
+            ExceptionHandler.UseGetDbExceptionInfo((ex) => new Dictionary<string, object> { ["database"] = "database data" });
+
             // Act
             ExceptionHandler.Handle(exception, null, null, TraceEventType.Error);
 
             // Assert
-            writeException.Received().Invoke(exception.Message, exception);
+            writeException.Received().Invoke(
+                "Dll was not found.\r\n\r\n"
+                + "SERVER INFO\r\n\tserver: server data\r\n\r\n"
+                + "DATABASE INFO\r\n\tdatabase: database data\r\n\r\n"
+                + "EXCEPTION INFO\r\n\texception: exception data\r\n", 
+                exception);
         }
 
         [Fact]

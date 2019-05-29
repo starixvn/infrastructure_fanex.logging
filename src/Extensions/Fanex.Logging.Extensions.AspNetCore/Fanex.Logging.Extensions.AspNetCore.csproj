@@ -5,8 +5,9 @@
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
-    <Version>1.0.0-beta4</Version>
-    <PackageReleaseNotes>- Support logging for AspNetCore site</PackageReleaseNotes>
+    <Version>1.0.1-beta1</Version>
+    <PackageReleaseNotes>- Log more information when http context is null</PackageReleaseNotes>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -19,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fanex.Logging" Version="2.0.0" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6-beta3" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.4" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
       <PrivateAssets>all</PrivateAssets>
