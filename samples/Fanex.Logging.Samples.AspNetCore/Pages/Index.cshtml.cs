@@ -14,22 +14,24 @@ namespace Fanex.Logging.Samples.AspNetCore.Pages
 
         public void OnGet()
         {
-            HttpContext.Session.SetString("demo", "value");
-            HttpContext.Session.SetInt32("demo1", 34343);
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
             LogService.Error("test message 1");
-            stopwatch.Stop();
+            SqlException();
+            //HttpContext.Session.SetString("demo", "value");
+            //HttpContext.Session.SetInt32("demo1", 34343);
 
-            CompletedTime1 = stopwatch.ElapsedMilliseconds.ToString();
+            //var stopwatch = new Stopwatch();
+            //stopwatch.Start();
+            //LogService.Error("test message 1");
+            //stopwatch.Stop();
 
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            LogService.Error("test message 2");
-            stopwatch.Stop();
+            //CompletedTime1 = stopwatch.ElapsedMilliseconds.ToString();
 
-            CompletedTime2 = stopwatch.ElapsedMilliseconds.ToString();
+            //stopwatch = new Stopwatch();
+            //stopwatch.Start();
+            //LogService.Error("test message 2");
+            //stopwatch.Stop();
+
+            //CompletedTime2 = stopwatch.ElapsedMilliseconds.ToString();
 
 
         }
