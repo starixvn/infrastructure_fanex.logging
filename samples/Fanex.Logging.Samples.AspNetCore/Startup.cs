@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Fanex.Data;
+using Fanex.Data.SqlServer;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
@@ -39,18 +40,13 @@ namespace Fanex.Logging.Samples.AspNetCore
                        new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                        new SentryLogging(new SentryEngineOptions
                        {
-                           Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
-                           FrontEndDsn = new Dsn("http://5dff1e44f5c549c19e528a9c272a2b84@sentry.nexdev.net/5"),
+                           Dsn = new Dsn("http://dd81659b4bdb4857b023ef046b212844@sentry.nexdev.net/5"),
                            Release = "Release-2018-10-25",
                            //AttachStacktrace = true,
                            //SendDefaultPii = true,
                            GetUserInfo = () => new User
                            {
                                Username = "ricky.nguyen2"
-                           },
-                           ConfigureClient = (httpClient, dsn) =>
-                           {
-                               httpClient.Timeout = TimeSpan.FromSeconds(0.0005);
                            }
                        })
                    });
@@ -74,11 +70,12 @@ namespace Fanex.Logging.Samples.AspNetCore
 
             DbSettingProviderManager
                 .StartNewSession()
-                .UseConnectionStrings(new Dictionary<string, string>
+                .WithSqlServer(resourcePath: "~/App_Data")
+                .Use(new Dictionary<string, ConnectionConfiguration>
                 {
-                    { "DBBOT.bodb_Chatbot.BODBDownlineNet", "packet size=4096; Data Source=DB231\\SQLSERVER2008R2;Initial Catalog=bodb_Chatbot;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk==" }
+                    
+                    { "DBBOT.bodb_Chatbot.BODBDownlineNet", new ConnectionConfiguration("DBBOT.bodb_Chatbot.BODBDownlineNet","packet size=4096; Data Source=DB231\\SQLSERVER2008R2;Initial Catalog=bodb_Chatbot;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk==") }
                 })
-                .UseDefaultDbSettingProvider(resourcePath: "~/App_Data/")
                 .Run();
 
             ExceptionHandler
@@ -104,6 +101,8 @@ namespace Fanex.Logging.Samples.AspNetCore
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
             services.AddSession();
+
+            LogService.Error("test message 1");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -23,13 +23,13 @@ namespace Fanex.Logging.Extensions.Database
 
         private static IDictionary<string, object> GetObjectDbExceptionInfo(ObjectDbException ex)
         {
-            var connString = new SqlConnectionStringBuilder(ex.ConnectionString);
+            var connectionStringBuilder = new ConnectionStringBuilder(ex.ConnectionString);
 
             return new Dictionary<string, object>
             {
-                ["Server"] = connString.DataSource,
+                ["Server"] = connectionStringBuilder.GetServer(),
                 [nameof(ex.DbName)] = ex.DbName,
-                [nameof(connString.UserID)] = connString.UserID,
+                ["UserId"] = connectionStringBuilder.GetUserId(),
                 [nameof(ex.SpName)] = ex.SpName,
                 ["Parameters"] = GetParameters(ex.Parameters),
                 ["Line"] = CommonInfoGetters.GetLineNumber(ex),
@@ -37,7 +37,7 @@ namespace Fanex.Logging.Extensions.Database
             };
         }
 
-        internal static string GetParameters(ICollection parameters)
+        internal static string GetParameters(IDictionary<string, object> parameters)
             => parameters.Count > 0
                 ? parameters.Cast<KeyValuePair<string, object>>()
                         .Select(parameter => $"{parameter.Key}={parameter.Value}")
