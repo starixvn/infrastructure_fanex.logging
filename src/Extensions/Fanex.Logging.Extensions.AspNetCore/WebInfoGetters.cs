@@ -34,7 +34,7 @@ namespace Fanex.Logging.Extensions.AspNetCore
 
         public static IDictionary<string, object> GetBrowserInfo(HttpRequest request)
         {
-            if (request == null)
+            if (request == null || !request.Headers.ContainsKey("User-Agent"))
             {
                 return Constants.EmptyDictionary;
             }

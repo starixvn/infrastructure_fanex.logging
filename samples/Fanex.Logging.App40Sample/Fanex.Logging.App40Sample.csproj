@@ -104,5 +104,11 @@
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.11.0.8083\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.11.0.8083\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Engines\Fanex.Logging.RabbitMQ\Fanex.Logging.RabbitMQ.csproj">
+      <Project>{89f341b5-5fc6-455d-a3fd-877698a63830}</Project>
+      <Name>Fanex.Logging.RabbitMQ</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
