@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
-    <Version>1.0.7-beta1</Version>
+    <Version>1.0.8</Version>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
     <Description>- Extension for logging Database Information</Description>
-    <PackageReleaseNotes>- Support logging MySql exception information</PackageReleaseNotes>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <PackageReleaseNotes>- Support logging MySql exception information
+- Correct dll version</PackageReleaseNotes>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net461|AnyCPU'">
