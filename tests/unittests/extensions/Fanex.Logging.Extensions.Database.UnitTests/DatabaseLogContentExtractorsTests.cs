@@ -31,7 +31,7 @@
                 "DbName",
                 "packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;",
                 600,
-                new Hashtable { { "Name", "Value" } });
+                new Dictionary<string,string> { { "Name", "Value" } });
 
             // Act
             var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(objectDBException);
@@ -42,7 +42,7 @@
                 {
                     ["Server"] = "10.18.200.232",
                     ["DbName"] = "DbName",
-                    ["UserID"] = "bodbAdminNet",
+                    ["UserId"] = "bodbAdminNet",
                     ["SpName"] = "SPNAME",
                     ["Parameters"] = "",
                     ["Line"] = 0,
@@ -125,7 +125,7 @@
                 "DbName",
                 "packet size=4096; Data Source=10.18.200.232;Initial Catalog=bodb_OER;integrated security=false; User Id=bodbAdminNet;Password=23232323;",
                 600,
-                new Hashtable { { "Name", "Value" } });
+                new Dictionary<string,string> { { "Name", "Value" } });
 
             // Act
             var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(new Exception("Message", objectDBException));
@@ -136,7 +136,7 @@
                 {
                     ["Server"] = "10.18.200.232",
                     ["DbName"] = "DbName",
-                    ["UserID"] = "bodbAdminNet",
+                    ["UserId"] = "bodbAdminNet",
                     ["SpName"] = "SPNAME",
                     ["Parameters"] = "",
                     ["Line"] = 0,

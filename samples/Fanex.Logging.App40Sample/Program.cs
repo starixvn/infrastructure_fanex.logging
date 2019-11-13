@@ -13,6 +13,7 @@
     using Fanex.Data.OldConnectionStringProvider;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry.RavenClient;
     using SharpRaven;
 
@@ -26,7 +27,7 @@
                     .SetDefaultLogCategory("Fanex.Logging.Tests")
                     .Use(new List<ILogEngine>
                     {
-                        new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
+                        //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
                             Dsn = new Dsn(ConfigurationManager.AppSettings["sentryurl"]),

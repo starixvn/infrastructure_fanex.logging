@@ -34,7 +34,7 @@ namespace Fanex.Logging.Extensions.AspNetCore
 
         public static IDictionary<string, object> GetBrowserInfo(HttpRequest request)
         {
-            if (request == null || !request.Headers.ContainsKey("User-Agent"))
+            if (request == null || request.Headers == null || !request.Headers.ContainsKey("User-Agent"))
             {
                 return Constants.EmptyDictionary;
             }
@@ -42,7 +42,7 @@ namespace Fanex.Logging.Extensions.AspNetCore
             var userAgent = new UserAgent.UserAgent(request.Headers["User-Agent"]);
             return new Dictionary<string, object>
             {
-                ["Platform"] = $"{userAgent.OS.Name} {userAgent.OS.Version} ",
+                ["Platform"] = $"{userAgent.OS.Name} {userAgent.OS.Version}",
                 ["Browser"] = $"{userAgent.Browser.Name} {userAgent.Browser.Version}"
             };
         }

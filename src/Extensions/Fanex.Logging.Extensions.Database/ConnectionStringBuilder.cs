@@ -10,7 +10,7 @@
         internal const string DefaultServerKeyword = "data source";
         internal const string DefaultUserIdKeyword = "user id";
 
-        internal static readonly string[] ServerAliases = { DefaultServerKeyword, "server", "host", "datasource", "address", "add", "network address" };
+        internal static readonly string[] ServerAliases = { DefaultServerKeyword, "server", "host", "datasource", "address", "addr", "network address" };
         internal static readonly string[] UserIdAliases = { DefaultUserIdKeyword, "uid", "username", "user name", "user", "userid" };
 
         private readonly IDictionary<string, string> connectionStringKeyValuePairs;
@@ -21,7 +21,7 @@
                 ?? throw new ArgumentNullException(nameof(connectionString)));
         }
 
-        private IDictionary<string, string> BuildConnectionStringKeyValues(string connectionString)
+        private static IDictionary<string, string> BuildConnectionStringKeyValues(string connectionString)
             => connectionString.Split(';')
                             .Where(kvp => kvp.Contains('='))
                             .Select(kvp => kvp.Split(new[] { '=' }, splitIndex))

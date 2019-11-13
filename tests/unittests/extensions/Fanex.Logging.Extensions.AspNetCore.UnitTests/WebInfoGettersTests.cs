@@ -82,6 +82,7 @@
         public void GetBrowserInfo_Always_ReturnBrowserInfo()
         {
             // Arrange
+            httpRequest.Headers.ContainsKey("User-Agent").Returns(true);
             httpRequest.Headers["User-Agent"].Returns(new StringValues("Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.10) Gecko/20100914 Firefox/3.6.10"));
 
             // Act
@@ -91,7 +92,7 @@
             AssertExtensions.Equal(
                 new Dictionary<string, object>
                 {
-                    ["Platform"] = "Windows 7 ",
+                    ["Platform"] = "Windows 7",
                     ["Browser"] = "Firefox 3.6.10"
                 },
                 browserInfo);
