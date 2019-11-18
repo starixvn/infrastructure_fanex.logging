@@ -23,7 +23,7 @@ Entlibs with MSMQ Integration
 | LOCAL       | - FormatName:DIRECT=tcp:10.18.200.103\private$\entlib                                                                                  |
 |             | - FormatName:DIRECT=tcp:10.18.200.104\private$\entlib                                                                                  |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
-| UAT         | - FormatName:DIRECT=tcp:10.40.40.73\private$\entlib                                                                                    |
+| UAT         | - FormatName:DIRECT=tcp:10.99.99.101\private$\entlib                                                                                    |
 |             | - FormatName:DIRECT=tcp:10.40.40.75\private$\entlib                                                                                    |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | PRO         | - ALPHA: FormatName:DIRECT=tcp:10.40.40.20\private$\entlib                                                                             |

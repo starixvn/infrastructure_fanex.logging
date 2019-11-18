@@ -19,7 +19,7 @@ Entlibs with RabbitMQ Integration
 +=============+========================================================================================================================================+
 | LOCAL       | host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw==                                  |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
-| UAT         | host=10.99.99.37:5673;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=           |
+| UAT         | host=10.99.99.101:5672;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=           |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | SIT         | host=172.16.4.106,172.16.4.107;virtualHost=/fanex_logging;username=fanexlogging;password=VKREKUBBd2T3DAtosbDPojl4YQFDnDp7Yilb8JGcLQ8=  |
 +-------------+----------------------------------------------------------------------------------------------------------------------------------------+
