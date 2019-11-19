@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'fanex.logging'
-copyright = '2018, fanex.logging'
+copyright = '2018, fanex.logging, if you have any questions or concerns please contact Ricky.Nguyen'
 author = 'fanex.logging'
 
 # The short X.Y version
