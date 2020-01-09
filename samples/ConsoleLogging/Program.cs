@@ -23,12 +23,12 @@
                     .SetDefaultLogCategory("Fanex.Logging.Tests")
                     .Use(new List<ILogEngine>
                     {
-                        new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
+                        //new RabbitMQLogging("host=10.18.200.103;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="),
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("https://dd81659b4bdb4857b023ef046b212844@demo.com/5"),
+                            Dsn = new Dsn("https://0150ec6d00b34ebd83a2b2f583dba06e@sentry.starific.net/11"),
                             //GetUserInfo = () => new SharpRaven.Data.SentryUser("ricky.test.1"),
-                            WriteLogTimeoutSeconds = 5
+                            WriteLogTimeoutSeconds = 100
                         }),
                         //new EntlibLogging(new EntLibConfig(
                         //        @"FormatName:DIRECT=tcp:10.18.200.103\private$\entlib",
