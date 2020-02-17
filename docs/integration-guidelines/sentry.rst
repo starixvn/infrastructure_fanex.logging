@@ -51,7 +51,7 @@ Example:
 
        new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@10.99.99.37:801/3"),
+                            Dsn = new Dsn("http://cedc74b2ae244da599820b107361e389@10.99.99.51:801/3"),
                             Release = "Release-2018-10-25", // In case you want to keep track new issue for your releases
                             // You need to set FrontEndDsn in case your front-end side accesses to different Sentry endpoint with back-end side, if you dont config, Dns config above will be used for FrontEndDsn
                             FrontEndDsn = new Dsn("http://cedc74b2ae244da599820b107361e389@sentry.starific.net/3"),
@@ -82,7 +82,7 @@ Example:
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 | MNL         | http://sentry.ibcbk.com          | http://xxx@10.11.200.202:800/xxx  | http://xxx@sentry.ibcbk.com/xxx           |                               
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
-| UAT - PRO   | https://sentry.starific.net      | http://xxx@10.99.99.37:801/xxx    | https://xxx@sentry.starific.net/xxx       |                       
+| UAT - PRO   | https://sentry.starific.net      | http://xxx@10.99.99.51:801/xxx    | https://xxx@sentry.starific.net/xxx       |                       
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 
 .. [Notes] :
