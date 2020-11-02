@@ -76,7 +76,7 @@ Example:
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 | Environment | Sentry Admin Site (Public domain)| Dsn (Back-end) Config             | FrontEndDsn Config                        |                               
 +=============+==================================+===================================+===========================================+
-| LOCAL       | https://sentry.nexdev.net        | http://xxx@sentry.nexdev.net/xxx  | http://xxx@sentry.nexdev.net/xxx          |                    
+| LOCAL       | https://sentry.nexdev.net        | http://xxx@10.18.200.140:800/xxx  | http://xxx@sentry.nexdev.net/xxx          |                    
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
 | SIT         | http://sentry.playthefun.com     | http://xxx@172.16.4.109:800/xxx   | https://xxx@sentry.playthefun.com/xxx     |                            
 +-------------+----------------------------------+-----------------------------------+-------------------------------------------+
