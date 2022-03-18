@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
       <PrivateAssets>all</PrivateAssets>

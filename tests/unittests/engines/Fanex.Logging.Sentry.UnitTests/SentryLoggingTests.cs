@@ -14,7 +14,7 @@
         private readonly Action<SentryOptions, string, string, SentryLevel> captureMessageAction;
         private readonly SentryEngineOptions sentryOptions = new SentryEngineOptions
         {
-            Dsn = new Dsn("http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3")
+            Dsn = "http://21a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3"
         };
 
         public SentryLoggingTests()
@@ -101,7 +101,7 @@
         [Fact]
         public void RenderJavascriptLogger_WithFrontEndDsn_ReturnSentryJavascriptWithFrontEndDns()
         {
-            sentryLogging.GetSentryOptions.FrontEndDsn = new Dsn("http://112a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3");
+            sentryLogging.GetSentryOptions.FrontEndDsn = "http://112a8f21f7c5a4cc1b9c79bb68fb0ebb9@sentry.nexdev.net/3";
 
             var sentryJs = sentryLogging.RenderJavascriptLogger();
 

@@ -23,7 +23,7 @@
 
         public int MaxQueueItems { get; set; }
 
-        public Dsn Dsn { get; set; }
+        public string Dsn { get; set; }
 
         public string Environment { get; set; }
 

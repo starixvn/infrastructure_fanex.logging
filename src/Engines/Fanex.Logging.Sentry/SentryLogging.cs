@@ -7,7 +7,6 @@ namespace Fanex.Logging.Sentry
     using System.Net.Http;
     using System.Threading.Tasks;
     using global::Sentry;
-    using global::Sentry.Protocol;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -27,7 +26,7 @@ namespace Fanex.Logging.Sentry
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             MaxDepth = 1
         };
-        
+
         public SentryLogging(
             SentryEngineOptions sentryOptions,
             string sentryScript = sentryScriptDefault,
@@ -48,7 +47,7 @@ namespace Fanex.Logging.Sentry
             this.es6PromiseScript = es6PromiseScript;
         }
 
-        private static void DefaultConfigClient(HttpClient httpClient, Dsn dsn)
+        private static void DefaultConfigClient(HttpClient httpClient )
         {
             httpClient.Timeout = TimeSpan.FromSeconds(writeLogTimeoutSeconds);
         }
@@ -66,7 +65,7 @@ namespace Fanex.Logging.Sentry
             string category,
             SentryLevel sentryLevel)
         {
-            if(sentryOptions.ConfigureClient == null)
+            if (sentryOptions.ConfigureClient == null)
             {
                 sentryOptions.ConfigureClient = DefaultConfigClient;
             }
@@ -74,10 +73,10 @@ namespace Fanex.Logging.Sentry
             {
                 var customConfigureClient = sentryOptions.ConfigureClient;
 
-                sentryOptions.ConfigureClient = (httpclient, dsn) =>
+                sentryOptions.ConfigureClient = (httpclient) =>
                 {
-                    DefaultConfigClient(httpclient, dsn);
-                    customConfigureClient(httpclient, dsn);
+                    DefaultConfigClient(httpclient);
+                    customConfigureClient(httpclient);
                 };
             }
 
@@ -132,7 +131,7 @@ namespace Fanex.Logging.Sentry
                 Debug = backEndSentryOptions.Debug,
                 DecompressionMethods = backEndSentryOptions.DecompressionMethods,
                 DiagnosticLogger = backEndSentryOptions.DiagnosticLogger,
-                DiagnosticsLevel = backEndSentryOptions.DiagnosticsLevel,
+                DiagnosticsLevel = backEndSentryOptions.DiagnosticLevel,
                 Environment = backEndSentryOptions.Environment,
                 MaxBreadcrumbs = backEndSentryOptions.MaxBreadcrumbs,
                 MaxQueueItems = backEndSentryOptions.MaxQueueItems,

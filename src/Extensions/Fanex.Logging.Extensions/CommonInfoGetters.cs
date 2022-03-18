@@ -21,14 +21,34 @@
             };
 
         public static IDictionary<string, object> GetServerInfo()
-           => new Dictionary<string, object>
-           {
-               ["Server IP"] = GetMachineIP(Dns.GetHostEntry(Dns.GetHostName())),
-               [nameof(Environment.MachineName)] = Environment.MachineName,
-               [nameof(Environment.OSVersion)] = Environment.OSVersion,
-               ["System Time"] = DateTime.Now,
-               ["User Domain"] = $"{Environment.UserDomainName}/{Environment.UserName}"
-           };
+        {
+            IPHostEntry GetHostEntry(string name)
+            {
+                try
+                {
+                    return Dns.GetHostEntry(name);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(e.Message + $". Error when call Dns.GetHostEntry. Hostname: {name}", e);
+                }
+            }
+
+            var hostname = Dns.GetHostName();
+
+            var hostEntry = GetHostEntry(hostname);
+            var getServerInfo = new Dictionary<string, object>
+            {
+                ["Server IP"] = GetMachineIP(hostEntry),
+                [nameof(Environment.MachineName)] = Environment.MachineName,
+                [nameof(Environment.OSVersion)] = Environment.OSVersion,
+                ["System Time"] = DateTime.Now,
+                ["User Domain"] = $"{Environment.UserDomainName}/{Environment.UserName}"
+            };
+
+            return getServerInfo;
+        }
+
 
         public static Exception GetInnerException<TInnerExceptionType>(this Exception exception)
         {
