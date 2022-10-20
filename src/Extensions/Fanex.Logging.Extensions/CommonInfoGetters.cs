@@ -6,6 +6,7 @@
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
+    using System.Xml.Linq;
 
     public static class CommonInfoGetters
     {
@@ -22,21 +23,9 @@
 
         public static IDictionary<string, object> GetServerInfo()
         {
-            IPHostEntry GetHostEntry(string name)
-            {
-                try
-                {
-                    return Dns.GetHostEntry(name);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception(e.Message + $". Error when call Dns.GetHostEntry. Hostname: {name}", e);
-                }
-            }
-
             var hostname = Dns.GetHostName();
 
-            var hostEntry = GetHostEntry(hostname);
+            var hostEntry = Dns.GetHostEntry(hostname);
             var getServerInfo = new Dictionary<string, object>
             {
                 ["Server IP"] = GetMachineIP(hostEntry),

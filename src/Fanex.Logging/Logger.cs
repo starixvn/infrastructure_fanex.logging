@@ -33,10 +33,7 @@
                 {
                     lock (syncRoot)
                     {
-                        if (logger == null)
-                        {
-                            logger = new Logger();
-                        }
+                        logger = logger?? new Logger();
                     }
                 }
 
