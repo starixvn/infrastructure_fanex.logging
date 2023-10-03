@@ -88,7 +88,7 @@ namespace Fanex.Logging.Sentry.RavenClient
         {
             Write(message, severity, category);
 
-#if NETSTANDARD2_0 || NET461
+#if NETSTANDARD2_0 || NET461 || NET5_0_OR_GREATER
             return Task.FromResult(0);
 #else
             return Logger.FromResult(0);

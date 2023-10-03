@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+#if NET5_0_OR_GREATER
+    using Microsoft.Data.SqlClient;
+#else
     using System.Data.SqlClient;
+#endif
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
-    using System.Xml.Linq;
 
     public static class CommonInfoGetters
     {
