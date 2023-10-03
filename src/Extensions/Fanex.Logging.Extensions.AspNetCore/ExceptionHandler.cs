@@ -5,6 +5,7 @@ namespace Fanex.Logging.Extensions.AspNetCore
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Http;
 
     public static class ExceptionHandler

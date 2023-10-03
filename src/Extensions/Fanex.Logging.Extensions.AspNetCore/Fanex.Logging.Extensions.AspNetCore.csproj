@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0; net5.0; net7.0</TargetFrameworks>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
@@ -10,22 +10,15 @@
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.AspNetCore.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.AspNetCore.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
+  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net7.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.0" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.4" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.11.0.8083">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6.1" />
   </ItemGroup>
 
 </Project>

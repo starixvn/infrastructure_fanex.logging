@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net461;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0;net5.0;net7.0</TargetFrameworks>
     <Version>1.0.1</Version>
     <Authors>RnD</Authors>
     <Company>_</Company>
@@ -14,16 +14,8 @@
     <PackageTags>Fanex.Logging, Logging, Sentry</PackageTags>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Sentry.RavenClient.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Sentry.RavenClient.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
