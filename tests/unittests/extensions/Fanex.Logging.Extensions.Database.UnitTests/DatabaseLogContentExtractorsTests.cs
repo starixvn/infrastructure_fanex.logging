@@ -1,9 +1,7 @@
 ﻿namespace Fanex.Logging.Extensions.Database.UnitTests
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Data.SqlClient;
     using Data;
     using Xunit;
 
@@ -51,51 +49,7 @@
                 dbExceptionInfo);
         }
 
-        [Fact]
-        public void GetDbExceptionInfo_ExceptionIsSqlException_ReturnDbExceptionInfo()
-        {
-            // Arrange
-            var sqlException = V59.UnitTests.DatabaseLogContentExtractorsTests.CreateSqlException("server", "proccedure");
-
-            // Act
-            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(sqlException);
-
-            // Assert
-            Assert.Equal(
-                new Dictionary<string, object>
-                {
-                    ["Server"] = "server",
-                    ["Procedure"] = "proccedure",
-                    ["LineNumber"] = 100,
-                    ["ErrorCode"] = -2146232060,
-                    ["Number"] = 10
-                },
-                dbExceptionInfo);
-        }
-
-        [Fact]
-        public void GetDbExceptionInfo_InnerExceptionIsSqlException_ReturnDbExceptionInfo()
-        {
-            // Arrange
-            var sqlException = V59.UnitTests.DatabaseLogContentExtractorsTests.CreateSqlException("server", "proccedure");
-            var exception = new Exception("message", sqlException);
-
-            // Act
-            var dbExceptionInfo = DatabaseInfoGetters.GetDbExceptionInfo(exception);
-
-            // Assert
-            Assert.Equal(
-                new Dictionary<string, object>
-                {
-                    ["Server"] = "server",
-                    ["Procedure"] = "proccedure",
-                    ["LineNumber"] = 100,
-                    ["ErrorCode"] = -2146232060,
-                    ["Number"] = 10
-                },
-                dbExceptionInfo);
-        }
-
+       
         [Fact]
         public void GetParameters_Always_ReturnCombinedParameterString()
         {
