@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <Version>1.0.8</Version>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
@@ -12,21 +12,12 @@
     <AssemblyVersion>1.0.8.0</AssemblyVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net471|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.Database.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.Database.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Fanex.Data" Version="4.2.3" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6.1" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

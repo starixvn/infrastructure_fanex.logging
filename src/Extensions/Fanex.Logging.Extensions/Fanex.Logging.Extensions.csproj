@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netstandard2.0;net5.0;net7.0</TargetFrameworks>
-    <Version>1.0.6-beta3</Version>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+    <Version>1.0.6</Version>
     <Authors>R&amp;D</Authors>
     <Product>_</Product>
     <Company>_</Company>
@@ -10,22 +10,8 @@
     <PackageReleaseNotes>- Support .net core</PackageReleaseNotes>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net471|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
-    <CodeAnalysisRuleSet>Fanex.Logging.Extensions.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net7.0'">
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />

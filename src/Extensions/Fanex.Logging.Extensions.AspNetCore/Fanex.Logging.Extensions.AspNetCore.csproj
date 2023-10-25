@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0; net5.0; net7.0</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
     <Product>_</Product>
@@ -17,8 +17,8 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
-    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6.1" />
+    <ProjectReference Include="..\..\Fanex.Logging\Fanex.Logging.csproj" />
+    <ProjectReference Include="..\Fanex.Logging.Extensions\Fanex.Logging.Extensions.csproj" />
   </ItemGroup>
 
 </Project>
