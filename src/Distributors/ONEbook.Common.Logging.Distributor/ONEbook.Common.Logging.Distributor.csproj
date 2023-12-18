@@ -151,6 +151,9 @@
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="ONEbook.Common.Logging.Distributor.exe.dr.config">
+      <DependentUpon>App.config</DependentUpon>
+    </Content>
     <None Include="ONEbook.Common.Logging.Distributor.exe.local.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
