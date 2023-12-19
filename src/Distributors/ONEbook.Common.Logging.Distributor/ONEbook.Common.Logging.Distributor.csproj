@@ -153,6 +153,7 @@
     </None>
     <Content Include="ONEbook.Common.Logging.Distributor.exe.dr.config">
       <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="ONEbook.Common.Logging.Distributor.exe.local.config">
       <DependentUpon>App.config</DependentUpon>

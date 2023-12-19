@@ -29,7 +29,7 @@
             }
             catch(Exception ex)
             {
-                entlibLog.Logger.Write(ex.ToString(), "Fanex-Logging-Test");
+                entlibLog.Logger.Write(ex.ToString() + _rabbitMQConnectionString, "Fanex-Logging-Test");
             }
         }
 
