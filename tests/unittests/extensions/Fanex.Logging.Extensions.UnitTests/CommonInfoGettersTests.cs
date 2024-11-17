@@ -1,130 +1,127 @@
-﻿namespace Fanex.Logging.Extensions.UnitTests
+﻿namespace Fanex.Logging.Extensions.UnitTests;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using Xunit;
+using static CommonInfoGetters;
+
+[Trait("Unit Tests", "Extensions/CommonInfoGetters.cs")]
+public class CommonInfoGettersTests
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using Xunit;
-    using static CommonInfoGetters;
-
-    [Trait("Unit Tests", "Extensions/CommonInfoGetters.cs")]
-    public class CommonInfoGettersTests
+    [Fact]
+    public void GetExceptionInfo_ExceptionIsNull_ReturnEmptyContent()
     {
-        [Fact]
-        public void GetExceptionInfo_ExceptionIsNull_ReturnEmptyContent()
-        {
-            // Act
-            var exceptionInfo = GetExceptionInfo(null);
+        // Act
+        var exceptionInfo = GetExceptionInfo(null);
 
-            // Assert
-            Assert.Same(Constants.EmptyDictionary, exceptionInfo);
-        }
+        // Assert
+        Assert.Empty(exceptionInfo);
+    }
 
-        [Fact]
-        public void GetExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
-        {
-            // Arrange
-            var customException = new DllNotFoundException();
+    [Fact]
+    public void GetExceptionInfo_Always_ReturnLogEntryWithExceptionInfo()
+    {
+        // Arrange
+        var customException = new DllNotFoundException();
 
-            // Act
-            var exceptionInfo = GetExceptionInfo(customException);
+        // Act
+        var exceptionInfo = GetExceptionInfo(customException);
 
-            // Assert
-            Assert.Equal(
-                new Dictionary<string, object>
-                {
-                    ["Source"] = null,
-                    ["Type"] = typeof(DllNotFoundException),
-                    ["TargetSite"] = null,
-                    ["Details"] = "System.DllNotFoundException: Dll was not found."
-                },
-                exceptionInfo);
-        }
-
-        [Fact]
-        public void GetMachineIP_IPAddressFamilyIsInterNetwork_ReturnIP()
-        {
-            // Arrange
-            var hostEntry = new IPHostEntry
+        // Assert
+        Assert.Equal(
+            new Dictionary<string, object>
             {
-                AddressList = new IPAddress[] { new IPAddress(100000) }
-            };
+                ["Source"] = null,
+                ["Type"] = typeof(DllNotFoundException),
+                ["TargetSite"] = null,
+                ["Details"] = "System.DllNotFoundException: Dll was not found."
+            },
+            exceptionInfo);
+    }
 
-            // Act
-            var machineIP = GetMachineIP(hostEntry);
-
-            // Assert
-            Assert.Equal("160.134.1.0", machineIP);
-        }
-
-        [Fact]
-        public void GetMachineIP_NotFoundIP_ReturnNotAvailable()
+    [Fact]
+    public void GetMachineIP_IPAddressFamilyIsInterNetwork_ReturnIP()
+    {
+        // Arrange
+        var hostEntry = new IPHostEntry
         {
-            // Arrange
-            var hostEntry = new IPHostEntry
-            {
-                AddressList = new IPAddress[] { }
-            };
+            AddressList = [new IPAddress(100000)]
+        };
 
-            // Act
-            var machineIP = GetMachineIP(hostEntry);
+        // Act
+        var machineIp = GetMachineIp(hostEntry);
 
-            // Assert
-            Assert.Equal("N/A", machineIP);
-        }
+        // Assert
+        Assert.Equal("160.134.1.0", machineIp);
+    }
 
-        [Fact]
-        public void GetServerInfo_Always_ReturnLogEntryWithServerInformation()
+    [Fact]
+    public void GetMachineIP_NotFoundIP_ReturnNotAvailable()
+    {
+        // Arrange
+        var hostEntry = new IPHostEntry
         {
-            // Act
-            var serverInfo = GetServerInfo();
+            AddressList = []
+        };
 
-            // Assert
-            Assert.True(
-                serverInfo.Keys.Any(info => info.Contains("Server IP"))
-                && serverInfo.Keys.Any(info => info.Contains("MachineName"))
-                && serverInfo.Keys.Any(info => info.Contains("OSVersion"))
-                && serverInfo.Keys.Any(info => info.Contains("System Time"))
-                && serverInfo.Keys.Any(info => info.Contains("User Domain")));
-        }
+        // Act
+        var machineIp = GetMachineIp(hostEntry);
 
-        [Fact]
-        public void ConvertStreamToString_RequestStreamIsNull_ReturnNAString()
-        {
-            // Act
-            var bodyData = ConvertStreamToString(null);
+        // Assert
+        Assert.Equal("N/A", machineIp);
+    }
 
-            // Assert
-            Assert.Equal("N/A", bodyData);
-        }
+    [Fact]
+    public void GetServerInfo_Always_ReturnLogEntryWithServerInformation()
+    {
+        // Act
+        var serverInfo = GetServerInfo();
 
-        [Theory]
-        [InlineData("{ 'demo': 1, 'demo2': '33333' }", "{ 'demo': 1, 'demo2': '33333' }")]
-        [InlineData("{ \\\"demo\\\": 1, \\\"demo2\\\": '33333' }", "{ \"demo\": 1, \"demo2\": '33333' }")]
-        public void ConvertStreamToString_RequestStreamContainsJsonData_ReturnEmpty(
-            string requestJson,
-            string expectedJson)
-        {
-            // Arrange
-            using (Stream stream = GenerateStreamFromString(requestJson))
-            {
-                // Act
-                var bodyData = ConvertStreamToString(stream);
+        // Assert
+        Assert.True(
+            serverInfo.Keys.Any(info => info.Contains("Server IP"))
+            && serverInfo.Keys.Any(info => info.Contains("MachineName"))
+            && serverInfo.Keys.Any(info => info.Contains("OSVersion"))
+            && serverInfo.Keys.Any(info => info.Contains("System Time"))
+            && serverInfo.Keys.Any(info => info.Contains("User Domain")));
+    }
 
-                // Assert
-                Assert.Equal(expectedJson, bodyData);
-            }
-        }
+    [Fact]
+    public void ConvertStreamToString_RequestStreamIsNull_ReturnNAString()
+    {
+        // Act
+        var bodyData = ConvertStreamToString(null);
 
-        internal static Stream GenerateStreamFromString(string s)
-        {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
-        }
+        // Assert
+        Assert.Equal("N/A", bodyData);
+    }
+
+    [Theory]
+    [InlineData("{ 'demo': 1, 'demo2': '33333' }", "{ 'demo': 1, 'demo2': '33333' }")]
+    [InlineData("{ \\\"demo\\\": 1, \\\"demo2\\\": '33333' }", "{ \"demo\": 1, \"demo2\": '33333' }")]
+    public void ConvertStreamToString_RequestStreamContainsJsonData_ReturnEmpty(
+        string requestJson,
+        string expectedJson)
+    {
+        // Arrange
+        using var stream = GenerateStreamFromString(requestJson);
+        // Act
+        var bodyData = ConvertStreamToString(stream);
+
+        // Assert
+        Assert.Equal(expectedJson, bodyData);
+    }
+
+    internal static Stream GenerateStreamFromString(string s)
+    {
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
     }
 }

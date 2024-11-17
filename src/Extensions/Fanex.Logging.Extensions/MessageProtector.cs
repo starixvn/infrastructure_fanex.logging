@@ -1,48 +1,40 @@
-﻿namespace Fanex.Logging.Extensions
+﻿namespace Fanex.Logging.Extensions;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+public static class MessageProtector
 {
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-
-    public static class MessageProtector
-    {
 #pragma warning disable S4226 // Extensions should be in separate namespaces
-        public static string ToCleanMessage(this LogMessage logMessage, List<string> patterns)
+    public static string ToCleanMessage(this LogMessage logMessage, List<string> patterns)
 #pragma warning restore S4226 // Extensions should be in separate namespaces
-            => logMessage.ToString().HideSensitiveInfo(patterns);
+        => logMessage.ToString().HideSensitiveInfo(patterns);
 
-        public static string HideSensitiveInfo(this string message, List<string> patterns)
+    public static string HideSensitiveInfo(this string message, List<string> patterns)
+    {
+        return patterns == null ? message : patterns.Aggregate(message, HideSensitiveInfo);
+    }
+
+    public static string HideSensitiveInfo(this string message, string pattern)
+    {
+        var cleanMessage = message;
+
+        if (string.IsNullOrWhiteSpace(pattern))
         {
-            string cleanMessage = message;
-
-            if (patterns != null)
-            {
-                foreach (var pattern in patterns)
-                {
-                    cleanMessage = HideSensitiveInfo(cleanMessage, pattern);
-                }
-            }
-
             return cleanMessage;
         }
 
-        public static string HideSensitiveInfo(this string message, string pattern)
+        var matchCollection = Regex.Matches(message, pattern, RegexOptions.IgnoreCase);
+
+        foreach (Match match in matchCollection)
         {
-            string cleanMessage = message;
-
-            if (!string.IsNullOrWhiteSpace(pattern))
+            if (match.Success)
             {
-                var matchCollection = Regex.Matches(message, pattern, RegexOptions.IgnoreCase);
-
-                foreach (Match match in matchCollection)
-                {
-                    if (match.Success)
-                    {
-                        cleanMessage = cleanMessage.Replace(match.Groups[Constants.ParamValue].ToString(), Constants.SensitiveInfo);
-                    }
-                }
+                cleanMessage = cleanMessage.Replace(match.Groups[Constants.ParamValue].ToString(), Constants.SensitiveInfo);
             }
-
-            return cleanMessage;
         }
+
+        return cleanMessage;
     }
 }

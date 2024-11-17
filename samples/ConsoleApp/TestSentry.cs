@@ -1,6 +1,4 @@
-﻿using Sentry;
-
-namespace ConsoleApp;
+﻿namespace ConsoleApp;
 
 using System.Net;
 using Fanex.Logging;
@@ -29,9 +27,8 @@ public static class TestSentry
                 Debug = true,
                 AutoSessionTracking = true,
                 IsGlobalModeEnabled = false,
-                EnableTracing = true,
                 TracesSampleRate = 0.1,
-                CreateHttpMessageHandler = CreateHttpMessageHandler,
+                CreateHttpMessageHandler = CreateHttpMessageHandler
             }));
 
         Logger.Log.Info("Test" + Guid.NewGuid());

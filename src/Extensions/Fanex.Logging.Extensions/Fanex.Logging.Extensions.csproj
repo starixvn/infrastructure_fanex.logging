@@ -1,20 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0</TargetFrameworks>
-    <Version>1.0.6</Version>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
+    <Version>1.1.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>R&amp;D</Authors>
     <Product>_</Product>
     <Company>_</Company>
     <Description>- Provide extension to log more error information</Description>
     <PackageReleaseNotes>- Support .net core</PackageReleaseNotes>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net7.0'">
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
   </ItemGroup>
 
 

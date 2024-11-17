@@ -6,20 +6,22 @@ internal static class TestHttpClient
 {
     internal static void Action()
     {
-        CookieContainer cookies = new CookieContainer();
-        HttpClientHandler handler = new HttpClientHandler
+        var cookies = new CookieContainer();
+        var handler = new HttpClientHandler
         {
             CookieContainer = cookies,
             UseCookies = true
         };
 
-        HttpClient client = new HttpClient(handler);
-        HttpResponseMessage response = client.GetAsync("http://napsc.nexdev.net/Auth").Result;
+        var client = new HttpClient(handler);
+        _ = client.GetAsync("http://napsc.nexdev.net/Auth").Result;
 
-        Uri uri = new Uri("http://napsc.nexdev.net");
-        IEnumerable<Cookie> responseCookies = cookies.GetCookies(uri).Cast<Cookie>();
-        foreach (Cookie cookie in responseCookies)
+        var uri = new Uri("http://napsc.nexdev.net");
+        var responseCookies = cookies.GetCookies(uri).Cast<Cookie>();
+        foreach (var cookie in responseCookies)
+        {
             Console.WriteLine(cookie.Name + ": " + cookie.Value);
+        }
 
         Console.ReadLine();
     }

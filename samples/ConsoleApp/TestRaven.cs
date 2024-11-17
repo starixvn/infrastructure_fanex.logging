@@ -13,7 +13,7 @@ public static class TestRaven
             .SetDefaultLogCategory("Test")
             .Use(new SentryLogging(new SentryEngineOptions
             {
-                Dsn = new Dsn("http://38a50130b98c4bd8a70b071774b3c26c@sentry.nexdev.net/119"),
+                Dsn = new Dsn("http://38a50130b98c4bd8a70b071774b3c26c@sentry.nexdev.net/119")
             }));
 
         Logger.Log.Info("Test " + Guid.NewGuid());

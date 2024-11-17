@@ -1,14 +1,13 @@
-﻿namespace Fanex.Logging
+﻿namespace Fanex.Logging;
+
+using System.Diagnostics;
+using System.Threading.Tasks;
+
+public interface ILogEngine
 {
-    using System.Diagnostics;
-    using System.Threading.Tasks;
+    void Write(string message, TraceEventType severity, string category);
 
-    public interface ILogEngine
-    {
-        void Write(string message, TraceEventType severity, string category);
+    Task WriteAsync(string message, TraceEventType severity, string category);
 
-        Task WriteAsync(string message, TraceEventType severity, string category);
-
-        string RenderJavascriptLogger();
-    }
+    string RenderJavascriptLogger();
 }
