@@ -1,75 +1,69 @@
-﻿namespace Fanex.Logging.Extensions
+﻿namespace Fanex.Logging.Extensions;
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+public class LoggingConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
+    internal Func<Exception, IDictionary<string, object>> GetDbExceptionInfo;
+    internal List<string> Patterns;
+    internal bool EnabledLogHttpHeader;
+    internal bool EnabledLogHttpSession;
+    internal List<Type> IgnoredExceptionTypes = [typeof(ThreadAbortException)];
 
-    public class LoggingConfiguration
+    public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, IDictionary<string, object>> getDbExceptionInfo)
     {
-        internal Func<Exception, IDictionary<string, object>> GetDbExceptionInfo;
-        internal List<string> Patterns;
-        internal bool EnabledLogHttpHeader;
-        internal bool EnabledLogHttpSession;
-        internal List<Type> IgnoredExceptionTypes = new List<Type> { typeof(ThreadAbortException) };
+        GetDbExceptionInfo = getDbExceptionInfo ?? throw new ArgumentNullException(nameof(getDbExceptionInfo));
 
-        public LoggingConfiguration UseGetDbExceptionInfo(Func<Exception, IDictionary<string, object>> getDbExceptionInfo)
+        return this;
+    }
+
+    public LoggingConfiguration HideSensitiveInfo(List<string> patterns)
+    {
+        if (patterns != null)
         {
-            if (getDbExceptionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(getDbExceptionInfo));
-            }
-
-            GetDbExceptionInfo = getDbExceptionInfo;
-
-            return this;
+            Patterns = patterns;
         }
 
-        public LoggingConfiguration HideSensitiveInfo(List<string> patterns)
-        {
-            if (patterns != null)
-            {
-                Patterns = patterns;
-            }
+        return this;
+    }
 
-            return this;
-        }
+    public LoggingConfiguration GetHttpHeaderInfo()
+    {
+        EnabledLogHttpHeader = true;
 
-        public LoggingConfiguration GetHttpHeaderInfo()
-        {
-            EnabledLogHttpHeader = true;
+        return this;
+    }
 
-            return this;
-        }
+    public LoggingConfiguration GetHttpSessionInfo()
+    {
+        EnabledLogHttpSession = true;
 
-        public LoggingConfiguration GetHttpSessionInfo()
-        {
-            EnabledLogHttpSession = true;
+        return this;
+    }
 
-            return this;
-        }
+    /// <summary>
+    /// Ignore HttpException and ThreadAbortException
+    /// </summary>
+    /// <param name="exceptionTypes"></param>
+    /// <returns>instance of WebLoggingConfiguration</returns>
+    public LoggingConfiguration IgnoreExceptionTypes(params Type[] exceptionTypes)
+    {
+        IgnoredExceptionTypes.AddRange(exceptionTypes);
 
-        /// <summary>
-        /// Ingore HttpException and ThreadAbortException
-        /// </summary>
-        /// <param name="exceptionTypes"></param>
-        /// <returns>instance of WebLoggingConfiguration</returns>
-        public LoggingConfiguration IgnoreExceptionTypes(params Type[] exceptionTypes)
-        {
-            IgnoredExceptionTypes.AddRange(exceptionTypes);
+        return this;
+    }
 
-            return this;
-        }
+    /// <summary>
+    /// Ignore HttpException and ThreadAbortException
+    /// </summary>
+    /// <typeparam name="TException"></typeparam>
+    /// <returns>instance of WebLoggingConfiguration</returns>
+    public LoggingConfiguration IgnoreException<TException>()
+    {
+        IgnoredExceptionTypes.Add(typeof(TException));
 
-        /// <summary>
-        /// Ingore HttpException and ThreadAbortException
-        /// </summary>
-        /// <typeparam name="TException"></typeparam>
-        /// <returns>instance of WebLoggingConfiguration</returns>
-        public LoggingConfiguration IgnoreException<TException>()
-        {
-            IgnoredExceptionTypes.Add(typeof(TException));
-
-            return this;
-        }
+        return this;
     }
 }

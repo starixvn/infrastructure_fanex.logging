@@ -12,24 +12,16 @@
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Sentry")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Fanex.Logging.Sentry.UnitTests")]
 
-namespace Fanex.Logging.Extensions
+namespace Fanex.Logging.Extensions;
+
+using System.Collections.Generic;
+
+internal static class Constants
 {
-    using System.Collections.Generic;
+    public const string NotAvailableAbbr = "N/A";
+    public const string SensitiveInfo = "*****";
+    public const string NoInformation = "No Information is available.";
+    public const string ParamValue = "paramValue";
 
-    internal static class Constants
-    {
-        public const string NotAvailableAbbr = "N/A";
-        public const string SensitiveInfo = "*****";
-        public const string NoInfomration = "No Information is available.";
-        public const string ParamValue = "paramValue";
-        private readonly static IDictionary<string, object> emptyDictionary = new Dictionary<string, object>();
-
-        public static IDictionary<string, object> EmptyDictionary
-        {
-            get
-            {
-                return emptyDictionary;
-            }
-        }
-    }
+    public static IDictionary<string, object> EmptyDictionary => new Dictionary<string, object>();
 }

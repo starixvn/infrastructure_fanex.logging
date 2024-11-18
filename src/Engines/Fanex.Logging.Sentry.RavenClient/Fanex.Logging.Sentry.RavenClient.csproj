@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net471;netstandard2.0;net5.0;net7.0</TargetFrameworks>
-    <Version>1.0.1</Version>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <LangVersion>13.0</LangVersion>
+    <Version>1.1.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>RnD</Authors>
     <Company>_</Company>
     <Description>- Raven Client Sentry Logging Engine for Fanex.Logging
@@ -13,15 +15,19 @@
     <RepositoryUrl>https://gitlab.nexcel.vn/infrastructure/fanex.logging</RepositoryUrl>
     <PackageTags>Fanex.Logging, Logging, Sentry</PackageTags>
   </PropertyGroup>
-
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Logging" Version="2.0.1.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="7.12.0.8217">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+
   </ItemGroup>
 
 </Project>
