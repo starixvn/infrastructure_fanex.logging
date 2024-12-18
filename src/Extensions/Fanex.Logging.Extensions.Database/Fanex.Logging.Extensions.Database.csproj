@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
-    <Version>1.1.0</Version>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>R&amp;D</Authors>
     <Company>_</Company>
@@ -11,7 +13,6 @@
     <Description>- Extension for logging Database Information</Description>
     <PackageReleaseNotes>- Support logging MySql exception information
 - Correct dll version</PackageReleaseNotes>
-    <AssemblyVersion>1.0.8.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
