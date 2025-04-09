@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <Version>2.0.2.1</Version>
+    <AssemblyVersion>2.0.2.1</AssemblyVersion>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>R&amp;D</Authors>
@@ -14,7 +14,7 @@
     <PackageReleaseNotes>- Support .net core</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
   </ItemGroup>
 
 

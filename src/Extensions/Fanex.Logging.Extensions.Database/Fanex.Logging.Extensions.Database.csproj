@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
-    <Version>2.0.2</Version>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <Version>2.0.2.1</Version>
+    <AssemblyVersion>2.0.2.1</AssemblyVersion>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>R&amp;D</Authors>
@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fanex.Data" Version="4.2.3" />
+    <PackageReference Include="Fanex.Data" Version="4.3.3" />
   </ItemGroup>
 
   <ItemGroup>

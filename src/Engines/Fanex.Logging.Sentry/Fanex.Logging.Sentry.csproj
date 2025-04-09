@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
-    <Version>5.0.0</Version>
-    <AssemblyVersion>2.0.2</AssemblyVersion>
+    <Version>5.0.0.1</Version>
+    <AssemblyVersion>5.0.0</AssemblyVersion>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>RnD</Authors>
@@ -22,12 +22,12 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Sentry" Version="5.0.0" />
+    <PackageReference Include="Sentry" Version="5.5.1" />
   </ItemGroup>
 
   <ItemGroup>
